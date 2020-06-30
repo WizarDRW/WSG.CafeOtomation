@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WSG.CafeOtomation.DataAccess\WSG.CafeOtomation.DataAccess.csproj" />
+    <ProjectReference Include="..\WSG.CafeOtomation.Entities\WSG.CafeOtomation.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="WizardSoftwareGroupsFramework.Core">
+      <HintPath>..\..\..\Workspaces\Çalışma Alanı\WizardSoftwareGroupsFramework\WizardSoftwareGroupsFramework.Core\bin\Release\netstandard2.0\WizardSoftwareGroupsFramework.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
