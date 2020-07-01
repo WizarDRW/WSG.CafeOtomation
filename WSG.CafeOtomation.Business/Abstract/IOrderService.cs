@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using WizardSoftwareGroupsFramework.Core.Utilities.Result.Abstract;
 using WSG.CafeOtomation.Entities.Concrete;
+using WSG.CafeOtomation.Entities.Dtos;
 
 namespace WSG.CafeOtomation.Business.Abstract
 {
     public interface IOrderService
     {
-        IDataResult<List<Order>> GetAll();
+        IDataResult<List<OrderDto>> GetAll(Expression<Func<Order, bool>> expression = null);
         IDataResult<List<Order>> GetByDesk(int deskId);
         IDataResult<List<Order>> GetByClose(bool close);
         IDataResult<Order> GetByOrderNo(int no);
@@ -16,7 +19,7 @@ namespace WSG.CafeOtomation.Business.Abstract
     }
     public interface IOrderDetailService
     {
-        IDataResult<List<OrderDetail>> GetAll();
+        IDataResult<List<OrderDetailsDto>> GetAll(Expression<Func<OrderDetail, bool>> filter = null);
         IDataResult<List<OrderDetail>> GetByOrderNo(int orderId);
         IResult Add(OrderDetail orderDetail);
         IResult Update(OrderDetail orderDetail);

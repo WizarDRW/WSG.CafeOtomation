@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using WizardSoftwareGroupsFramework.Core.Utilities.Result.Abstract;
 using WizardSoftwareGroupsFramework.Core.Utilities.Result.Concrete;
 using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.Business.Constants;
 using WSG.CafeOtomation.DataAccess.Abstract;
 using WSG.CafeOtomation.Entities.Concrete;
+using WSG.CafeOtomation.Entities.Dtos;
 
 namespace WSG.CafeOtomation.Business.Concrete
 {
@@ -33,9 +36,9 @@ namespace WSG.CafeOtomation.Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
-        public IDataResult<List<Order>> GetAll()
+        public IDataResult<List<OrderDto>> GetAll(Expression<Func<Order, bool>> filter = null)
         {
-            return new SuccessDataResult<List<Order>>(_orderDal.GetList());
+            return new SuccessDataResult<List<OrderDto>>(_orderDal.GetOrderDtos(filter));
         }
 
         public IDataResult<List<Order>> GetByClose(bool close)
@@ -78,9 +81,9 @@ namespace WSG.CafeOtomation.Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
-        public IDataResult<List<OrderDetail>> GetAll()
+        public IDataResult<List<OrderDetailsDto>> GetAll(Expression<Func<OrderDetail, bool>> filter = null)
         {
-            return new SuccessDataResult<List<OrderDetail>>(_orderDetailDal.GetList());
+            return new SuccessDataResult<List<OrderDetailsDto>>(_orderDetailDal.GetOrderDetailDtos(filter));
         }
 
         public IDataResult<List<OrderDetail>> GetByOrderNo(int id)

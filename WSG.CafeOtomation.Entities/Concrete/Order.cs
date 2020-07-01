@@ -8,7 +8,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
     public class Order : IEntity
     {
         public int ID { get; set; }
-        public Guid CreateDate { get; set; }
+        public DateTime CreateDate { get { return DateTime.Now; } }
         public int? CreateUserID { get; set; }
         public User CreateUser { get; set; }
         public int DeskID { get; set; }
