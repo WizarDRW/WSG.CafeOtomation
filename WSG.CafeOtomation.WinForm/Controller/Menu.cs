@@ -35,7 +35,6 @@ namespace WSG.CafeOtomation.WinForm.Controller
             _orderService = new OrderManager(new EfOrderDal());
             _orderDetailService = new OrderDetailManager(new EfOrderDetailDal());
         }
-
         private void Menu_Load(object sender, EventArgs e)
         {
             foreach (var pC in _productCategoryService.GetAll().Data)
@@ -43,7 +42,6 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 lBxPCategory.Items.Add(pC.Name);
             }
         }
-
         public void Desk(string find = "")
         {
             int left = 200;
@@ -78,22 +76,19 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 tPDesk.Controls.Add(button);
             }
         }
-
         private void Button_Click(object sender, EventArgs e)
         {
             Button button;
             button = sender as Button;
             var data = _deskService.GetByNo(button.Text).Data;
             DeskMenu desk = new DeskMenu(data);
-            desk.Show();
+            desk.ShowDialog();
 
         }
-
         public void OrderList()
         {
             dGVOrder.DataSource = _orderService.GetAll(x => !x.IsClose).Data;
         }
-
         private void lBxPCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             int id = _productCategoryService.GetByName(lBxPCategory.SelectedItem.ToString()).Data.ID;
@@ -114,7 +109,6 @@ namespace WSG.CafeOtomation.WinForm.Controller
             lblProductName.Text = product.Name;
             lblStockAmount.Text = product.StockAmount.ToString();
         }
-
         private void dGVOrder_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int id = int.Parse(dGVOrder.CurrentRow.Cells["ID"].Value.ToString());

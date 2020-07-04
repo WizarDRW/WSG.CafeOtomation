@@ -25,5 +25,11 @@ namespace WSG.CafeOtomation.WinForm.Controller
         {
             lblTitle.Text = _desk.DeskNo;
         }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Dispose();
+            this.Close();
+        }
     }
 }
