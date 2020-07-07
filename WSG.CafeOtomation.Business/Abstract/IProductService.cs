@@ -19,6 +19,7 @@ namespace WSG.CafeOtomation.Business.Abstract
         IDataResult<List<Product>> GetAll();
         IDataResult<List<ProductDto>> GetByCategory(int id);
         IDataResult<Product> GetByID(int id);
+        IDataResult<Product> GetByName(string name);
         IResult Add(Product product);
         IResult Update(Product product);
         IResult Delete(Product product);

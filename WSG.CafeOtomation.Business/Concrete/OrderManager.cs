@@ -6,6 +6,7 @@ using WizardSoftwareGroupsFramework.Core.Utilities.Result.Concrete;
 using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.Business.Constants;
 using WSG.CafeOtomation.DataAccess.Abstract;
+using WSG.CafeOtomation.DataAccess.Concrete.EntityFramework;
 using WSG.CafeOtomation.Entities.Concrete;
 using WSG.CafeOtomation.Entities.Dtos;
 
@@ -80,7 +81,6 @@ namespace WSG.CafeOtomation.Business.Concrete
             _orderDetailDal.Delete(orderDetail);
             return new SuccessResult(Messages.Deleted);
         }
-
         public IDataResult<List<OrderDetailsDto>> GetAll(Expression<Func<OrderDetail, bool>> filter = null)
         {
             return new SuccessDataResult<List<OrderDetailsDto>>(_orderDetailDal.GetOrderDetailDtos(filter));
@@ -89,6 +89,11 @@ namespace WSG.CafeOtomation.Business.Concrete
         public IDataResult<List<OrderDetail>> GetByOrderNo(int id)
         {
             return new SuccessDataResult<List<OrderDetail>>(_orderDetailDal.GetList(x => x.OrderID == id));
+        }
+
+        public IDataResult<OrderDetail> GetBy(Expression<Func<OrderDetail, bool>> filter)
+        {
+            return new SuccessDataResult<OrderDetail>(_orderDetailDal.Get(filter));
         }
     }
 }

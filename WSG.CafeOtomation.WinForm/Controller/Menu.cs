@@ -12,6 +12,7 @@ using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.Business.Concrete;
 using WSG.CafeOtomation.DataAccess.Concrete.EntityFramework;
+using WSG.CafeOtomation.Entities.Concrete;
 
 namespace WSG.CafeOtomation.WinForm.Controller
 {
@@ -35,13 +36,6 @@ namespace WSG.CafeOtomation.WinForm.Controller
             _orderService = new OrderManager(new EfOrderDal());
             _orderDetailService = new OrderDetailManager(new EfOrderDetailDal());
         }
-        private void Menu_Load(object sender, EventArgs e)
-        {
-            foreach (var pC in _productCategoryService.GetAll().Data)
-            {
-                lBxPCategory.Items.Add(pC.Name);
-            }
-        }
         public void Desk(string find = "")
         {
             int left = 200;
@@ -56,16 +50,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                     top += 200;
                 }
                 button.Enabled = true;
-                if (d.IsActive)
-                {
-                    button.BackColor = Color.LawnGreen;
-                    button.ForeColor = Color.White;
-                }
-                else
-                {
-                    button.BackColor = Color.Gray;
-                    button.ForeColor = Color.Black;
-                }
+                ButtonColor(button, d.ID);
                 button.Font = new Font("Trebuchet MS", 25f, FontStyle.Regular);
                 button.Text = d.DeskNo;
                 button.Location = new Point(left, top);
@@ -76,18 +61,42 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 tPDesk.Controls.Add(button);
             }
         }
+        private void ButtonColor(Button button, int id)
+        {
+            var data = _orderService.GetByDesk(id).Data.Where(c => !c.IsClose);
+            if (data.Count() > 0)
+            {
+                button.BackColor = Color.LawnGreen;
+                button.ForeColor = Color.White;
+            }
+            else
+            {
+                button.BackColor = Color.Gray;
+                button.ForeColor = Color.White;
+            }
+        }
+        public void OrderList()
+        {
+            dGVOrder.DataSource = _orderService.GetAll(x => !x.IsClose).Data;
+        }
+
+        #region Events
+        private void Menu_Load(object sender, EventArgs e)
+        {
+            foreach (var pC in _productCategoryService.GetAll().Data)
+            {
+                lBxPCategory.Items.Add(pC.Name);
+            }
+        }
         private void Button_Click(object sender, EventArgs e)
         {
             Button button;
             button = sender as Button;
             var data = _deskService.GetByNo(button.Text).Data;
-            DeskMenu desk = new DeskMenu(data);
+            DeskMenu desk = new DeskMenu(data, _user);
             desk.ShowDialog();
-
-        }
-        public void OrderList()
-        {
-            dGVOrder.DataSource = _orderService.GetAll(x => !x.IsClose).Data;
+            int id = _deskService.GetByNo(button.Text).Data.ID;
+            ButtonColor(button, id);
         }
         private void lBxPCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -150,6 +159,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 Application.Exit();
             }
         }
+        #endregion
         #endregion
     }
 }

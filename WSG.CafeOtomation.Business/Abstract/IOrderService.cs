@@ -21,6 +21,7 @@ namespace WSG.CafeOtomation.Business.Abstract
     {
         IDataResult<List<OrderDetailsDto>> GetAll(Expression<Func<OrderDetail, bool>> filter = null);
         IDataResult<List<OrderDetail>> GetByOrderNo(int orderId);
+        IDataResult<OrderDetail> GetBy(Expression<Func<OrderDetail, bool>> filter);
         IResult Add(OrderDetail orderDetail);
         IResult Update(OrderDetail orderDetail);
         IResult Delete(OrderDetail orderDetail);

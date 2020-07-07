@@ -88,6 +88,11 @@ namespace WSG.CafeOtomation.Business.Concrete
         {
             return new SuccessDataResult<Product>(_productDal.Get(x=>x.ID == id));
         }
+
+        public IDataResult<Product> GetByName(string name)
+        {
+            return new SuccessDataResult<Product>(_productDal.Get(x => x.Name == name));
+        }
     }
     public class ProductImageManager : IProductImageService
     {
