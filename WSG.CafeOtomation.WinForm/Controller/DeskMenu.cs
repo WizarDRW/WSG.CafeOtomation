@@ -53,19 +53,30 @@ namespace WSG.CafeOtomation.WinForm.Controller
             }
         }
 
-        private void DeskMenu_Load(object sender, EventArgs e)
-        {
-            lblTitle.Text = _desk.DeskNo;
-            loadData();
-        }
-
         private void loadData()
         {
             if (_orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).Count() > 0)
             {
                 var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
                 dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == data.ID).Data;
+                dGWOrders.Columns["ID"].Visible = false;
                 lblTotalPay.Text = data.TotalPrice.ToString();
+                pnlPay.Enabled = true;
+            }
+        }
+
+        #region Events
+
+        private void DeskMenu_Load(object sender, EventArgs e)
+        {
+            lblTitle.Text = _desk.DeskNo;
+            loadData();
+            try
+            {
+                PayChange();
+            }
+            catch
+            {
             }
         }
 
@@ -89,6 +100,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             if (dataChilds != null)
             {
                 dataChilds.Amount += 1;
+                dataChilds.TotalPrice += product.UnitPrice;
                 data.TotalPrice += product.UnitPrice;
                 _orderDetailService.Update(dataChilds);
                 _orderService.Update(data);
@@ -134,13 +146,50 @@ namespace WSG.CafeOtomation.WinForm.Controller
 
         private void nUDPay_ValueChanged(object sender, EventArgs e)
         {
+            PayChange();
+        }
+
+        private void PayChange()
+        {
             var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
             dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == data.ID).Data;
-            lblChange.Text = (data.TotalPrice - nUDPay.Value).ToString();
+            if ((nUDPay.Value - data.TotalPrice) < 0)
+            {
+                lblChangeTitle.Text = "Ödenecek: ";
+            }
+            else
+            {
+                lblChangeTitle.Text = "Para Üstü: ";
+            }
+            lblChange.Text = (nUDPay.Value - data.TotalPrice).ToString();
+        }
+
+        /// <summary>
+        /// Urun adetini degistirmek icin
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void nUDAmount_ValueChanged(object sender, EventArgs e)
+        {
+            var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
+            var product = _productService.GetByName(dGWOrders.CurrentRow.Cells["Product"].Value.ToString()).Data;
+            var dataChild = _orderDetailService.GetBy(x => x.Product.Name == product.Name && x.OrderID == data.ID).Data;
+            if (dataChild != null)
+            {
+                dataChild.Amount = (int)nUDAmount.Value;
+                dataChild.TotalPrice = dataChild.Amount * product.UnitPrice;
+                _orderDetailService.Update(dataChild);
+                data.TotalPrice = _orderDetailService.GetAll(x => x.OrderID == data.ID).Data.Sum(x => x.TotalPrice);
+                _orderService.Update(data);
+            }
+            var i = dGWOrders.CurrentCell.RowIndex;
+            loadData();
+            dGWOrders.CurrentCell = dGWOrders.Rows[i].Cells[1];
         }
 
         private void dGWOrders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            pnlControl.Enabled = true;
             nUDAmount.Value = decimal.Parse(dGWOrders.CurrentRow.Cells["Amount"].Value.ToString());
             lblProductTitle.Text = dGWOrders.CurrentRow.Cells["Product"].Value.ToString();
         }
@@ -149,7 +198,27 @@ namespace WSG.CafeOtomation.WinForm.Controller
 
         private void btnPaySuccess_Click(object sender, EventArgs e)
         {
-
+            var dataSource = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
+            if (decimal.Parse(lblChange.Text) >= 0)
+            {
+                var data = new Order
+                {
+                    ID = dataSource.ID,
+                    UpdateUserID = _user.ID,
+                    Change = decimal.Parse(lblChange.Text),
+                    CreateUserID = dataSource.CreateUserID,
+                    DeskID = dataSource.DeskID,
+                    IsClose = true,
+                    Paid = nUDPay.Value,
+                    TotalPrice = dataSource.TotalPrice
+                };
+                _orderService.Update(data);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show(lblChange.Text + " Daha ödenmesi gerekiyor!");
+            }
         }
 
         private void btnPayCustomer_Click(object sender, EventArgs e)
@@ -157,11 +226,23 @@ namespace WSG.CafeOtomation.WinForm.Controller
 
         }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var data = new OrderDetail
+            {
+                ID = (int)dGWOrders.Rows[dGWOrders.CurrentCell.RowIndex].Cells[0].Value
+            };
+            _orderDetailService.Delete(data);
+            loadData();
+        }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             Dispose();
             this.Close();
         }
+        #endregion
+
         #endregion
     }
 }

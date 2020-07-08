@@ -11,6 +11,8 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public DateTime CreateDate { get { return DateTime.Now; } }
         public int? CreateUserID { get; set; }
         public User CreateUser { get; set; }
+        public int? UpdateUserID { get; set; }
+        public User UpdateUser { get; set; }
         public int DeskID { get; set; }
         public Desk Desk { get; set; }
         public decimal TotalPrice { get; set; }
