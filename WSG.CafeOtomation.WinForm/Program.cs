@@ -29,7 +29,7 @@ namespace WSG.CafeOtomation.WinForm
 
             var user = new User()
             {
-                ID = 1,
+                ID = 3,
                 LastName = "Ozkara",
                 FirstName = "Nedim",
                 Status = true

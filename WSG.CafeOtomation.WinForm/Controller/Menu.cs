@@ -35,28 +35,31 @@ namespace WSG.CafeOtomation.WinForm.Controller
             _deskService = new DeskManager(new EfDeskDal());
             _orderService = new OrderManager(new EfOrderDal());
             _orderDetailService = new OrderDetailManager(new EfOrderDetailDal());
+
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
         }
         public void Desk(string find = "")
         {
-            int left = 200;
-            int top = 100;
+            int left = 25;
+            int top = 25;
             int i = 1;
             foreach (var d in _deskService.GetAll(x => x.DeskNo.Contains(find)).Data)
             {
                 Button button = new Button();
                 if (i % 5 == 0)
                 {
-                    left = 200;
-                    top += 200;
+                    left = 25;
+                    top += 330;
                 }
                 button.Enabled = true;
                 ButtonColor(button, d.ID);
                 button.Font = new Font("Trebuchet MS", 25f, FontStyle.Regular);
                 button.Text = d.DeskNo;
                 button.Location = new Point(left, top);
-                button.Size = new Size(190, 190);
+                button.Size = new Size(325, 325);
                 i += 1;
-                left += 200;
+                left += 330;
                 button.Click += Button_Click;
                 tPDesk.Controls.Add(button);
             }
@@ -128,11 +131,6 @@ namespace WSG.CafeOtomation.WinForm.Controller
 
         #region Buttons
 
-        private void tSSale_Click(object sender, EventArgs e)
-        {
-            tCMain.SelectedTab = tPSale;
-        }
-
         private void tSDesk_Click(object sender, EventArgs e)
         {
             tCMain.SelectedTab = tPDesk;
@@ -145,9 +143,10 @@ namespace WSG.CafeOtomation.WinForm.Controller
             OrderList();
         }
 
-        private void tSStock_Click(object sender, EventArgs e)
+        private void tSLogOut_Click(object sender, EventArgs e)
         {
-            tCMain.SelectedTab = tPStock;
+            _user = null;
+            this.Close();
         }
 
         private void tSExit_Click(object sender, EventArgs e)

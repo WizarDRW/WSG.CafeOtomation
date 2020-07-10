@@ -36,5 +36,7 @@ namespace WSG.CafeOtomation.Entities.Dtos
         public int Amount { get; set; }
         [DisplayName("Toplam")]
         public decimal TotalPrice { get; set; }
+        [DisplayName("Sipariş Durumu")]
+        public bool IsComplete { get; set; }
     }
 }

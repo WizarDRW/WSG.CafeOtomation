@@ -40,7 +40,7 @@ namespace WSG.CafeOtomation.Business.Concrete
 
         public IDataResult<OperationClaim> GetByID(int id)
         {
-            return new SuccessDataResult<OperationClaim>(_operationClaimDal.Get(x=>x.ID == id));
+            return new SuccessDataResult<OperationClaim>(_operationClaimDal.GetByUserID(id));
         }
 
         public IDataResult<OperationClaim> GetByName(string name)

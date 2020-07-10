@@ -28,6 +28,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int ID { get; set; }
         public int Amount { get; set; }
         public decimal TotalPrice { get; set; }
+        public bool IsComplete { get; set; }
         public int OrderID { get; set; }
         public Order Order { get; set; }
         public int ProductID { get; set; }

@@ -87,7 +87,8 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          ID = o.ID,
                          Product = p.Name,
                          Amount = o.Amount,
-                         TotalPrice = o.TotalPrice
+                         TotalPrice = o.TotalPrice,
+                         IsComplete = o.IsComplete
                      }).ToList()
                     :
                     (from o in context.OrderDetails.Where(filter)
@@ -98,7 +99,8 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          ID = o.ID,
                          Product = p.Name,
                          Amount = o.Amount,
-                         TotalPrice = o.TotalPrice
+                         TotalPrice = o.TotalPrice,
+                         IsComplete = o.IsComplete
                      }).ToList();
             }
         }
