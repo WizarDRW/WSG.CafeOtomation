@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -36,16 +37,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblCompany = new System.Windows.Forms.Label();
             this.pnlCompany = new System.Windows.Forms.Panel();
+            this.lblTimeNow = new System.Windows.Forms.Label();
             this.menuLeft = new System.Windows.Forms.MenuStrip();
             this.tSDesk = new System.Windows.Forms.ToolStripMenuItem();
             this.tSOrder = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,43 +54,52 @@
             this.cartesianChart1 = new LiveCharts.WinForms.CartesianChart();
             this.dGSale = new System.Windows.Forms.DataGridView();
             this.tPStock = new System.Windows.Forms.TabPage();
-            this.lBxPCategory = new System.Windows.Forms.ListBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.dGwProductList = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblCount = new System.Windows.Forms.Label();
             this.gBxProductDetail = new System.Windows.Forms.GroupBox();
-            this.pBxImage = new System.Windows.Forms.PictureBox();
-            this.lblProductName = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblDayPerSale = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lblStockAmount = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblStockAmount = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblDayPerSale = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblProductName = new System.Windows.Forms.Label();
+            this.pBxImage = new System.Windows.Forms.PictureBox();
+            this.lblCount = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dGwProductList = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lBxPCategory = new System.Windows.Forms.ListBox();
             this.tPOrder = new System.Windows.Forms.TabPage();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.grpProcess = new System.Windows.Forms.GroupBox();
-            this.btnDoSale = new System.Windows.Forms.Button();
-            this.btnDetailSale = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.grBxAboutOrderDetailProcess = new System.Windows.Forms.GroupBox();
+            this.lblTimeMinuteInfo = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.lblTimeInfo = new System.Windows.Forms.Label();
+            this.lblAmountInfo = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.lblDeskInfo = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.lblProductInfoName = new System.Windows.Forms.Label();
+            this.lblOrderNo = new System.Windows.Forms.Label();
+            this.cmBxOrderStatus = new System.Windows.Forms.ComboBox();
             this.dGVOrderDetails = new System.Windows.Forms.DataGridView();
-            this.dGVOrder = new System.Windows.Forms.DataGridView();
             this.tPDesk = new System.Windows.Forms.TabPage();
             this.tCMain = new System.Windows.Forms.TabControl();
+            this.timerLoadOrderDetails = new System.Windows.Forms.Timer(this.components);
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.timerNow = new System.Windows.Forms.Timer(this.components);
             this.pnlCompany.SuspendLayout();
             this.menuLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGSale)).BeginInit();
             this.tPStock.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dGwProductList)).BeginInit();
             this.gBxProductDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pBxImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dGwProductList)).BeginInit();
             this.tPOrder.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.grpProcess.SuspendLayout();
+            this.grBxAboutOrderDetailProcess.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGVOrderDetails)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dGVOrder)).BeginInit();
             this.tCMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,7 +111,7 @@
             this.lblCompany.BackColor = System.Drawing.Color.Transparent;
             this.lblCompany.Font = new System.Drawing.Font("Trebuchet MS", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblCompany.ForeColor = System.Drawing.Color.White;
-            this.lblCompany.Location = new System.Drawing.Point(2126, 2);
+            this.lblCompany.Location = new System.Drawing.Point(2124, 2);
             this.lblCompany.Name = "lblCompany";
             this.lblCompany.Size = new System.Drawing.Size(208, 100);
             this.lblCompany.TabIndex = 3;
@@ -113,13 +121,27 @@
             // 
             this.pnlCompany.AutoSize = true;
             this.pnlCompany.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.pnlCompany.Controls.Add(this.lblTimeNow);
             this.pnlCompany.Controls.Add(this.lblCompany);
             this.pnlCompany.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlCompany.Location = new System.Drawing.Point(203, 971);
+            this.pnlCompany.Location = new System.Drawing.Point(203, 714);
             this.pnlCompany.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlCompany.Name = "pnlCompany";
-            this.pnlCompany.Size = new System.Drawing.Size(2346, 117);
+            this.pnlCompany.Size = new System.Drawing.Size(2346, 170);
             this.pnlCompany.TabIndex = 18;
+            // 
+            // lblTimeNow
+            // 
+            this.lblTimeNow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblTimeNow.AutoSize = true;
+            this.lblTimeNow.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTimeNow.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblTimeNow.Location = new System.Drawing.Point(3, 141);
+            this.lblTimeNow.Name = "lblTimeNow";
+            this.lblTimeNow.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lblTimeNow.Size = new System.Drawing.Size(65, 35);
+            this.lblTimeNow.TabIndex = 12;
+            this.lblTimeNow.Text = "Null";
             // 
             // menuLeft
             // 
@@ -135,7 +157,7 @@
             this.menuLeft.Location = new System.Drawing.Point(0, 0);
             this.menuLeft.Name = "menuLeft";
             this.menuLeft.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuLeft.Size = new System.Drawing.Size(203, 1088);
+            this.menuLeft.Size = new System.Drawing.Size(203, 884);
             this.menuLeft.TabIndex = 1;
             this.menuLeft.Text = "menuStrip1";
             // 
@@ -258,37 +280,142 @@
             this.tPStock.Margin = new System.Windows.Forms.Padding(4);
             this.tPStock.Name = "tPStock";
             this.tPStock.Padding = new System.Windows.Forms.Padding(4);
-            this.tPStock.Size = new System.Drawing.Size(2317, 963);
+            this.tPStock.Size = new System.Drawing.Size(2317, 706);
             this.tPStock.TabIndex = 3;
             this.tPStock.UseVisualStyleBackColor = true;
             // 
-            // lBxPCategory
+            // gBxProductDetail
             // 
-            this.lBxPCategory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.lBxPCategory.BackColor = System.Drawing.SystemColors.Window;
-            this.lBxPCategory.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lBxPCategory.Font = new System.Drawing.Font("Trebuchet MS", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lBxPCategory.FormattingEnabled = true;
-            this.lBxPCategory.ItemHeight = 49;
-            this.lBxPCategory.Location = new System.Drawing.Point(4, 4);
-            this.lBxPCategory.Margin = new System.Windows.Forms.Padding(4);
-            this.lBxPCategory.Name = "lBxPCategory";
-            this.lBxPCategory.Size = new System.Drawing.Size(317, 1029);
-            this.lBxPCategory.TabIndex = 0;
-            this.lBxPCategory.Visible = false;
-            this.lBxPCategory.SelectedIndexChanged += new System.EventHandler(this.lBxPCategory_SelectedIndexChanged);
+            this.gBxProductDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gBxProductDetail.Controls.Add(this.label3);
+            this.gBxProductDetail.Controls.Add(this.label5);
+            this.gBxProductDetail.Controls.Add(this.lblStockAmount);
+            this.gBxProductDetail.Controls.Add(this.label4);
+            this.gBxProductDetail.Controls.Add(this.lblDayPerSale);
+            this.gBxProductDetail.Controls.Add(this.label2);
+            this.gBxProductDetail.Controls.Add(this.lblProductName);
+            this.gBxProductDetail.Controls.Add(this.pBxImage);
+            this.gBxProductDetail.Location = new System.Drawing.Point(356, 546);
+            this.gBxProductDetail.Margin = new System.Windows.Forms.Padding(4);
+            this.gBxProductDetail.Name = "gBxProductDetail";
+            this.gBxProductDetail.Padding = new System.Windows.Forms.Padding(4);
+            this.gBxProductDetail.Size = new System.Drawing.Size(1943, 508);
+            this.gBxProductDetail.TabIndex = 6;
+            this.gBxProductDetail.TabStop = false;
+            this.gBxProductDetail.Text = "Ürün Detay Bilgisi";
+            this.gBxProductDetail.Visible = false;
             // 
-            // panel1
+            // label3
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.panel1.BackColor = System.Drawing.Color.Black;
-            this.panel1.Location = new System.Drawing.Point(329, 7);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(13, 1083);
-            this.panel1.TabIndex = 1;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label3.Location = new System.Drawing.Point(313, 146);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(27, 29);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label5.Location = new System.Drawing.Point(8, 145);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(296, 29);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Gün İçindeki Satış Miktarı:";
+            // 
+            // lblStockAmount
+            // 
+            this.lblStockAmount.AutoSize = true;
+            this.lblStockAmount.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblStockAmount.Location = new System.Drawing.Point(313, 231);
+            this.lblStockAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblStockAmount.Name = "lblStockAmount";
+            this.lblStockAmount.Size = new System.Drawing.Size(27, 29);
+            this.lblStockAmount.TabIndex = 8;
+            this.lblStockAmount.Text = "0";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label4.Location = new System.Drawing.Point(8, 231);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(151, 29);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Skot Miktarı:";
+            // 
+            // lblDayPerSale
+            // 
+            this.lblDayPerSale.AutoSize = true;
+            this.lblDayPerSale.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblDayPerSale.Location = new System.Drawing.Point(313, 190);
+            this.lblDayPerSale.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDayPerSale.Name = "lblDayPerSale";
+            this.lblDayPerSale.Size = new System.Drawing.Size(27, 29);
+            this.lblDayPerSale.TabIndex = 7;
+            this.lblDayPerSale.Text = "0";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label2.Location = new System.Drawing.Point(8, 190);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(263, 29);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Günlük Ortalama Satış:";
+            // 
+            // lblProductName
+            // 
+            this.lblProductName.AutoSize = true;
+            this.lblProductName.Font = new System.Drawing.Font("Trebuchet MS", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblProductName.Location = new System.Drawing.Point(8, 20);
+            this.lblProductName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblProductName.Name = "lblProductName";
+            this.lblProductName.Size = new System.Drawing.Size(178, 100);
+            this.lblProductName.TabIndex = 0;
+            this.lblProductName.Text = "null";
+            // 
+            // pBxImage
+            // 
+            this.pBxImage.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pBxImage.Location = new System.Drawing.Point(1251, 19);
+            this.pBxImage.Margin = new System.Windows.Forms.Padding(4);
+            this.pBxImage.Name = "pBxImage";
+            this.pBxImage.Size = new System.Drawing.Size(688, 485);
+            this.pBxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pBxImage.TabIndex = 5;
+            this.pBxImage.TabStop = false;
+            // 
+            // lblCount
+            // 
+            this.lblCount.AutoSize = true;
+            this.lblCount.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblCount.Location = new System.Drawing.Point(595, 513);
+            this.lblCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(26, 29);
+            this.lblCount.TabIndex = 4;
+            this.lblCount.Text = "0";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(351, 513);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(225, 29);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Toplam Ürün Sayısı:";
             // 
             // dGwProductList
             // 
@@ -339,276 +466,262 @@
             this.dGwProductList.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dGwProductList.RowTemplate.Height = 24;
             this.dGwProductList.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dGwProductList.Size = new System.Drawing.Size(1958, 503);
+            this.dGwProductList.Size = new System.Drawing.Size(1957, 503);
             this.dGwProductList.TabIndex = 2;
             this.dGwProductList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGwProductList_CellClick);
             // 
-            // label1
+            // panel1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(351, 513);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(225, 29);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Toplam Ürün Sayısı:";
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Location = new System.Drawing.Point(329, 7);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(13, 1083);
+            this.panel1.TabIndex = 1;
             // 
-            // lblCount
+            // lBxPCategory
             // 
-            this.lblCount.AutoSize = true;
-            this.lblCount.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblCount.Location = new System.Drawing.Point(595, 513);
-            this.lblCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(26, 29);
-            this.lblCount.TabIndex = 4;
-            this.lblCount.Text = "0";
-            // 
-            // gBxProductDetail
-            // 
-            this.gBxProductDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gBxProductDetail.Controls.Add(this.label3);
-            this.gBxProductDetail.Controls.Add(this.label5);
-            this.gBxProductDetail.Controls.Add(this.lblStockAmount);
-            this.gBxProductDetail.Controls.Add(this.label4);
-            this.gBxProductDetail.Controls.Add(this.lblDayPerSale);
-            this.gBxProductDetail.Controls.Add(this.label2);
-            this.gBxProductDetail.Controls.Add(this.lblProductName);
-            this.gBxProductDetail.Controls.Add(this.pBxImage);
-            this.gBxProductDetail.Location = new System.Drawing.Point(356, 546);
-            this.gBxProductDetail.Margin = new System.Windows.Forms.Padding(4);
-            this.gBxProductDetail.Name = "gBxProductDetail";
-            this.gBxProductDetail.Padding = new System.Windows.Forms.Padding(4);
-            this.gBxProductDetail.Size = new System.Drawing.Size(1943, 508);
-            this.gBxProductDetail.TabIndex = 6;
-            this.gBxProductDetail.TabStop = false;
-            this.gBxProductDetail.Text = "Ürün Detay Bilgisi";
-            this.gBxProductDetail.Visible = false;
-            // 
-            // pBxImage
-            // 
-            this.pBxImage.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pBxImage.Location = new System.Drawing.Point(1251, 19);
-            this.pBxImage.Margin = new System.Windows.Forms.Padding(4);
-            this.pBxImage.Name = "pBxImage";
-            this.pBxImage.Size = new System.Drawing.Size(688, 485);
-            this.pBxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pBxImage.TabIndex = 5;
-            this.pBxImage.TabStop = false;
-            // 
-            // lblProductName
-            // 
-            this.lblProductName.AutoSize = true;
-            this.lblProductName.Font = new System.Drawing.Font("Trebuchet MS", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblProductName.Location = new System.Drawing.Point(8, 20);
-            this.lblProductName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(178, 100);
-            this.lblProductName.TabIndex = 0;
-            this.lblProductName.Text = "null";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label2.Location = new System.Drawing.Point(8, 190);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(263, 29);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Günlük Ortalama Satış:";
-            // 
-            // lblDayPerSale
-            // 
-            this.lblDayPerSale.AutoSize = true;
-            this.lblDayPerSale.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblDayPerSale.Location = new System.Drawing.Point(313, 190);
-            this.lblDayPerSale.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblDayPerSale.Name = "lblDayPerSale";
-            this.lblDayPerSale.Size = new System.Drawing.Size(27, 29);
-            this.lblDayPerSale.TabIndex = 7;
-            this.lblDayPerSale.Text = "0";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label4.Location = new System.Drawing.Point(8, 231);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(151, 29);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Skot Miktarı:";
-            // 
-            // lblStockAmount
-            // 
-            this.lblStockAmount.AutoSize = true;
-            this.lblStockAmount.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblStockAmount.Location = new System.Drawing.Point(313, 231);
-            this.lblStockAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblStockAmount.Name = "lblStockAmount";
-            this.lblStockAmount.Size = new System.Drawing.Size(27, 29);
-            this.lblStockAmount.TabIndex = 8;
-            this.lblStockAmount.Text = "0";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label5.Location = new System.Drawing.Point(8, 145);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(296, 29);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Gün İçindeki Satış Miktarı:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label3.Location = new System.Drawing.Point(313, 146);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(27, 29);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "0";
+            this.lBxPCategory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lBxPCategory.BackColor = System.Drawing.SystemColors.Window;
+            this.lBxPCategory.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lBxPCategory.Font = new System.Drawing.Font("Trebuchet MS", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lBxPCategory.FormattingEnabled = true;
+            this.lBxPCategory.ItemHeight = 49;
+            this.lBxPCategory.Location = new System.Drawing.Point(4, 4);
+            this.lBxPCategory.Margin = new System.Windows.Forms.Padding(4);
+            this.lBxPCategory.Name = "lBxPCategory";
+            this.lBxPCategory.Size = new System.Drawing.Size(317, 931);
+            this.lBxPCategory.TabIndex = 0;
+            this.lBxPCategory.Visible = false;
+            this.lBxPCategory.SelectedIndexChanged += new System.EventHandler(this.lBxPCategory_SelectedIndexChanged);
             // 
             // tPOrder
             // 
-            this.tPOrder.Controls.Add(this.dGVOrder);
+            this.tPOrder.BackColor = System.Drawing.Color.DimGray;
+            this.tPOrder.Controls.Add(this.grBxAboutOrderDetailProcess);
             this.tPOrder.Controls.Add(this.dGVOrderDetails);
-            this.tPOrder.Controls.Add(this.panel2);
             this.tPOrder.Location = new System.Drawing.Point(25, 4);
             this.tPOrder.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tPOrder.Name = "tPOrder";
             this.tPOrder.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tPOrder.Size = new System.Drawing.Size(2317, 963);
+            this.tPOrder.Size = new System.Drawing.Size(2317, 706);
             this.tPOrder.TabIndex = 2;
-            this.tPOrder.UseVisualStyleBackColor = true;
             // 
-            // panel2
+            // grBxAboutOrderDetailProcess
             // 
-            this.panel2.Controls.Add(this.grpProcess);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(3, 476);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(2311, 485);
-            this.panel2.TabIndex = 5;
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.lblTimeMinuteInfo);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.label12);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.label11);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.label10);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.lblTimeInfo);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.lblAmountInfo);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.label9);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.lblDeskInfo);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.label8);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.label7);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.label6);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.lblProductInfoName);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.lblOrderNo);
+            this.grBxAboutOrderDetailProcess.Controls.Add(this.cmBxOrderStatus);
+            this.grBxAboutOrderDetailProcess.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.grBxAboutOrderDetailProcess.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.grBxAboutOrderDetailProcess.ForeColor = System.Drawing.Color.White;
+            this.grBxAboutOrderDetailProcess.Location = new System.Drawing.Point(3, 364);
+            this.grBxAboutOrderDetailProcess.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grBxAboutOrderDetailProcess.Name = "grBxAboutOrderDetailProcess";
+            this.grBxAboutOrderDetailProcess.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grBxAboutOrderDetailProcess.Size = new System.Drawing.Size(2311, 340);
+            this.grBxAboutOrderDetailProcess.TabIndex = 4;
+            this.grBxAboutOrderDetailProcess.TabStop = false;
+            this.grBxAboutOrderDetailProcess.Text = "Sipariş İşlemleri";
             // 
-            // grpProcess
+            // lblTimeMinuteInfo
             // 
-            this.grpProcess.Controls.Add(this.label6);
-            this.grpProcess.Controls.Add(this.textBox1);
-            this.grpProcess.Controls.Add(this.btnDetailSale);
-            this.grpProcess.Controls.Add(this.btnDoSale);
-            this.grpProcess.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grpProcess.Location = new System.Drawing.Point(0, 0);
-            this.grpProcess.Margin = new System.Windows.Forms.Padding(4);
-            this.grpProcess.Name = "grpProcess";
-            this.grpProcess.Padding = new System.Windows.Forms.Padding(4);
-            this.grpProcess.Size = new System.Drawing.Size(2311, 485);
-            this.grpProcess.TabIndex = 0;
-            this.grpProcess.TabStop = false;
-            this.grpProcess.Text = "İşlemler";
+            this.lblTimeMinuteInfo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblTimeMinuteInfo.AutoSize = true;
+            this.lblTimeMinuteInfo.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTimeMinuteInfo.Location = new System.Drawing.Point(249, 299);
+            this.lblTimeMinuteInfo.Name = "lblTimeMinuteInfo";
+            this.lblTimeMinuteInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lblTimeMinuteInfo.Size = new System.Drawing.Size(65, 35);
+            this.lblTimeMinuteInfo.TabIndex = 13;
+            this.lblTimeMinuteInfo.Text = "Null";
             // 
-            // btnDoSale
+            // label12
             // 
-            this.btnDoSale.Enabled = false;
-            this.btnDoSale.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDoSale.Location = new System.Drawing.Point(29, 91);
-            this.btnDoSale.Margin = new System.Windows.Forms.Padding(4);
-            this.btnDoSale.Name = "btnDoSale";
-            this.btnDoSale.Size = new System.Drawing.Size(336, 37);
-            this.btnDoSale.TabIndex = 0;
-            this.btnDoSale.Text = "Satış Yap";
-            this.btnDoSale.UseVisualStyleBackColor = true;
+            this.label12.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label12.Location = new System.Drawing.Point(20, 299);
+            this.label12.Name = "label12";
+            this.label12.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label12.Size = new System.Drawing.Size(230, 35);
+            this.label12.TabIndex = 12;
+            this.label12.Text = "Zaman Farkı(dk):";
             // 
-            // btnDetailSale
+            // label11
             // 
-            this.btnDetailSale.Enabled = false;
-            this.btnDetailSale.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDetailSale.Location = new System.Drawing.Point(29, 135);
-            this.btnDetailSale.Margin = new System.Windows.Forms.Padding(4);
-            this.btnDetailSale.Name = "btnDetailSale";
-            this.btnDetailSale.Size = new System.Drawing.Size(336, 37);
-            this.btnDetailSale.TabIndex = 1;
-            this.btnDetailSale.Text = "Satış Ayrıntıları";
-            this.btnDetailSale.UseVisualStyleBackColor = true;
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label11.Location = new System.Drawing.Point(1973, 21);
+            this.label11.Name = "label11";
+            this.label11.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label11.Size = new System.Drawing.Size(217, 35);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Sipariş Durumu:";
             // 
-            // textBox1
+            // label10
             // 
-            this.textBox1.Location = new System.Drawing.Point(29, 59);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(335, 22);
-            this.textBox1.TabIndex = 2;
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label10.Location = new System.Drawing.Point(20, 39);
+            this.label10.Name = "label10";
+            this.label10.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label10.Size = new System.Drawing.Size(107, 35);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "Zaman:";
+            // 
+            // lblTimeInfo
+            // 
+            this.lblTimeInfo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblTimeInfo.AutoSize = true;
+            this.lblTimeInfo.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTimeInfo.Location = new System.Drawing.Point(146, 39);
+            this.lblTimeInfo.Name = "lblTimeInfo";
+            this.lblTimeInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lblTimeInfo.Size = new System.Drawing.Size(65, 35);
+            this.lblTimeInfo.TabIndex = 9;
+            this.lblTimeInfo.Text = "Null";
+            // 
+            // lblAmountInfo
+            // 
+            this.lblAmountInfo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblAmountInfo.AutoSize = true;
+            this.lblAmountInfo.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblAmountInfo.Location = new System.Drawing.Point(146, 147);
+            this.lblAmountInfo.Name = "lblAmountInfo";
+            this.lblAmountInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lblAmountInfo.Size = new System.Drawing.Size(65, 35);
+            this.lblAmountInfo.TabIndex = 8;
+            this.lblAmountInfo.Text = "Null";
+            // 
+            // label9
+            // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label9.Location = new System.Drawing.Point(37, 184);
+            this.label9.Name = "label9";
+            this.label9.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label9.Size = new System.Drawing.Size(85, 35);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Masa:";
+            // 
+            // lblDeskInfo
+            // 
+            this.lblDeskInfo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblDeskInfo.AutoSize = true;
+            this.lblDeskInfo.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblDeskInfo.Location = new System.Drawing.Point(146, 184);
+            this.lblDeskInfo.Name = "lblDeskInfo";
+            this.lblDeskInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lblDeskInfo.Size = new System.Drawing.Size(65, 35);
+            this.lblDeskInfo.TabIndex = 6;
+            this.lblDeskInfo.Text = "Null";
+            // 
+            // label8
+            // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label8.Location = new System.Drawing.Point(39, 147);
+            this.label8.Name = "label8";
+            this.label8.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label8.Size = new System.Drawing.Size(86, 35);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Adet:";
+            // 
+            // label7
+            // 
+            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label7.Location = new System.Drawing.Point(37, 111);
+            this.label7.Name = "label7";
+            this.label7.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label7.Size = new System.Drawing.Size(87, 35);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Ürün:";
             // 
             // label6
             // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(29, 36);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label6.Location = new System.Drawing.Point(58, 75);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(28, 17);
+            this.label6.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label6.Size = new System.Drawing.Size(58, 35);
             this.label6.TabIndex = 3;
-            this.label6.Text = "Bul";
+            this.label6.Text = "No:";
+            // 
+            // lblProductInfoName
+            // 
+            this.lblProductInfoName.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblProductInfoName.AutoSize = true;
+            this.lblProductInfoName.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblProductInfoName.Location = new System.Drawing.Point(146, 111);
+            this.lblProductInfoName.Name = "lblProductInfoName";
+            this.lblProductInfoName.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lblProductInfoName.Size = new System.Drawing.Size(65, 35);
+            this.lblProductInfoName.TabIndex = 2;
+            this.lblProductInfoName.Text = "Null";
+            // 
+            // lblOrderNo
+            // 
+            this.lblOrderNo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblOrderNo.AutoSize = true;
+            this.lblOrderNo.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblOrderNo.Location = new System.Drawing.Point(146, 75);
+            this.lblOrderNo.Name = "lblOrderNo";
+            this.lblOrderNo.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lblOrderNo.Size = new System.Drawing.Size(65, 35);
+            this.lblOrderNo.TabIndex = 1;
+            this.lblOrderNo.Text = "Null";
+            // 
+            // cmBxOrderStatus
+            // 
+            this.cmBxOrderStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmBxOrderStatus.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cmBxOrderStatus.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cmBxOrderStatus.Font = new System.Drawing.Font("Trebuchet MS", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.cmBxOrderStatus.FormattingEnabled = true;
+            this.cmBxOrderStatus.Location = new System.Drawing.Point(1978, 67);
+            this.cmBxOrderStatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmBxOrderStatus.Name = "cmBxOrderStatus";
+            this.cmBxOrderStatus.Size = new System.Drawing.Size(327, 43);
+            this.cmBxOrderStatus.TabIndex = 0;
+            this.cmBxOrderStatus.SelectedIndexChanged += new System.EventHandler(this.cmBxOrderStatus_SelectedIndexChanged);
             // 
             // dGVOrderDetails
             // 
             this.dGVOrderDetails.AllowUserToAddRows = false;
             this.dGVOrderDetails.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
-            this.dGVOrderDetails.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
-            this.dGVOrderDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
+            this.dGVOrderDetails.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            this.dGVOrderDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dGVOrderDetails.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dGVOrderDetails.BackgroundColor = System.Drawing.Color.White;
             this.dGVOrderDetails.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dGVOrderDetails.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dGVOrderDetails.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(25)))), ((int)(((byte)(72)))));
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dGVOrderDetails.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
-            this.dGVOrderDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.DarkTurquoise;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dGVOrderDetails.DefaultCellStyle = dataGridViewCellStyle15;
-            this.dGVOrderDetails.EnableHeadersVisualStyles = false;
-            this.dGVOrderDetails.Location = new System.Drawing.Point(1152, 0);
-            this.dGVOrderDetails.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dGVOrderDetails.Name = "dGVOrderDetails";
-            this.dGVOrderDetails.ReadOnly = true;
-            this.dGVOrderDetails.RowHeadersWidth = 51;
-            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black;
-            this.dGVOrderDetails.RowsDefaultCellStyle = dataGridViewCellStyle16;
-            this.dGVOrderDetails.RowTemplate.Height = 24;
-            this.dGVOrderDetails.Size = new System.Drawing.Size(1157, 468);
-            this.dGVOrderDetails.TabIndex = 4;
-            // 
-            // dGVOrder
-            // 
-            this.dGVOrder.AllowUserToAddRows = false;
-            this.dGVOrder.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
-            this.dGVOrder.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
-            this.dGVOrder.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dGVOrder.BackgroundColor = System.Drawing.Color.White;
-            this.dGVOrder.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dGVOrder.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dGVOrder.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(25)))), ((int)(((byte)(72)))));
             dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -616,28 +729,40 @@
             dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dGVOrder.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
-            this.dGVOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dGVOrderDetails.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            this.dGVOrderDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.DarkTurquoise;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.Black;
             dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             dataGridViewCellStyle11.ForeColor = System.Drawing.Color.WhiteSmoke;
             dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dGVOrder.DefaultCellStyle = dataGridViewCellStyle11;
-            this.dGVOrder.EnableHeadersVisualStyles = false;
-            this.dGVOrder.Location = new System.Drawing.Point(0, 0);
-            this.dGVOrder.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dGVOrder.Name = "dGVOrder";
-            this.dGVOrder.ReadOnly = true;
-            this.dGVOrder.RowHeadersWidth = 51;
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
-            this.dGVOrder.RowsDefaultCellStyle = dataGridViewCellStyle12;
-            this.dGVOrder.RowTemplate.Height = 24;
-            this.dGVOrder.Size = new System.Drawing.Size(1148, 468);
-            this.dGVOrder.TabIndex = 3;
-            this.dGVOrder.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGVOrder_CellClick);
+            this.dGVOrderDetails.DefaultCellStyle = dataGridViewCellStyle11;
+            this.dGVOrderDetails.EnableHeadersVisualStyles = false;
+            this.dGVOrderDetails.Location = new System.Drawing.Point(3, 2);
+            this.dGVOrderDetails.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dGVOrderDetails.Name = "dGVOrderDetails";
+            this.dGVOrderDetails.ReadOnly = true;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dGVOrderDetails.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            this.dGVOrderDetails.RowHeadersWidth = 51;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.Control;
+            this.dGVOrderDetails.RowsDefaultCellStyle = dataGridViewCellStyle13;
+            this.dGVOrderDetails.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
+            this.dGVOrderDetails.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.SystemColors.Control;
+            this.dGVOrderDetails.RowTemplate.Height = 24;
+            this.dGVOrderDetails.Size = new System.Drawing.Size(2311, 358);
+            this.dGVOrderDetails.TabIndex = 3;
+            this.dGVOrderDetails.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGVOrder_CellClick);
+            this.dGVOrderDetails.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dGVOrderDetails_CellFormatting);
             // 
             // tPDesk
             // 
@@ -647,7 +772,7 @@
             this.tPDesk.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tPDesk.Name = "tPDesk";
             this.tPDesk.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tPDesk.Size = new System.Drawing.Size(2317, 963);
+            this.tPDesk.Size = new System.Drawing.Size(2317, 706);
             this.tPDesk.TabIndex = 1;
             // 
             // tCMain
@@ -662,8 +787,29 @@
             this.tCMain.Multiline = true;
             this.tCMain.Name = "tCMain";
             this.tCMain.SelectedIndex = 0;
-            this.tCMain.Size = new System.Drawing.Size(2346, 971);
+            this.tCMain.Size = new System.Drawing.Size(2346, 714);
             this.tCMain.TabIndex = 19;
+            // 
+            // timerLoadOrderDetails
+            // 
+            this.timerLoadOrderDetails.Interval = 400;
+            this.timerLoadOrderDetails.Tick += new System.EventHandler(this.timerLoadOrderDetails_Tick);
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel2.Location = new System.Drawing.Point(193, 5);
+            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(25, 762);
+            this.panel2.TabIndex = 21;
+            // 
+            // timerNow
+            // 
+            this.timerNow.Enabled = true;
+            this.timerNow.Interval = 1000;
+            this.timerNow.Tick += new System.EventHandler(this.timerNow_Tick);
             // 
             // Menu
             // 
@@ -671,7 +817,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
-            this.ClientSize = new System.Drawing.Size(2549, 1088);
+            this.ClientSize = new System.Drawing.Size(2549, 884);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.tCMain);
             this.Controls.Add(this.pnlCompany);
             this.Controls.Add(this.menuLeft);
@@ -693,16 +840,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dGSale)).EndInit();
             this.tPStock.ResumeLayout(false);
             this.tPStock.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dGwProductList)).EndInit();
             this.gBxProductDetail.ResumeLayout(false);
             this.gBxProductDetail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pBxImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dGwProductList)).EndInit();
             this.tPOrder.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.grpProcess.ResumeLayout(false);
-            this.grpProcess.PerformLayout();
+            this.grBxAboutOrderDetailProcess.ResumeLayout(false);
+            this.grBxAboutOrderDetailProcess.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGVOrderDetails)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dGVOrder)).EndInit();
             this.tCMain.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -736,15 +881,27 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ListBox lBxPCategory;
         private System.Windows.Forms.TabPage tPOrder;
-        private System.Windows.Forms.DataGridView dGVOrder;
         private System.Windows.Forms.DataGridView dGVOrderDetails;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.GroupBox grpProcess;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button btnDetailSale;
-        private System.Windows.Forms.Button btnDoSale;
         private System.Windows.Forms.TabPage tPDesk;
         private System.Windows.Forms.TabControl tCMain;
+        private System.Windows.Forms.GroupBox grBxAboutOrderDetailProcess;
+        private System.Windows.Forms.Timer timerLoadOrderDetails;
+        private System.Windows.Forms.Label lblOrderNo;
+        private System.Windows.Forms.ComboBox cmBxOrderStatus;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lblProductInfoName;
+        private System.Windows.Forms.Label lblDeskInfo;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblAmountInfo;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lblTimeInfo;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lblTimeNow;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lblTimeMinuteInfo;
+        private System.Windows.Forms.Timer timerNow;
     }
 }

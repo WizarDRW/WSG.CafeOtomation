@@ -69,6 +69,48 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
     }
     public class EfOrderDetailDal : EfEntityRepositoryBase<OrderDetail, CafeContext>, IOrderDetailDal
     {
+        public List<OrderAllDetailsDto> GetListAllOrders(Expression<Func<OrderDetail, bool>> filter = null)
+        {
+            using (CafeContext context = new CafeContext())
+            {
+                return filter == null ?
+                    (from o in context.OrderDetails
+                     join p in context.Products
+                     on o.ProductID equals p.ID
+                     join or in context.Orders
+                     on o.OrderID equals or.ID
+                     select new OrderAllDetailsDto
+                     {
+                         ID = o.ID,
+                         OrderNo = o.OrderID,
+                         Product = p.Name,
+                         DeskNo = or.Desk.DeskNo,
+                         Amount = o.Amount,
+                         TotalPrice = o.TotalPrice,
+                         EOrderStatus = o.EOrderStatus,
+                         CreateTime = o.CreateDate.ToString("HH:mm:ss")
+
+                     }).ToList()
+                    :
+                    (from o in context.OrderDetails.Where(filter)
+                     join p in context.Products
+                     on o.ProductID equals p.ID
+                     join or in context.Orders
+                     on o.OrderID equals or.ID
+                     select new OrderAllDetailsDto
+                     {
+                         ID = o.ID,
+                         OrderNo = o.OrderID,
+                         Product = p.Name,
+                         DeskNo = or.Desk.DeskNo,
+                         Amount = o.Amount,
+                         TotalPrice = o.TotalPrice,
+                         EOrderStatus = o.EOrderStatus,
+                         CreateTime = o.CreateDate.ToString("HH:mm:ss")
+                     }).ToList();
+            }
+        }
+
         public OrderDetailsDto GetOrderDetailDto(Expression<Func<OrderDetail, bool>> filter)
         {
             throw new NotImplementedException();
@@ -88,7 +130,9 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          Product = p.Name,
                          Amount = o.Amount,
                          TotalPrice = o.TotalPrice,
-                         IsComplete = o.IsComplete
+                         EOrderStatus = o.EOrderStatus,
+                         ProductID = p.ID,
+                         CreateTime = o.CreateDate.ToString("HH:mm:ss")
                      }).ToList()
                     :
                     (from o in context.OrderDetails.Where(filter)
@@ -100,9 +144,15 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          Product = p.Name,
                          Amount = o.Amount,
                          TotalPrice = o.TotalPrice,
-                         IsComplete = o.IsComplete
+                         EOrderStatus = o.EOrderStatus,
+                         ProductID = p.ID,
+                         CreateTime = o.CreateDate.ToString("HH:mm:ss")
                      }).ToList();
             }
         }
+    }
+    public class EfOrderDetailTimeLogDal : EfEntityRepositoryBase<OrderDetailTimeLog, CafeContext>, IOrderDetailTimeLogDal
+    {
+
     }
 }

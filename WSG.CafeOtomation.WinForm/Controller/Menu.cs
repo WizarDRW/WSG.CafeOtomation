@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WSG.CafeOtomation.Business.Abstract;
@@ -18,6 +14,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
 {
     public partial class Menu : Form
     {
+        private DateTime _nowTime;
         private User _user;
         private IProductCategoryService _productCategoryService;
         private IProductService _productService;
@@ -25,6 +22,8 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private IDeskService _deskService;
         private IOrderService _orderService;
         private IOrderDetailService _orderDetailService;
+        private IUserTitleService _userTitleService;
+        private IOrderDetailTimeLogService _orderDetailTimeLogService;
         public Menu(User user)
         {
             InitializeComponent();
@@ -35,6 +34,8 @@ namespace WSG.CafeOtomation.WinForm.Controller
             _deskService = new DeskManager(new EfDeskDal());
             _orderService = new OrderManager(new EfOrderDal());
             _orderDetailService = new OrderDetailManager(new EfOrderDetailDal());
+            _userTitleService = new UserTitleManager(new EfUserTitleDal());
+            _orderDetailTimeLogService = new OrderDetailTimeLogManager(new EfOrderDetailTimeLogDal());
 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
             this.AutoScaleMode = AutoScaleMode.Font;
@@ -64,6 +65,16 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 tPDesk.Controls.Add(button);
             }
         }
+        private void Button_Click(object sender, EventArgs e)
+        {
+            Button button;
+            button = sender as Button;
+            var data = _deskService.GetByNo(button.Text).Data;
+            DeskMenu desk = new DeskMenu(data, _user, _userTitleService, _orderDetailTimeLogService);
+            desk.ShowDialog();
+            int id = _deskService.GetByNo(button.Text).Data.ID;
+            ButtonColor(button, id);
+        }
         private void ButtonColor(Button button, int id)
         {
             var data = _orderService.GetByDesk(id).Data.Where(c => !c.IsClose);
@@ -80,26 +91,40 @@ namespace WSG.CafeOtomation.WinForm.Controller
         }
         public void OrderList()
         {
-            dGVOrder.DataSource = _orderService.GetAll(x => !x.IsClose).Data;
+            dGVOrderDetails.DataSource = _orderDetailService.GetOrderDetailAll(x => x.EOrderStatus != (OrderStatus)3).Data;
+            dGVOrderDetails.Columns["ID"].Visible = false;
+        }
+        public void AccessControl()
+        {
+            var access = _userTitleService.GetByUserID(_user.ID);
+            if (access.Data.AccessAuth == (AccessAuth)5)
+            {
+                tSOrder.Enabled = false;
+                grBxAboutOrderDetailProcess.Enabled = false;
+            }
         }
 
         #region Events
         private void Menu_Load(object sender, EventArgs e)
         {
+            AccessControl();
+            try
+            {
+                OrderList();
+                dGVOrderDetails.CurrentCell = dGVOrderDetails[0, 1];
+                timerLoadOrderDetails.Enabled = true;
+            }
+            catch
+            {
+            }
             foreach (var pC in _productCategoryService.GetAll().Data)
             {
                 lBxPCategory.Items.Add(pC.Name);
             }
-        }
-        private void Button_Click(object sender, EventArgs e)
-        {
-            Button button;
-            button = sender as Button;
-            var data = _deskService.GetByNo(button.Text).Data;
-            DeskMenu desk = new DeskMenu(data, _user);
-            desk.ShowDialog();
-            int id = _deskService.GetByNo(button.Text).Data.ID;
-            ButtonColor(button, id);
+
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoSize = true;
         }
         private void lBxPCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -123,10 +148,150 @@ namespace WSG.CafeOtomation.WinForm.Controller
         }
         private void dGVOrder_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = int.Parse(dGVOrder.CurrentRow.Cells["ID"].Value.ToString());
-            dGVOrderDetails.DataSource = _orderDetailService.GetAll(x => x.OrderID == id).Data;
-            btnDoSale.Enabled = true;
-            btnDetailSale.Enabled = true;
+            if (dGVOrderDetails.Rows.Count == 0)
+            {
+                return;
+            }
+            int id = int.Parse(dGVOrderDetails.CurrentRow.Cells["ID"].Value.ToString());
+            lblOrderNo.Text = dGVOrderDetails.CurrentRow.Cells["ID"].Value.ToString();
+            lblProductInfoName.Text = dGVOrderDetails.CurrentRow.Cells["Product"].Value.ToString();
+            lblDeskInfo.Text = dGVOrderDetails.CurrentRow.Cells["DeskNo"].Value.ToString();
+            lblAmountInfo.Text = dGVOrderDetails.CurrentRow.Cells["Amount"].Value.ToString();
+            lblTimeInfo.Text = dGVOrderDetails.CurrentRow.Cells["CreateTime"].Value.ToString();
+            if ((OrderStatus)dGVOrderDetails.CurrentRow.Cells["EOrderStatus"].Value == OrderStatus.Waiting)
+            {
+                cmBxOrderStatus.Items.Remove(OrderStatus.AtWaiters);
+                if (!cmBxOrderStatus.Items.Contains(OrderStatus.Waiting))
+                {
+                    cmBxOrderStatus.Items.Add(OrderStatus.Waiting);
+                }
+                if (!cmBxOrderStatus.Items.Contains(OrderStatus.Prepares))
+                {
+                    cmBxOrderStatus.Items.Add(OrderStatus.Prepares);
+                }
+            }
+            else if ((OrderStatus)dGVOrderDetails.CurrentRow.Cells["EOrderStatus"].Value == OrderStatus.Prepares)
+            {
+                cmBxOrderStatus.Items.Remove(OrderStatus.Waiting);
+                if (!cmBxOrderStatus.Items.Contains(OrderStatus.Prepares))
+                {
+                    cmBxOrderStatus.Items.Add(OrderStatus.Prepares);
+                }
+                if (!cmBxOrderStatus.Items.Contains(OrderStatus.AtWaiters))
+                {
+                    cmBxOrderStatus.Items.Add(OrderStatus.AtWaiters);
+                }
+            }
+            else
+            {
+                cmBxOrderStatus.Items.Remove(OrderStatus.Prepares);
+                if (!cmBxOrderStatus.Items.Contains(OrderStatus.AtWaiters))
+                {
+                    cmBxOrderStatus.Items.Add(OrderStatus.AtWaiters);
+                }
+            }
+            cmBxOrderStatus.SelectedItem = dGVOrderDetails.CurrentRow.Cells["EOrderStatus"].Value;
+            timerLoadOrderDetails.Enabled = true;
+        }
+        private void dGVOrderDetails_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            dGVOrderDetails.Columns["TotalPrice"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dGVOrderDetails.Columns["TotalPrice"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dGVOrderDetails.Columns["TotalPrice"].HeaderCell.Style.Font = new Font("Tahoma", 9.75F, FontStyle.Bold);
+            dGVOrderDetails.Columns["TotalPrice"].DefaultCellStyle.Font = new Font("Tahoma", 9.75F, FontStyle.Bold);
+            dGVOrderDetails.Columns["TotalPrice"].DefaultCellStyle.Format = "#.00 ₺";
+            foreach (DataGridViewRow row in dGVOrderDetails.Rows)
+            {
+                if (Convert.ToInt32(row.Cells["EOrderStatus"].Value) == 0)
+                {
+                    row.DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+                    row.DefaultCellStyle.ForeColor = Color.Black;
+                }
+                else if (Convert.ToInt32(row.Cells["EOrderStatus"].Value) == 1)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Orange;
+                    row.DefaultCellStyle.ForeColor = Color.Black;
+                }
+                else if (Convert.ToInt32(row.Cells["EOrderStatus"].Value) == 2)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Blue;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
+            }
+        }
+        private void timerLoadOrderDetails_Tick(object sender, EventArgs e)
+        {
+            _nowTime = DateTime.Now;
+            int scroll = dGVOrderDetails.FirstDisplayedScrollingRowIndex;
+            if (dGVOrderDetails.Rows.Count == 0)
+            {
+                return;
+            }
+            int i = dGVOrderDetails.CurrentCell.RowIndex;
+            int r = dGVOrderDetails.CurrentCell.ColumnIndex;
+            OrderList();
+            try
+            {
+                TimeSpan span = _nowTime.Subtract(DateTime.ParseExact(dGVOrderDetails.Rows[i].Cells["CreateTime"].Value.ToString(), "HH:mm:ss", null));
+                lblTimeMinuteInfo.Text = span.Minutes.ToString("0 dk");
+                dGVOrderDetails.CurrentCell = dGVOrderDetails.Rows[i].Cells[r];
+                dGVOrderDetails.FirstDisplayedScrollingRowIndex = scroll;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                dGVOrderDetails.CurrentCell = dGVOrderDetails.Rows[i - 1].Cells[r];
+                dGVOrderDetails.FirstDisplayedScrollingRowIndex = 0;
+            }
+            catch (NullReferenceException) { }
+            catch { }
+            finally
+            {
+            }
+        }
+        private void timerNow_Tick(object sender, EventArgs e)
+        {
+            _nowTime = DateTime.Now;
+            lblTimeNow.Text = _nowTime.ToString("dddd dd/MM HH:mm ");
+        }
+        private void cmBxOrderStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _nowTime = DateTime.Now;
+            TimeSpan begintoSpan = _nowTime.Subtract(DateTime.ParseExact(dGVOrderDetails.CurrentRow.Cells["CreateTime"].Value.ToString(), "HH:mm:ss", null));
+            int id = (int)dGVOrderDetails.CurrentRow.Cells["ID"].Value;
+            var data = _orderDetailService.GetBy(x => x.ID == id).Data;
+            if (data.EOrderStatus != (OrderStatus)cmBxOrderStatus.SelectedItem)
+            {
+                if ((OrderStatus)cmBxOrderStatus.SelectedItem == OrderStatus.Prepares)
+                {
+                    var log = new OrderDetailTimeLog
+                    {
+                        UserID = _user.ID,
+                        OrderStatus = OrderStatus.Waiting,
+                        OrderDetailID = id,
+                        Minute = begintoSpan.Minutes.ToString("0") + ':' + begintoSpan.Seconds.ToString("00")
+                    };
+                    _orderDetailTimeLogService.Add(log);
+                    cmBxOrderStatus.Items.Remove(OrderStatus.Waiting);
+                    cmBxOrderStatus.Items.Add(OrderStatus.AtWaiters);
+
+                }
+                else if ((OrderStatus)cmBxOrderStatus.SelectedItem == OrderStatus.AtWaiters)
+                {
+                    var minute = _orderDetailTimeLogService.GetBy(x => x.OrderDetailID == data.ID && x.OrderStatus == OrderStatus.Waiting).Data.Minute;
+                    begintoSpan = begintoSpan.Subtract(TimeSpan.ParseExact(minute, @"%m\:ss", CultureInfo.InvariantCulture));
+                    var log = new OrderDetailTimeLog
+                    {
+                        UserID = _user.ID,
+                        OrderStatus = OrderStatus.Prepares,
+                        OrderDetailID = id,
+                        Minute = begintoSpan.Minutes.ToString("0") + ':' + begintoSpan.Seconds.ToString("00")
+                    };
+                    _orderDetailTimeLogService.Add(log);
+                    cmBxOrderStatus.Items.Remove(OrderStatus.Prepares);
+                }
+                data.EOrderStatus = (OrderStatus)cmBxOrderStatus.SelectedItem;
+                _orderDetailService.Update(data);
+            }
         }
 
         #region Buttons
@@ -159,6 +324,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             }
         }
         #endregion
+
         #endregion
     }
 }

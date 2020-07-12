@@ -97,4 +97,44 @@ namespace WSG.CafeOtomation.Business.Concrete
             return new SuccessDataResult<Title>(_titleDal.Get(x => x.Name == name));
         }
     }
+    public class UserTitleManager : IUserTitleService
+    {
+        private IUserTitleDal _userTitleDal;
+        public UserTitleManager(IUserTitleDal userTitleDal)
+        {
+            _userTitleDal = userTitleDal;
+        }
+        public IResult Add(UserTitle title)
+        {
+            _userTitleDal.Add(title);
+            return new SuccessResult(UserTitleMessages.Added);
+        }
+
+        public IResult Update(UserTitle title)
+        {
+            _userTitleDal.Update(title);
+            return new SuccessResult(UserTitleMessages.Updated);
+        }
+
+        public IResult Delete(UserTitle title)
+        {
+            _userTitleDal.Delete(title);
+            return new SuccessResult(UserTitleMessages.Deleted);
+        }
+
+        public IDataResult<List<UserTitle>> GetAll()
+        {
+            return new SuccessDataResult<List<UserTitle>>(_userTitleDal.GetList());
+        }
+
+        public IDataResult<UserTitle> GetByID(int id)
+        {
+            return new SuccessDataResult<UserTitle>(_userTitleDal.Get(x => x.ID == id));
+        }
+
+        public IDataResult<UserTitle> GetByUserID(int id)
+        {
+            return new SuccessDataResult<UserTitle>(_userTitleDal.Get(x => x.UserID == id));
+        }
+    }
 }

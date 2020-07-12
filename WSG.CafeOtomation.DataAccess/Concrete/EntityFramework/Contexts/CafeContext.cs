@@ -9,6 +9,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySQL("server=localhost;user id=root;Password=Wizard911078;persistsecurityinfo=True;database=cafe");
+            //optionsBuilder.UseMySQL("server=89.252.184.103;port=3307;user id=wnokroot;password=Wizard911078;database=cafe;persistsecurityinfo=True");
         }
         public DbSet<User> Users { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
@@ -23,6 +24,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<ProductDetail> ProductDetails { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<OrderDetailTimeLog> OrderDetailTimeLogs { get; set; }
         public DbSet<Desk> Desks { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }

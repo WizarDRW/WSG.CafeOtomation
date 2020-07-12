@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using WSG.CafeOtomation.Entities.Concrete;
 
 namespace WSG.CafeOtomation.Entities.Dtos
 {
@@ -37,6 +38,29 @@ namespace WSG.CafeOtomation.Entities.Dtos
         [DisplayName("Toplam")]
         public decimal TotalPrice { get; set; }
         [DisplayName("Sipariş Durumu")]
-        public bool IsComplete { get; set; }
+        public OrderStatus EOrderStatus { get; set; }
+        [DisplayName("Ürün No")]
+        public int ProductID { get; set; }
+        [DisplayName("Sipariş Oluşturulma Zamanı")]
+        public string CreateTime { get; set; }
+    }
+    public class OrderAllDetailsDto
+    {
+        [DisplayName("Sipariş Numarası")]
+        public int ID { get; set; }
+        [DisplayName("Fiş Numarası")]
+        public int OrderNo { get; set; }
+        [DisplayName("Ürün")]
+        public string Product { get; set; }
+        [DisplayName("Masa")]
+        public string DeskNo { get; set; }
+        [DisplayName("Adet")]
+        public int Amount { get; set; }
+        [DisplayName("Toplam")]
+        public decimal TotalPrice { get; set; }
+        [DisplayName("Sipariş Durumu")]
+        public OrderStatus EOrderStatus { get; set; }
+        [DisplayName("Sipariş Oluşturulma Zamanı")]
+        public string CreateTime { get; set; }
     }
 }

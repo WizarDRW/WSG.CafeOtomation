@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.tVProducts = new System.Windows.Forms.TreeView();
@@ -54,6 +55,7 @@
             this.pnlControl = new System.Windows.Forms.Panel();
             this.btnSuccessOrder = new System.Windows.Forms.Button();
             this.lblUnitPrice = new System.Windows.Forms.Label();
+            this.timerOrderList = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dGWOrders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUDPay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUDAmount)).BeginInit();
@@ -69,7 +71,7 @@
             this.lblTitle.Location = new System.Drawing.Point(16, 30);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(0, 36);
+            this.lblTitle.Size = new System.Drawing.Size(0, 24);
             this.lblTitle.TabIndex = 0;
             // 
             // btnExit
@@ -109,18 +111,18 @@
             this.dGWOrders.Margin = new System.Windows.Forms.Padding(4);
             this.dGWOrders.Name = "dGWOrders";
             this.dGWOrders.ReadOnly = true;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dGWOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dGWOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dGWOrders.RowHeadersWidth = 51;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.Control;
-            this.dGWOrders.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.Control;
+            this.dGWOrders.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dGWOrders.Size = new System.Drawing.Size(799, 647);
             this.dGWOrders.TabIndex = 4;
             this.dGWOrders.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGWOrders_CellClick);
@@ -134,7 +136,7 @@
             this.txtBxFind.Location = new System.Drawing.Point(21, 79);
             this.txtBxFind.Margin = new System.Windows.Forms.Padding(4);
             this.txtBxFind.Name = "txtBxFind";
-            this.txtBxFind.Size = new System.Drawing.Size(351, 31);
+            this.txtBxFind.Size = new System.Drawing.Size(351, 26);
             this.txtBxFind.TabIndex = 5;
             this.txtBxFind.TextChanged += new System.EventHandler(this.txtBxFind_TextChanged);
             // 
@@ -143,7 +145,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.Font = new System.Drawing.Font("Trebuchet MS", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(12, 156);
+            this.label1.Location = new System.Drawing.Point(12, 138);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(238, 43);
@@ -156,7 +158,7 @@
             this.lblTotalPay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTotalPay.Font = new System.Drawing.Font("Trebuchet MS", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblTotalPay.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblTotalPay.Location = new System.Drawing.Point(284, 156);
+            this.lblTotalPay.Location = new System.Drawing.Point(284, 138);
             this.lblTotalPay.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotalPay.Name = "lblTotalPay";
             this.lblTotalPay.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -170,7 +172,7 @@
             this.lblChange.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblChange.Font = new System.Drawing.Font("Trebuchet MS", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblChange.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblChange.Location = new System.Drawing.Point(284, 97);
+            this.lblChange.Location = new System.Drawing.Point(284, 79);
             this.lblChange.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblChange.Name = "lblChange";
             this.lblChange.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -184,7 +186,7 @@
             this.lblChangeTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblChangeTitle.Font = new System.Drawing.Font("Trebuchet MS", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblChangeTitle.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblChangeTitle.Location = new System.Drawing.Point(20, 100);
+            this.lblChangeTitle.Location = new System.Drawing.Point(20, 82);
             this.lblChangeTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblChangeTitle.Name = "lblChangeTitle";
             this.lblChangeTitle.Size = new System.Drawing.Size(230, 43);
@@ -198,10 +200,10 @@
             this.btnPayCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnPayCustomer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnPayCustomer.ForeColor = System.Drawing.Color.White;
-            this.btnPayCustomer.Location = new System.Drawing.Point(274, 225);
+            this.btnPayCustomer.Location = new System.Drawing.Point(12, 278);
             this.btnPayCustomer.Margin = new System.Windows.Forms.Padding(4);
             this.btnPayCustomer.Name = "btnPayCustomer";
-            this.btnPayCustomer.Size = new System.Drawing.Size(239, 140);
+            this.btnPayCustomer.Size = new System.Drawing.Size(493, 52);
             this.btnPayCustomer.TabIndex = 12;
             this.btnPayCustomer.Text = "Ödeme Yapılmadı Hesabı Müsteriye Yaz";
             this.btnPayCustomer.UseVisualStyleBackColor = false;
@@ -213,10 +215,10 @@
             this.btnPaySuccess.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnPaySuccess.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnPaySuccess.ForeColor = System.Drawing.Color.White;
-            this.btnPaySuccess.Location = new System.Drawing.Point(12, 225);
+            this.btnPaySuccess.Location = new System.Drawing.Point(12, 218);
             this.btnPaySuccess.Margin = new System.Windows.Forms.Padding(4);
             this.btnPaySuccess.Name = "btnPaySuccess";
-            this.btnPaySuccess.Size = new System.Drawing.Size(239, 140);
+            this.btnPaySuccess.Size = new System.Drawing.Size(494, 52);
             this.btnPaySuccess.TabIndex = 13;
             this.btnPaySuccess.Text = "Ödeme Yapıldı Masayı Kapat";
             this.btnPaySuccess.UseVisualStyleBackColor = false;
@@ -228,7 +230,7 @@
             this.nUDPay.DecimalPlaces = 2;
             this.nUDPay.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.nUDPay.ForeColor = System.Drawing.SystemColors.Control;
-            this.nUDPay.Location = new System.Drawing.Point(267, 36);
+            this.nUDPay.Location = new System.Drawing.Point(267, 18);
             this.nUDPay.Margin = new System.Windows.Forms.Padding(4);
             this.nUDPay.Maximum = new decimal(new int[] {
             100000,
@@ -236,7 +238,7 @@
             0,
             0});
             this.nUDPay.Name = "nUDPay";
-            this.nUDPay.Size = new System.Drawing.Size(204, 46);
+            this.nUDPay.Size = new System.Drawing.Size(204, 38);
             this.nUDPay.TabIndex = 14;
             this.nUDPay.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nUDPay.ValueChanged += new System.EventHandler(this.nUDPay_ValueChanged);
@@ -259,7 +261,7 @@
             0,
             0});
             this.nUDAmount.Name = "nUDAmount";
-            this.nUDAmount.Size = new System.Drawing.Size(204, 46);
+            this.nUDAmount.Size = new System.Drawing.Size(204, 38);
             this.nUDAmount.TabIndex = 16;
             this.nUDAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nUDAmount.Value = new decimal(new int[] {
@@ -274,7 +276,7 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.Font = new System.Drawing.Font("Trebuchet MS", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label2.ForeColor = System.Drawing.SystemColors.Control;
-            this.label2.Location = new System.Drawing.Point(28, 37);
+            this.label2.Location = new System.Drawing.Point(28, 19);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(222, 43);
@@ -306,7 +308,7 @@
             this.lblProductTitle.Location = new System.Drawing.Point(380, 39);
             this.lblProductTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblProductTitle.Name = "lblProductTitle";
-            this.lblProductTitle.Size = new System.Drawing.Size(0, 76);
+            this.lblProductTitle.Size = new System.Drawing.Size(0, 49);
             this.lblProductTitle.TabIndex = 18;
             // 
             // btnDelete
@@ -329,10 +331,10 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Trebuchet MS", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label5.ForeColor = System.Drawing.SystemColors.Control;
-            this.label5.Location = new System.Drawing.Point(471, 100);
+            this.label5.Location = new System.Drawing.Point(471, 82);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(37, 43);
+            this.label5.Size = new System.Drawing.Size(29, 35);
             this.label5.TabIndex = 20;
             this.label5.Text = "₺";
             // 
@@ -341,10 +343,10 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Trebuchet MS", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label6.ForeColor = System.Drawing.SystemColors.Control;
-            this.label6.Location = new System.Drawing.Point(471, 156);
+            this.label6.Location = new System.Drawing.Point(471, 138);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(37, 43);
+            this.label6.Size = new System.Drawing.Size(29, 35);
             this.label6.TabIndex = 21;
             this.label6.Text = "₺";
             // 
@@ -353,10 +355,10 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Trebuchet MS", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label7.ForeColor = System.Drawing.SystemColors.Control;
-            this.label7.Location = new System.Drawing.Point(471, 36);
+            this.label7.Location = new System.Drawing.Point(471, 18);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(37, 43);
+            this.label7.Size = new System.Drawing.Size(29, 35);
             this.label7.TabIndex = 22;
             this.label7.Text = "₺";
             // 
@@ -418,9 +420,15 @@
             this.lblUnitPrice.Location = new System.Drawing.Point(865, 39);
             this.lblUnitPrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUnitPrice.Name = "lblUnitPrice";
-            this.lblUnitPrice.Size = new System.Drawing.Size(315, 61);
+            this.lblUnitPrice.Size = new System.Drawing.Size(315, 71);
             this.lblUnitPrice.TabIndex = 25;
             this.lblUnitPrice.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // timerOrderList
+            // 
+            this.timerOrderList.Enabled = true;
+            this.timerOrderList.Interval = 400;
+            this.timerOrderList.Tick += new System.EventHandler(this.timerOrderList_Tick);
             // 
             // DeskMenu
             // 
@@ -481,5 +489,6 @@
         private System.Windows.Forms.Panel pnlControl;
         private System.Windows.Forms.Button btnSuccessOrder;
         private System.Windows.Forms.Label lblUnitPrice;
+        private System.Windows.Forms.Timer timerOrderList;
     }
 }

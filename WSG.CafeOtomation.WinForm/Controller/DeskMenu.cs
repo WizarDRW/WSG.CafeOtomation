@@ -1,9 +1,9 @@
-﻿using MySqlX.XDevAPI.Relational;
-using System;
+﻿using System;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WSG.CafeOtomation.Business.Abstract;
@@ -16,15 +16,17 @@ namespace WSG.CafeOtomation.WinForm.Controller
 {
     public partial class DeskMenu : Form
     {
+        private DateTime _nowTime;
         private Desk _desk;
         private User _user;
         private IProductCategoryService _productCategoryService;
         private IProductService _productService;
         private IOrderService _orderService;
         private IOrderDetailService _orderDetailService;
-        private IOperationClaimService _operationClaimService;
+        private IUserTitleService _userTitleService;
+        private IOrderDetailTimeLogService _orderDetailTimeLogService;
         private TreeNode _newNode;
-        public DeskMenu(Desk desk, User user)
+        public DeskMenu(Desk desk, User user, IUserTitleService userTitleService, IOrderDetailTimeLogService orderDetailTimeLogService)
         {
             InitializeComponent();
             _desk = desk;
@@ -33,7 +35,8 @@ namespace WSG.CafeOtomation.WinForm.Controller
             _productService = new ProductManager(new EfProductDal());
             _orderService = new OrderManager(new EfOrderDal());
             _orderDetailService = new OrderDetailManager(new EfOrderDetailDal());
-            _operationClaimService = new OperationClaimManager(new EfOperationClaimDal());
+            _userTitleService = userTitleService;
+            _orderDetailTimeLogService = orderDetailTimeLogService;
             AccessControl();
             tVList();
 
@@ -73,16 +76,10 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
                 dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == data.ID).Data;
                 dGWOrders.Columns["ID"].Visible = false;
-                dGWOrders.Columns["IsComplete"].Visible = false;
+                dGWOrders.Columns["ProductID"].Visible = false;
+                dGWOrders.Columns["CreateTime"].Visible = false;
                 lblTotalPay.Text = data.TotalPrice.ToString();
                 pnlPay.Enabled = true;
-            }
-            try
-            {
-                PayChange();
-            }
-            catch
-            {
             }
         }
         /// <summary>
@@ -102,10 +99,13 @@ namespace WSG.CafeOtomation.WinForm.Controller
             }
             lblChange.Text = (nUDPay.Value - data.TotalPrice).ToString();
         }
+        /// <summary>
+        /// Kullanici yetki kontrolleri
+        /// </summary>
         private void AccessControl()
         {
-            var access = _operationClaimService.GetByID(_user.ID);
-            if (access.Data.Name == "Waiter")
+            var access = _userTitleService.GetByUserID(_user.ID);
+            if (access.Data.AccessAuth == (AccessAuth)5)
             {
                 pnlPay.Visible = false;
                 pnlPay.Enabled = false;
@@ -117,6 +117,39 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 lblAmount.Enabled = false;
             }
         }
+        /// <summary>
+        /// Garsonun gormesi gereken sol buton kontrolu
+        /// </summary>
+        private void LeftProcessButton()
+        {
+            btnSuccessOrder.Enabled = false;
+            pnlControl.Enabled = true;
+            pnlControl.Visible = true;
+            btnSuccessOrder.Visible = true;
+            if (Convert.ToInt16(dGWOrders.CurrentRow.Cells["EOrderStatus"].Value) == 3)
+            {
+                pnlControl.Visible = false;
+            }
+            else if (Convert.ToInt16(dGWOrders.CurrentRow.Cells["EOrderStatus"].Value) == 2)
+            {
+                btnSuccessOrder.Enabled = true;
+                btnSuccessOrder.Text = "Siparişi Teslim Ettim";
+                btnSuccessOrder.BackColor = Color.MediumSeaGreen;
+            }
+            else if (Convert.ToInt16(dGWOrders.CurrentRow.Cells["EOrderStatus"].Value) == 1)
+            {
+                btnSuccessOrder.Enabled = false;
+                btnSuccessOrder.BackColor = Color.Orange;
+                btnSuccessOrder.Text = "Sipariş Hazırlanıyor";
+            }
+            else
+            {
+                btnSuccessOrder.Enabled = false;
+                btnSuccessOrder.BackColor = Color.LightGray;
+                btnSuccessOrder.ForeColor = Color.White;
+                btnSuccessOrder.Text = "İstenen Siparis Bekliyor";
+            }
+        }
 
         #region Events
         /// <summary>
@@ -126,8 +159,16 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// <param name="e"></param>
         private void DeskMenu_Load(object sender, EventArgs e)
         {
-            lblTitle.Text = _desk.DeskNo;
-            loadData();
+            try
+            {
+                lblTitle.Text = _desk.DeskNo;
+                loadData();
+                dGWOrders.CurrentCell = dGWOrders[1, 0];
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
         /// <summary>
         /// Agac listesindeki urunlere cift tiklanildiginda siparislere eklenmesi
@@ -157,33 +198,26 @@ namespace WSG.CafeOtomation.WinForm.Controller
                         CreateUserID = _user.ID,
                         DeskID = _desk.ID,
                         IsClose = false,
-                        TotalPrice = product.UnitPrice
+                        TotalPrice = product.UnitPrice,
+                        CreateDate = DateTime.Now
                     };
-                    MessageBox.Show(_orderService.Add(data).Message);
+                    _orderService.Add(data);
+                    timerOrderList.Enabled = true;
                 }
-                var dataChilds = _orderDetailService.GetBy(x => x.Product.Name == tVProducts.SelectedNode.Text && x.OrderID == data.ID).Data;
-                if (dataChilds != null)
+                var dataChilds = _orderDetailService.GetBy(x => x.Product.Name == tVProducts.SelectedNode.Text && x.OrderID == data.ID).Data; 
+                int count = (int)PropertyTraffics.ProductCount;
+                dataChilds = new OrderDetail
                 {
-                    dataChilds.Amount += 1;
-                    dataChilds.TotalPrice += product.UnitPrice;
-                    data.TotalPrice += product.UnitPrice;
-                    _orderDetailService.Update(dataChilds);
-                    _orderService.Update(data);
-                }
-                else
-                {
-                    int count = (int)PropertyTraffics.ProductCount;
-                    dataChilds = new OrderDetail
-                    {
-                        OrderID = data.ID,
-                        ProductID = product.ID,
-                        Amount = count,
-                        TotalPrice = product.UnitPrice * count
-                    };
-                    data.TotalPrice += dataChilds.TotalPrice;
-                    _orderDetailService.Add(dataChilds);
-                    _orderService.Update(data);
-                }
+                    OrderID = data.ID,
+                    ProductID = product.ID,
+                    Amount = count,
+                    TotalPrice = product.UnitPrice * count,
+                    CreateUserID = _user.ID,
+                    CreateDate = DateTime.Now
+                };
+                data.TotalPrice += dataChilds.TotalPrice;
+                _orderDetailService.Add(dataChilds);
+                _orderService.Update(data);
                 loadData();
             }
         }
@@ -238,8 +272,8 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private void nUDAmount_ValueChanged(object sender, EventArgs e)
         {
             var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
-            var product = _productService.GetByName(dGWOrders.CurrentRow.Cells["Product"].Value.ToString()).Data;
-            var dataChild = _orderDetailService.GetBy(x => x.Product.Name == product.Name && x.OrderID == data.ID).Data;
+            var product = _productService.GetByID(Convert.ToInt32(dGWOrders.CurrentRow.Cells["ProductID"].Value)).Data;
+            var dataChild = _orderDetailService.GetBy(x => x.ProductID == product.ID && x.OrderID == data.ID && x.ID == Convert.ToInt32(dGWOrders.CurrentRow.Cells["ID"].Value)).Data;
             if (dataChild != null)
             {
                 dataChild.Amount = (int)nUDAmount.Value;
@@ -259,20 +293,12 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// <param name="e"></param>
         private void dGWOrders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            pnlControl.Enabled = true;
+            var order = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
+            string totalAmount = Convert.ToDecimal(_orderDetailService.GetAll(x => x.OrderID == order.ID && x.ProductID == (int)dGWOrders.CurrentRow.Cells["ProductID"].Value).Data.Sum(x => x.Amount)).ToString("# Adet");
             nUDAmount.Value = decimal.Parse(dGWOrders.CurrentRow.Cells["Amount"].Value.ToString());
-            lblProductTitle.Text = dGWOrders.CurrentRow.Cells["Product"].Value.ToString();
-            lblUnitPrice.Text = Convert.ToDecimal(dGWOrders.CurrentRow.Cells["TotalPrice"].Value).ToString("#.00 ₺");
-            if (Convert.ToBoolean(dGWOrders.CurrentRow.Cells["IsComplete"].Value))
-            {
-                btnSuccessOrder.BackColor = Color.OrangeRed;
-                btnSuccessOrder.Text = "İstenen Sipariş Verilmedi";
-            }
-            else
-            {
-                btnSuccessOrder.BackColor = Color.MediumSeaGreen;
-                btnSuccessOrder.Text = "İstenen Siparis Verildi";
-            }
+            lblProductTitle.Text = totalAmount + ' ' + dGWOrders.CurrentRow.Cells["Product"].Value.ToString();
+            lblUnitPrice.Text = Convert.ToDecimal(_orderDetailService.GetAll(x=>x.OrderID == order.ID && x.ProductID == (int)dGWOrders.CurrentRow.Cells["ProductID"].Value).Data.Sum(x=>x.TotalPrice)).ToString("#.00 ₺");
+            LeftProcessButton();
         }
         /// <summary>
         /// DataGridView Formatlari icin
@@ -288,27 +314,95 @@ namespace WSG.CafeOtomation.WinForm.Controller
             dGWOrders.Columns["TotalPrice"].DefaultCellStyle.Format = "#.00 ₺";
             foreach (DataGridViewRow row in dGWOrders.Rows)
             {
-                if (Convert.ToBoolean(row.Cells[4].Value))
+                if (Convert.ToInt32(row.Cells[4].Value) == 3)
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumSeaGreen;
                     row.DefaultCellStyle.ForeColor = Color.White;
                 }
-
+                else if (Convert.ToInt32(row.Cells[4].Value) == 1)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Orange;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
+                else if (Convert.ToInt32(row.Cells[4].Value) == 2)
+                {
+                    row.DefaultCellStyle.BackColor = Color.MediumSlateBlue;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
+                else
+                {
+                }
             }
+        }
+        /// <summary>
+        /// Timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerOrderList_Tick(object sender, EventArgs e)
+        {
+            if (dGWOrders.Rows.Count <= 0)
+            {
+                return;
+            }
+            try
+            {
+                int i = dGWOrders.CurrentCell.RowIndex;
+                int c = dGWOrders.CurrentCell.ColumnIndex;
+                loadData();
+                dGWOrders.CurrentCell = dGWOrders.Rows[i].Cells[c];
+                LeftProcessButton();
+            }
+            catch (NullReferenceException ex)
+            {
+                Debug.WriteLine(ex);
+                timerOrderList.Enabled = false;
+            }
+            catch { }
         }
 
         #region Buttons
 
         private void btnSuccessOrder_Click(object sender, EventArgs e)
         {
+            _nowTime = DateTime.Now;
+            TimeSpan begintoSpan = _nowTime.Subtract(DateTime.ParseExact(dGWOrders.CurrentRow.Cells["CreateTime"].Value.ToString(), "HH:mm:ss", null));
             var data = _orderDetailService.GetBy(x => x.ID == Convert.ToInt32(dGWOrders.CurrentRow.Cells["ID"].Value)).Data;
-            data.IsComplete = true;
+            data.EOrderStatus = (OrderStatus)3;
+            data.UpdateDate = DateTime.Now;
+            data.UpdateUserID = _user.ID;
             _orderDetailService.Update(data);
+            var i = dGWOrders.CurrentCell.RowIndex;
             loadData();
+            dGWOrders.CurrentCell = dGWOrders.Rows[i].Cells[1];
+            btnSuccessOrder.Visible = false;
+
+            var minute = _orderDetailTimeLogService.GetAll(x => x.OrderDetailID == data.ID).Data
+                .Sum(x=>Convert.ToDouble(x.Minute.Split(':')[0])).ToString();
+            int m = 1;
+            if (Convert.ToDouble(minute.Split(':')[0]) > 60)
+            {
+                for (int j = 0; j <= Convert.ToDouble(minute); j++)
+                    if (Convert.ToDouble(minute.Split(':')[0]) % 60 == 0)
+                        m++;
+
+                minute = m.ToString() + ":" + (Convert.ToDouble(minute) % (60*m)).ToString();
+                begintoSpan = begintoSpan.Subtract(TimeSpan.ParseExact(minute, @"%h\:%m\:ss", CultureInfo.InvariantCulture));
+            }
+            else begintoSpan = begintoSpan.Subtract(TimeSpan.ParseExact(minute, @"%m", CultureInfo.InvariantCulture));
+            var log = new OrderDetailTimeLog
+            {
+                UserID = _user.ID,
+                OrderStatus = OrderStatus.AtWaiters,
+                OrderDetailID = data.ID,
+                Minute = begintoSpan.Minutes.ToString("0") + ':' + begintoSpan.Seconds.ToString("00")
+            };
+            _orderDetailTimeLogService.Add(log);
         }
 
         private void btnPaySuccess_Click(object sender, EventArgs e)
         {
+            PayChange();
             var dataSource = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
             if (decimal.Parse(lblChange.Text) >= 0)
             {
@@ -328,7 +422,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             }
             else
             {
-                MessageBox.Show(lblChange.Text + " Daha ödenmesi gerekiyor!");
+                MessageBox.Show((Convert.ToDecimal(lblChange.Text) * -1).ToString("#.00 ₺")  + " daha ödenmesi gerekiyor!");
             }
         }
 
@@ -349,8 +443,10 @@ namespace WSG.CafeOtomation.WinForm.Controller
             if (dataChilds.Count <= 0)
             {
                 _orderService.Delete(order);
+                this.Dispose();
+                this.Close();
             }
-            this.Close();
+            loadData();
         }
 
         private void btnExit_Click(object sender, EventArgs e)

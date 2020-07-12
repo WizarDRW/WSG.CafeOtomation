@@ -20,10 +20,20 @@ namespace WSG.CafeOtomation.Business.Abstract
     public interface IOrderDetailService
     {
         IDataResult<List<OrderDetailsDto>> GetAll(Expression<Func<OrderDetail, bool>> filter = null);
+        IDataResult<List<OrderAllDetailsDto>> GetOrderDetailAll(Expression<Func<OrderDetail, bool>> filter = null);
         IDataResult<List<OrderDetail>> GetByOrderNo(int orderId);
         IDataResult<OrderDetail> GetBy(Expression<Func<OrderDetail, bool>> filter);
         IResult Add(OrderDetail orderDetail);
         IResult Update(OrderDetail orderDetail);
         IResult Delete(OrderDetail orderDetail);
+    }
+    public interface IOrderDetailTimeLogService
+    {
+        IDataResult<List<OrderDetailTimeLog>> GetAll(Expression<Func<OrderDetailTimeLog, bool>> filter = null);
+        IDataResult<List<OrderDetailTimeLog>> GetByOrderNo(int orderId);
+        IDataResult<OrderDetailTimeLog> GetBy(Expression<Func<OrderDetailTimeLog, bool>> filter);
+        IResult Add(OrderDetailTimeLog orderDetailTimeLog);
+        IResult Update(OrderDetailTimeLog orderDetailTimeLog);
+        IResult Delete(OrderDetailTimeLog orderDetailTimeLog);
     }
 }

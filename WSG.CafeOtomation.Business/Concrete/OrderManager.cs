@@ -95,5 +95,51 @@ namespace WSG.CafeOtomation.Business.Concrete
         {
             return new SuccessDataResult<OrderDetail>(_orderDetailDal.Get(filter));
         }
+
+        public IDataResult<List<OrderAllDetailsDto>> GetOrderDetailAll(Expression<Func<OrderDetail, bool>> filter = null)
+        {
+            return new SuccessDataResult<List<OrderAllDetailsDto>>(_orderDetailDal.GetListAllOrders(filter));
+        }
+    }
+    public class OrderDetailTimeLogManager:IOrderDetailTimeLogService
+    {
+        private IOrderDetailTimeLogDal _orderDetailTimeLogDal;
+        public OrderDetailTimeLogManager(IOrderDetailTimeLogDal orderDetailTimeLogDal)
+        {
+            _orderDetailTimeLogDal = orderDetailTimeLogDal;
+        }
+
+        public IResult Add(OrderDetailTimeLog orderDetailTimeLog)
+        {
+            _orderDetailTimeLogDal.Add(orderDetailTimeLog);
+            return new SuccessResult();
+        }
+
+        public IResult Update(OrderDetailTimeLog orderDetailTimeLog)
+        {
+            _orderDetailTimeLogDal.Update(orderDetailTimeLog);
+            return new SuccessResult();
+        }
+
+        public IResult Delete(OrderDetailTimeLog orderDetailTimeLog)
+        {
+            _orderDetailTimeLogDal.Delete(orderDetailTimeLog);
+            return new SuccessResult();
+        }
+
+        public IDataResult<List<OrderDetailTimeLog>> GetAll(Expression<Func<OrderDetailTimeLog, bool>> filter = null)
+        {
+            return new SuccessDataResult<List<OrderDetailTimeLog>>(_orderDetailTimeLogDal.GetList(filter));
+        }
+
+        public IDataResult<OrderDetailTimeLog> GetBy(Expression<Func<OrderDetailTimeLog, bool>> filter)
+        {
+            return new SuccessDataResult<OrderDetailTimeLog>(_orderDetailTimeLogDal.Get(filter));
+        }
+
+        public IDataResult<List<OrderDetailTimeLog>> GetByOrderNo(int orderId)
+        {
+            return new SuccessDataResult<List<OrderDetailTimeLog>>(_orderDetailTimeLogDal.GetList(x=>x.OrderDetailID == orderId));
+        }
     }
 }

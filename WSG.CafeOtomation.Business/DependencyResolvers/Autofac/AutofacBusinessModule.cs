@@ -16,6 +16,7 @@ namespace WSG.CafeOtomation.Business.DependencyResolvers.Autofac
             builder.RegisterType<EfUserDal>().As<IUserDal>();
 
             builder.RegisterType<TitleManager>().As<ITitleService>();
+            builder.RegisterType<UserTitleManager>().As<IUserTitleService>();
             builder.RegisterType<EfTitleDal>().As<ITitleDal>();
             builder.RegisterType<EfUserTitleDal>().As<IUserTitleDal>();
 
