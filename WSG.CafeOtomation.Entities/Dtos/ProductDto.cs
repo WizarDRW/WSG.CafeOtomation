@@ -5,6 +5,11 @@ using System.Text;
 
 namespace WSG.CafeOtomation.Entities.Dtos
 {
+    public class ProductCategoryDto
+    {
+        public string Name { get; set; }
+        public int MyProperty { get; set; }
+    }
     public class ProductDto
     {
         [DisplayName("Ürün Numarası")]
@@ -19,6 +24,5 @@ namespace WSG.CafeOtomation.Entities.Dtos
         public int Amount { get; set; }
         [DisplayName("Ürün Kategorisi")]
         public string CategoryName { get; set; }
-
     }
 }

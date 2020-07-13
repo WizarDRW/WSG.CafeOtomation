@@ -48,6 +48,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
     public class OrderDetailTimeLog:IEntity
     {
         public int ID { get; set; }
+        public DateTime CreateDate { get; set; }
         public int OrderDetailID { get; set; }
         public OrderDetail OrderDetail { get; set; }
         public OrderStatus OrderStatus { get; set; }

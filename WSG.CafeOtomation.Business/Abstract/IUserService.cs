@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WizardSoftwareGroupsFramework.Core.Utilities.Result.Abstract;
 using WSG.CafeOtomation.Entities.Concrete;
+using WSG.CafeOtomation.Entities.Dtos;
 
 namespace WSG.CafeOtomation.Business.Abstract
 {
     public interface IUserService
     {
         IDataResult<List<User>> GetAll();
+        IDataResult<List<UserStuffDto>> GetAllStuff(Expression<Func<UserStuffDto, bool>> filter = null);
         List<OperationClaim> GetClaims(User user);
         IDataResult<User> GetByID(int id);
         User GetByUserName(string userName);

@@ -8,6 +8,7 @@ using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.Business.Constants;
 using WSG.CafeOtomation.DataAccess.Abstract;
 using WSG.CafeOtomation.Entities.Concrete;
+using WSG.CafeOtomation.Entities.Dtos;
 
 namespace WSG.CafeOtomation.Business.Concrete
 {
@@ -39,6 +40,10 @@ namespace WSG.CafeOtomation.Business.Concrete
         public IDataResult<List<User>> GetAll()
         {
             return new SuccessDataResult<List<User>>(_userDal.GetSafeList());
+        }
+        public IDataResult<List<UserStuffDto>> GetAllStuff(Expression<Func<UserStuffDto, bool>> filter = null)
+        {
+            return new SuccessDataResult<List<UserStuffDto>>(_userDal.GetStuffSafeList(filter));
         }
 
         public IDataResult<User> GetByID(int id)

@@ -377,25 +377,15 @@ namespace WSG.CafeOtomation.WinForm.Controller
             dGWOrders.CurrentCell = dGWOrders.Rows[i].Cells[1];
             btnSuccessOrder.Visible = false;
 
-            var minute = _orderDetailTimeLogService.GetAll(x => x.OrderDetailID == data.ID).Data
-                .Sum(x=>Convert.ToDouble(x.Minute.Split(':')[0])).ToString();
-            int m = 1;
-            if (Convert.ToDouble(minute.Split(':')[0]) > 60)
-            {
-                for (int j = 0; j <= Convert.ToDouble(minute); j++)
-                    if (Convert.ToDouble(minute.Split(':')[0]) % 60 == 0)
-                        m++;
-
-                minute = m.ToString() + ":" + (Convert.ToDouble(minute) % (60*m)).ToString();
-                begintoSpan = begintoSpan.Subtract(TimeSpan.ParseExact(minute, @"%h\:%m\:ss", CultureInfo.InvariantCulture));
-            }
-            else begintoSpan = begintoSpan.Subtract(TimeSpan.ParseExact(minute, @"%m", CultureInfo.InvariantCulture));
+            var minute = _orderDetailTimeLogService.GetBy(x => x.OrderDetailID == data.ID && x.OrderStatus == OrderStatus.AtWaiters).Data.CreateDate.ToString("dd.MM.yyyy HH:mm:ss");
+            begintoSpan = _nowTime.Subtract(DateTime.ParseExact(minute, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture));
             var log = new OrderDetailTimeLog
             {
                 UserID = _user.ID,
-                OrderStatus = OrderStatus.AtWaiters,
+                OrderStatus = OrderStatus.Complete,
                 OrderDetailID = data.ID,
-                Minute = begintoSpan.Minutes.ToString("0") + ':' + begintoSpan.Seconds.ToString("00")
+                CreateDate = _nowTime,
+                Minute = begintoSpan.TotalMinutes.ToString("0") + ':' + begintoSpan.TotalSeconds.ToString("00")
             };
             _orderDetailTimeLogService.Add(log);
         }
@@ -453,6 +443,16 @@ namespace WSG.CafeOtomation.WinForm.Controller
         {
             Dispose();
             this.Close();
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPrintSelect_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
 

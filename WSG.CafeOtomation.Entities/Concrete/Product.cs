@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using WizardSoftwareGroupsFramework.Core.Entities;
 
@@ -8,13 +9,17 @@ namespace WSG.CafeOtomation.Entities.Concrete
 {
     public class ProductCategory : IEntity
     {
+        [Key]
         public int ID { get; set; }
         public string Name { get; set; }
+        public string IconPath { get; set; }
+        public int Order { get; set; }
         public int ParentID { get; set; }
         public ProductCategory Parent { get; set; }
     }
     public class Product:IEntity
     {
+        [Key]
         public int ID { get; set; }
         [DisplayName("Ürün Adı")]
         public string Name { get; set; }
@@ -31,6 +36,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
     }
     public class ProductImage : IEntity
     {
+        [Key]
         public int ID { get; set; }
         public string Path { get; set; }
         public bool IsCover { get; set; }
@@ -39,6 +45,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
     }
     public class ProductDetail : IEntity
     {
+        [Key]
         public int ID { get; set; }
         public DateTime CreateDate { get; set; }
         public int Amount { get; set; }

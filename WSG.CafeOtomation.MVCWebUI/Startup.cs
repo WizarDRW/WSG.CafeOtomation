@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WSG.CafeOtomation.DataAccess.Concrete.EntityFramework.Contexts;
 
 namespace WSG.CafeOtomation.MVCWebUI
 {
@@ -24,6 +25,7 @@ namespace WSG.CafeOtomation.MVCWebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<CafeContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

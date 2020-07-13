@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -9,6 +10,7 @@ using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.Business.Concrete;
 using WSG.CafeOtomation.DataAccess.Concrete.EntityFramework;
 using WSG.CafeOtomation.Entities.Concrete;
+using WSG.CafeOtomation.WinForm.Controller.Business;
 
 namespace WSG.CafeOtomation.WinForm.Controller
 {
@@ -16,6 +18,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
     {
         private DateTime _nowTime;
         private User _user;
+        private DeskMenu _desk;
         private IProductCategoryService _productCategoryService;
         private IProductService _productService;
         private IProductImageService _productImageService;
@@ -24,6 +27,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private IOrderDetailService _orderDetailService;
         private IUserTitleService _userTitleService;
         private IOrderDetailTimeLogService _orderDetailTimeLogService;
+        private readonly int sessionMinutesOption = 120;
         public Menu(User user)
         {
             InitializeComponent();
@@ -37,30 +41,33 @@ namespace WSG.CafeOtomation.WinForm.Controller
             _userTitleService = new UserTitleManager(new EfUserTitleDal());
             _orderDetailTimeLogService = new OrderDetailTimeLogManager(new EfOrderDetailTimeLogDal());
 
+            PropertyTraffics.SessionSecond = sessionMinutesOption;
+
             this.AutoScaleDimensions = new SizeF(6F, 13F);
             this.AutoScaleMode = AutoScaleMode.Font;
         }
         public void Desk(string find = "")
         {
+            tPDesk.Controls.Clear();
             int left = 25;
             int top = 25;
             int i = 1;
             foreach (var d in _deskService.GetAll(x => x.DeskNo.Contains(find)).Data)
             {
                 Button button = new Button();
-                if (i % 5 == 0)
+                if ((left+200) > tPDesk.Width)
                 {
                     left = 25;
-                    top += 330;
+                    top += 230;
                 }
                 button.Enabled = true;
                 ButtonColor(button, d.ID);
                 button.Font = new Font("Trebuchet MS", 25f, FontStyle.Regular);
                 button.Text = d.DeskNo;
                 button.Location = new Point(left, top);
-                button.Size = new Size(325, 325);
+                button.Size = new Size(200, 200);
                 i += 1;
-                left += 330;
+                left += 230;
                 button.Click += Button_Click;
                 tPDesk.Controls.Add(button);
             }
@@ -70,8 +77,8 @@ namespace WSG.CafeOtomation.WinForm.Controller
             Button button;
             button = sender as Button;
             var data = _deskService.GetByNo(button.Text).Data;
-            DeskMenu desk = new DeskMenu(data, _user, _userTitleService, _orderDetailTimeLogService);
-            desk.ShowDialog();
+            _desk = new DeskMenu(data, _user, _userTitleService, _orderDetailTimeLogService);
+            _desk.ShowDialog();
             int id = _deskService.GetByNo(button.Text).Data.ID;
             ButtonColor(button, id);
         }
@@ -233,24 +240,37 @@ namespace WSG.CafeOtomation.WinForm.Controller
             try
             {
                 TimeSpan span = _nowTime.Subtract(DateTime.ParseExact(dGVOrderDetails.Rows[i].Cells["CreateTime"].Value.ToString(), "HH:mm:ss", null));
-                lblTimeMinuteInfo.Text = span.Minutes.ToString("0 dk");
+                lblTimeMinuteInfo.Text = span.TotalMinutes.ToString("0 dk");
                 dGVOrderDetails.CurrentCell = dGVOrderDetails.Rows[i].Cells[r];
                 dGVOrderDetails.FirstDisplayedScrollingRowIndex = scroll;
             }
-            catch (ArgumentOutOfRangeException)
+            catch (ArgumentOutOfRangeException) { return; }
+            catch (NullReferenceException) { }
+            catch
             {
                 dGVOrderDetails.CurrentCell = dGVOrderDetails.Rows[i - 1].Cells[r];
                 dGVOrderDetails.FirstDisplayedScrollingRowIndex = 0;
-            }
-            catch (NullReferenceException) { }
-            catch { }
-            finally
-            {
             }
         }
         private void timerNow_Tick(object sender, EventArgs e)
         {
             _nowTime = DateTime.Now;
+            PropertyTraffics.SessionSecond--;
+            Debug.WriteLine(PropertyTraffics.SessionSecond);
+            if (PropertyTraffics.SessionSecond < 1)
+            {
+                _user = null;
+                _userTitleService = null;
+                _productService = null;
+                _productImageService = null;
+                _productCategoryService = null;
+                _orderService = null;
+                _orderDetailTimeLogService = null;
+                _orderDetailService = null;
+                _deskService = null;
+                this.Close();
+                this.Dispose();
+            }
             lblTimeNow.Text = _nowTime.ToString("dddd dd/MM HH:mm ");
         }
         private void cmBxOrderStatus_SelectedIndexChanged(object sender, EventArgs e)
@@ -266,9 +286,10 @@ namespace WSG.CafeOtomation.WinForm.Controller
                     var log = new OrderDetailTimeLog
                     {
                         UserID = _user.ID,
-                        OrderStatus = OrderStatus.Waiting,
+                        OrderStatus = OrderStatus.Prepares,
                         OrderDetailID = id,
-                        Minute = begintoSpan.Minutes.ToString("0") + ':' + begintoSpan.Seconds.ToString("00")
+                        CreateDate = _nowTime,
+                        Minute = begintoSpan.TotalMinutes.ToString("0") + ':' + begintoSpan.TotalSeconds.ToString("00")
                     };
                     _orderDetailTimeLogService.Add(log);
                     cmBxOrderStatus.Items.Remove(OrderStatus.Waiting);
@@ -277,14 +298,15 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 }
                 else if ((OrderStatus)cmBxOrderStatus.SelectedItem == OrderStatus.AtWaiters)
                 {
-                    var minute = _orderDetailTimeLogService.GetBy(x => x.OrderDetailID == data.ID && x.OrderStatus == OrderStatus.Waiting).Data.Minute;
-                    begintoSpan = begintoSpan.Subtract(TimeSpan.ParseExact(minute, @"%m\:ss", CultureInfo.InvariantCulture));
+                    var minute = _orderDetailTimeLogService.GetBy(x => x.OrderDetailID == data.ID && x.OrderStatus == OrderStatus.Prepares).Data.CreateDate.ToString("dd.MM.yyyy HH:mm:ss");
+                    begintoSpan = _nowTime.Subtract(DateTime.ParseExact(minute, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture));
                     var log = new OrderDetailTimeLog
                     {
                         UserID = _user.ID,
-                        OrderStatus = OrderStatus.Prepares,
+                        OrderStatus = OrderStatus.AtWaiters,
                         OrderDetailID = id,
-                        Minute = begintoSpan.Minutes.ToString("0") + ':' + begintoSpan.Seconds.ToString("00")
+                        CreateDate = _nowTime,
+                        Minute = begintoSpan.TotalMinutes.ToString("0") + ':' + begintoSpan.TotalSeconds.ToString("00")
                     };
                     _orderDetailTimeLogService.Add(log);
                     cmBxOrderStatus.Items.Remove(OrderStatus.Prepares);
@@ -292,6 +314,11 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 data.EOrderStatus = (OrderStatus)cmBxOrderStatus.SelectedItem;
                 _orderDetailService.Update(data);
             }
+        }
+
+        private void MouseMoveForSession(object sender, MouseEventArgs e)
+        {
+            PropertyTraffics.SessionSecond = sessionMinutesOption;
         }
 
         #region Buttons

@@ -33,10 +33,10 @@ namespace WSG.CafeOtomation.WinForm
                 LastName = "Ozkara",
                 FirstName = "Nedim",
                 Status = true
-                
+
             };
-            Application.Run(new Controller.Menu(user));
-            //Application.Run(new Login());
+            //Application.Run(new Controller.Menu(user));
+            Application.Run(new Login());
         }
     }
 }

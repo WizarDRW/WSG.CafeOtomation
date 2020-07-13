@@ -1,0 +1,69 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Menü Başlığı</title>
+    <style type="text/css">
+        .main {
+            position: relative;
+        }
+
+        img {
+            position: relative;
+            object-fit: cover;
+            width: 100%;
+            height: 200px;
+            z-index: -1;
+        }
+
+        p {
+            color: #fff;
+            position: absolute;
+            width: 100%;
+            height:100%;
+            vertical-align: central;
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: bold;
+            font-size: 3rem;
+        }
+
+        .gredientColor {
+            display: block;
+            background: linear-gradient(rgba(92, 10, 10, 0.53),rgba(92, 10, 10, 0.53));
+        }
+    </style>
+</head>
+<body>
+    <div class="row main">
+        <div class="col-12">
+            <a href="CustomerDesk/MenuCategoryIndex">
+                <p>Menüler</p>
+                <div class="gredientColor">
+                    <img src="https://www.publicdomainpictures.net/pictures/210000/velka/brown-fabric-textured-background.jpg" alt="brown.img" />
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row main">
+        <div class="col-12">
+            <a href="Home">
+                <p>Siparişleriniz</p>
+                <div class="gredientColor">
+                    <img src="https://imgmedia.lbb.in/media/2019/12/5df3d7278b5cec09bebc757f_1576261415871.jpeg" alt="brown.img" />
+                </div>
+            </a>
+        </div>
+    </div>
+    <script>
+        $(".main").load(function () {
+            $("div.main").delay(800).fadeIn(400);
+        });
+    </script>
+</body>
+</html>

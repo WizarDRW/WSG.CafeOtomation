@@ -7,6 +7,7 @@ using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WSG.CafeOtomation.DataAccess.Abstract;
 using WSG.CafeOtomation.DataAccess.Concrete.EntityFramework.Contexts;
 using WSG.CafeOtomation.Entities.Concrete;
+using WSG.CafeOtomation.Entities.Dtos;
 
 namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
 {
@@ -60,6 +61,33 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                     UserName = x.UserName,
                     Status = x.Status
                 }).ToList();
+            }
+        }
+
+        public List<UserStuffDto> GetStuffSafeList(Expression<Func<UserStuffDto, bool>> filter = null)
+        {
+            using (CafeContext context = new CafeContext ())
+            {
+                return filter == null ?
+                    (from u in context.Users
+                        join uT in context.UserTitles
+                        on u.ID equals uT.UserID
+                        select new UserStuffDto
+                        {
+                            ID = u.ID,
+                            UserName = u.UserName,
+                            AccessAuth = (AccessAuth)uT.AccessAuth
+                        }).ToList()
+                        :
+                        (from u in context.Users
+                         join uT in context.UserTitles
+                         on u.ID equals uT.UserID
+                         select new UserStuffDto
+                         {
+                             ID = u.ID,
+                             UserName = u.UserName,
+                             AccessAuth = (AccessAuth)uT.AccessAuth
+                         }).Where(filter).ToList();
             }
         }
     }

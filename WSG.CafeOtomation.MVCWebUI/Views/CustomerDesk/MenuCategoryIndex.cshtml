@@ -1,0 +1,58 @@
+﻿@model IEnumerable<WSG.CafeOtomation.Entities.Concrete.ProductCategory>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Menü Başlığı</title>
+    <style type="text/css">
+        .main {
+            position: relative;
+        }
+
+        img {
+            position: relative;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        h2 {
+            color: #fff;
+            position: absolute;
+            width: 100%;
+            vertical-align: central;
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+
+        .gredientColor {
+            display: block;
+            background: linear-gradient(rgba(0,0,100,0.5),rgba(0,0,100,0.5));
+        }
+    </style>
+</head>
+<body>
+    @foreach (var item in Model)
+    {
+        <div class="row main">
+            <div class="col-12">
+                <a href="MenuIndex?categoryID=@item.ID">
+                    <h2>@item.Name</h2>
+                    <div class="gredientColor">
+                        <img src="@item.IconPath" alt="" />
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+</body>
+</html>
