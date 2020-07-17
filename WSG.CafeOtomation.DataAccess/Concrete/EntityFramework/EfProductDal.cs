@@ -30,7 +30,8 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          Description = p.Description,
                          Amount = p.StockAmount,
                          UnitPrice = p.UnitPrice,
-                         CategoryName = pC.Name
+                         CategoryName = pC.Name,
+                         ProductImages = p.ProductImages
                      }).ToList()
                     :
                     (from p in context.Products.Where(filter)
@@ -43,7 +44,8 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          Description = p.Description,
                          Amount = p.StockAmount,
                          UnitPrice = p.UnitPrice,
-                         CategoryName = pC.Name
+                         CategoryName = pC.Name,
+                         ProductImages = p.ProductImages
                      }).ToList();
             }
         }

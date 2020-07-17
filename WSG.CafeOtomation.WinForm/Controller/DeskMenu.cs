@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WSG.CafeOtomation.Business.Abstract;
@@ -43,6 +45,11 @@ namespace WSG.CafeOtomation.WinForm.Controller
             this.AutoScaleDimensions = new SizeF(6F, 13F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.AutoSize = true;
+        }
+        public void Alert(string msg, Form_Alert.enmType type)
+        {
+            Form_Alert frm = new Form_Alert();
+            frm.ShowAlert(msg, type);
         }
         /// <summary>
         /// Urunlerin listesinin kategorisi ile birlikte gelen datalar
@@ -204,9 +211,8 @@ namespace WSG.CafeOtomation.WinForm.Controller
                     _orderService.Add(data);
                     timerOrderList.Enabled = true;
                 }
-                var dataChilds = _orderDetailService.GetBy(x => x.Product.Name == tVProducts.SelectedNode.Text && x.OrderID == data.ID).Data; 
                 int count = (int)PropertyTraffics.ProductCount;
-                dataChilds = new OrderDetail
+                var dataChilds = new OrderDetail
                 {
                     OrderID = data.ID,
                     ProductID = product.ID,
@@ -216,9 +222,13 @@ namespace WSG.CafeOtomation.WinForm.Controller
                     CreateDate = DateTime.Now
                 };
                 data.TotalPrice += dataChilds.TotalPrice;
-                _orderDetailService.Add(dataChilds);
+                var result = _orderDetailService.Add(dataChilds);
                 _orderService.Update(data);
                 loadData();
+                if (result.Success == true)
+                    Alert(result.Message, Form_Alert.enmType.Success);
+                else
+                    Alert(result.Message, Form_Alert.enmType.Error);
             }
         }
         /// <summary>
@@ -295,9 +305,18 @@ namespace WSG.CafeOtomation.WinForm.Controller
         {
             var order = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
             string totalAmount = Convert.ToDecimal(_orderDetailService.GetAll(x => x.OrderID == order.ID && x.ProductID == (int)dGWOrders.CurrentRow.Cells["ProductID"].Value).Data.Sum(x => x.Amount)).ToString("# Adet");
-            nUDAmount.Value = decimal.Parse(dGWOrders.CurrentRow.Cells["Amount"].Value.ToString());
-            lblProductTitle.Text = totalAmount + ' ' + dGWOrders.CurrentRow.Cells["Product"].Value.ToString();
-            lblUnitPrice.Text = Convert.ToDecimal(_orderDetailService.GetAll(x=>x.OrderID == order.ID && x.ProductID == (int)dGWOrders.CurrentRow.Cells["ProductID"].Value).Data.Sum(x=>x.TotalPrice)).ToString("#.00 ₺");
+            if (dGWOrders.SelectedRows.Count > 1)
+            {
+                lblUnitPrice.Text = Convert.ToDecimal(dGWOrders.SelectedRows.Cast<DataGridViewRow>().Sum(x => (decimal)x.Cells["TotalPrice"].Value)).ToString();
+                timerOrderList.Enabled = false;
+            }
+            else
+            {
+                timerOrderList.Enabled = true;
+                nUDAmount.Value = decimal.Parse(dGWOrders.CurrentRow.Cells["Amount"].Value.ToString());
+                lblProductTitle.Text = totalAmount + ' ' + dGWOrders.CurrentRow.Cells["Product"].Value.ToString();
+                lblUnitPrice.Text = Convert.ToDecimal(_orderDetailService.GetAll(x => x.OrderID == order.ID && x.ProductID == (int)dGWOrders.CurrentRow.Cells["ProductID"].Value).Data.Sum(x => x.TotalPrice)).ToString("#.00 ₺");
+            }
             LeftProcessButton();
         }
         /// <summary>
@@ -412,7 +431,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             }
             else
             {
-                MessageBox.Show((Convert.ToDecimal(lblChange.Text) * -1).ToString("#.00 ₺")  + " daha ödenmesi gerekiyor!");
+                MessageBox.Show((Convert.ToDecimal(lblChange.Text) * -1).ToString("#.00 ₺") + " daha ödenmesi gerekiyor!");
             }
         }
 
@@ -453,6 +472,32 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private void btnPrintSelect_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnDeskMove_Click(object sender, EventArgs e)
+        {
+            var data = _orderService.GetByDesk(_desk.ID).Data.Where(x => !x.IsClose).SingleOrDefault();
+            DeskMenuMoveHelper deskMenuMoveHelper = new DeskMenuMoveHelper(_user, data, _orderService, _orderDetailService);
+            bool IsMove = false;
+            deskMenuMoveHelper.FormClosing += (o, ev) =>
+            {
+                IsMove = deskMenuMoveHelper.IsMove;
+            };
+            deskMenuMoveHelper.ShowDialog();
+            if (IsMove)
+                this.Close();
+        }
+
+        private void btnDeskSelectedMove_Click(object sender, EventArgs e)
+        {
+            List<int> ID = new List<int>();
+            foreach (DataGridViewRow item in dGWOrders.SelectedRows)
+            {
+                ID.Add((int)item.Cells["ID"].Value);
+            }
+            var data = _orderService.GetByDesk(_desk.ID).Data.Where(x => !x.IsClose).SingleOrDefault();
+            DeskMenuMoveHelper deskMenuMoveHelper = new DeskMenuMoveHelper(_user,ID, _orderService, _orderDetailService);
+            deskMenuMoveHelper.ShowDialog();
         }
         #endregion
 

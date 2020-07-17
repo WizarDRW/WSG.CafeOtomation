@@ -9,6 +9,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int ID { get; set; }
         public int UserID { get; set; }
         public int TitleID { get; set; }
+        public int SessionMinute { get; set; }
         public AccessAuth AccessAuth { get; set; }
     }
     public class Title : IEntity

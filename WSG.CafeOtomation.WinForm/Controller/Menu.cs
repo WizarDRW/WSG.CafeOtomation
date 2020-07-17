@@ -27,7 +27,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private IOrderDetailService _orderDetailService;
         private IUserTitleService _userTitleService;
         private IOrderDetailTimeLogService _orderDetailTimeLogService;
-        private readonly int sessionMinutesOption = 120;
+        private int _sessionMinutesOption;
         public Menu(User user)
         {
             InitializeComponent();
@@ -40,8 +40,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             _orderDetailService = new OrderDetailManager(new EfOrderDetailDal());
             _userTitleService = new UserTitleManager(new EfUserTitleDal());
             _orderDetailTimeLogService = new OrderDetailTimeLogManager(new EfOrderDetailTimeLogDal());
-
-            PropertyTraffics.SessionSecond = sessionMinutesOption;
+            _sessionMinutesOption = 2;
 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
             this.AutoScaleMode = AutoScaleMode.Font;
@@ -104,16 +103,25 @@ namespace WSG.CafeOtomation.WinForm.Controller
         public void AccessControl()
         {
             var access = _userTitleService.GetByUserID(_user.ID);
+            _sessionMinutesOption = access.Data.SessionMinute * 60;
+            PropertyTraffics.SessionSecond = _sessionMinutesOption;
             if (access.Data.AccessAuth == (AccessAuth)5)
             {
                 tSOrder.Enabled = false;
                 grBxAboutOrderDetailProcess.Enabled = false;
             }
+            timerNow.Enabled = true;
+        }
+        public void Alert()
+        {
+            Form_Alert frm = new Form_Alert();
+            frm.ShowAlert("", Form_Alert.enmType.Success);
         }
 
         #region Events
         private void Menu_Load(object sender, EventArgs e)
         {
+            Alert();
             AccessControl();
             try
             {
@@ -318,7 +326,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
 
         private void MouseMoveForSession(object sender, MouseEventArgs e)
         {
-            PropertyTraffics.SessionSecond = sessionMinutesOption;
+            PropertyTraffics.SessionSecond = _sessionMinutesOption;
         }
 
         #region Buttons

@@ -226,6 +226,18 @@
     <Compile Include="Controller\Business\DeskMenuHelper.Designer.cs">
       <DependentUpon>DeskMenuHelper.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controller\Business\DeskMenuMoveHelper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\Business\DeskMenuMoveHelper.Designer.cs">
+      <DependentUpon>DeskMenuMoveHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\Business\Form_Alert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\Business\Form_Alert.Designer.cs">
+      <DependentUpon>Form_Alert.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controller\Business\PropertyTraffics.cs" />
     <Compile Include="Controller\DeskMenu.cs">
       <SubType>Form</SubType>
@@ -249,6 +261,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controller\Business\DeskMenuHelper.resx">
       <DependentUpon>DeskMenuHelper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\Business\DeskMenuMoveHelper.resx">
+      <DependentUpon>DeskMenuMoveHelper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\Business\Form_Alert.resx">
+      <DependentUpon>Form_Alert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controller\DeskMenu.resx">
       <DependentUpon>DeskMenu.cs</DependentUpon>
@@ -300,8 +318,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\icons\Cancel.png" />
+    <Content Include="assets\icons\Close.png" />
     <Content Include="assets\icons\Desk.png" />
+    <Content Include="assets\icons\error.png" />
     <Content Include="assets\icons\Exit.png" />
+    <Content Include="assets\icons\info.png" />
     <Content Include="assets\icons\LogOut.png" />
     <Content Include="assets\icons\Minus.png" />
     <Content Include="assets\icons\OK.png" />
@@ -309,6 +330,8 @@
     <Content Include="assets\icons\Plus.png" />
     <Content Include="assets\icons\Sale.png" />
     <Content Include="assets\icons\Stock.png" />
+    <Content Include="assets\icons\success.png" />
+    <Content Include="assets\icons\warning.png" />
     <None Include="Resources\Plus.png" />
     <None Include="Resources\Minus1.png" />
     <None Include="Resources\Minus.png" />

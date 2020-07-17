@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using WSG.CafeOtomation.Entities.Concrete;
 
 namespace WSG.CafeOtomation.Entities.Dtos
 {
@@ -24,5 +25,6 @@ namespace WSG.CafeOtomation.Entities.Dtos
         public int Amount { get; set; }
         [DisplayName("Ürün Kategorisi")]
         public string CategoryName { get; set; }
+        public List<ProductImage> ProductImages { get; set; }
     }
 }

@@ -42,9 +42,10 @@
             this.lblCount.BackColor = System.Drawing.Color.White;
             this.lblCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblCount.Location = new System.Drawing.Point(12, 59);
+            this.lblCount.Location = new System.Drawing.Point(9, 48);
+            this.lblCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(299, 143);
+            this.lblCount.Size = new System.Drawing.Size(225, 117);
             this.lblCount.TabIndex = 4;
             this.lblCount.Text = "1";
             this.lblCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -53,9 +54,10 @@
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTitle.Location = new System.Drawing.Point(13, 13);
+            this.lblTitle.Location = new System.Drawing.Point(10, 11);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(92, 32);
+            this.lblTitle.Size = new System.Drawing.Size(71, 26);
             this.lblTitle.TabIndex = 5;
             this.lblTitle.Text = "Baslik";
             // 
@@ -63,9 +65,10 @@
             // 
             this.btnCancel.BackgroundImage = global::WSG.CafeOtomation.WinForm.Properties.Resources.Cancel;
             this.btnCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnCancel.Location = new System.Drawing.Point(317, 228);
+            this.btnCancel.Location = new System.Drawing.Point(237, 167);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(67, 71);
+            this.btnCancel.Size = new System.Drawing.Size(63, 58);
             this.btnCancel.TabIndex = 7;
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -74,9 +77,10 @@
             // 
             this.btnOK.BackgroundImage = global::WSG.CafeOtomation.WinForm.Properties.Resources.OK;
             this.btnOK.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnOK.Location = new System.Drawing.Point(244, 228);
+            this.btnOK.Location = new System.Drawing.Point(171, 167);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(67, 71);
+            this.btnOK.Size = new System.Drawing.Size(63, 58);
             this.btnOK.TabIndex = 6;
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -90,9 +94,10 @@
             this.btnMinus.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnMinus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnMinus.Location = new System.Drawing.Point(317, 131);
+            this.btnMinus.Location = new System.Drawing.Point(238, 106);
+            this.btnMinus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnMinus.Name = "btnMinus";
-            this.btnMinus.Size = new System.Drawing.Size(67, 71);
+            this.btnMinus.Size = new System.Drawing.Size(62, 58);
             this.btnMinus.TabIndex = 3;
             this.btnMinus.UseVisualStyleBackColor = false;
             this.btnMinus.Click += new System.EventHandler(this.btnMinus_Click);
@@ -106,18 +111,19 @@
             this.btnPlus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPlus.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnPlus.ForeColor = System.Drawing.Color.Black;
-            this.btnPlus.Location = new System.Drawing.Point(317, 59);
+            this.btnPlus.Location = new System.Drawing.Point(238, 48);
+            this.btnPlus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnPlus.Name = "btnPlus";
-            this.btnPlus.Size = new System.Drawing.Size(67, 71);
+            this.btnPlus.Size = new System.Drawing.Size(62, 58);
             this.btnPlus.TabIndex = 0;
             this.btnPlus.UseVisualStyleBackColor = false;
             this.btnPlus.Click += new System.EventHandler(this.btnPlus_Click);
             // 
             // DeskMenuHelper
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 311);
+            this.ClientSize = new System.Drawing.Size(312, 228);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.lblTitle);
@@ -125,6 +131,7 @@
             this.Controls.Add(this.btnMinus);
             this.Controls.Add(this.btnPlus);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "DeskMenuHelper";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DeskMenuHelper";
