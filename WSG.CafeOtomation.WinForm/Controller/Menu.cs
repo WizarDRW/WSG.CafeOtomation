@@ -297,7 +297,8 @@ namespace WSG.CafeOtomation.WinForm.Controller
                         OrderStatus = OrderStatus.Prepares,
                         OrderDetailID = id,
                         CreateDate = _nowTime,
-                        Minute = begintoSpan.TotalMinutes.ToString("0") + ':' + begintoSpan.TotalSeconds.ToString("00")
+                        Minute = (decimal)begintoSpan.TotalMinutes,
+                        Second = (decimal)begintoSpan.TotalSeconds
                     };
                     _orderDetailTimeLogService.Add(log);
                     cmBxOrderStatus.Items.Remove(OrderStatus.Waiting);
@@ -314,7 +315,8 @@ namespace WSG.CafeOtomation.WinForm.Controller
                         OrderStatus = OrderStatus.AtWaiters,
                         OrderDetailID = id,
                         CreateDate = _nowTime,
-                        Minute = begintoSpan.TotalMinutes.ToString("0") + ':' + begintoSpan.TotalSeconds.ToString("00")
+                        Minute = (decimal)begintoSpan.TotalMinutes,
+                        Second = (decimal)begintoSpan.TotalSeconds
                     };
                     _orderDetailTimeLogService.Add(log);
                     cmBxOrderStatus.Items.Remove(OrderStatus.Prepares);

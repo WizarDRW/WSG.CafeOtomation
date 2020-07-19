@@ -44,6 +44,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int? CreateUserID { get; set; }
         public DateTime? UpdateDate{ get; set; }
         public int? UpdateUserID { get; set; }
+        public List<OrderDetailTimeLog> OrderDetailTimeLogs { get; set; }
     }
     public class OrderDetailTimeLog:IEntity
     {
@@ -52,7 +53,8 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int OrderDetailID { get; set; }
         public OrderDetail OrderDetail { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        public string Minute { get; set; }
+        public decimal Minute { get; set; }
+        public decimal Second { get; set; }
         public int UserID { get; set; }
         public User User { get; set; }
     }
@@ -60,12 +62,16 @@ namespace WSG.CafeOtomation.Entities.Concrete
     public enum OrderStatus
     {
         [Description("Bekliyor!")]
+        [Display(Name = "Bekliyor!")]
         Waiting = 0,
         [Description("Hazırlanıyor!")]
+        [Display(Name = "Hazırlanıyor!")]
         Prepares = 1,
         [Description("Garsonda!")]
+        [Display(Name = "Garsonda!")]
         AtWaiters = 2,
         [Description("Tamamlandı!")]
+        [Display(Name = "Tamamlandı!")]
         Complete = 3,
     }
 }

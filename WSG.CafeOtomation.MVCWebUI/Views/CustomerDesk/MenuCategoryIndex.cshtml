@@ -10,6 +10,12 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Menü Başlığı</title>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style type="text/css">
         .main {
             position: relative;
@@ -32,6 +38,7 @@
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             font-weight: bold;
             font-size: 2rem;
+            padding: 4%;
         }
 
         .gredientColor {
@@ -43,16 +50,20 @@
 <body>
     @foreach (var item in Model)
     {
-        <div class="row main">
-            <div class="col-12">
-                <a href="MenuIndex?categoryID=@item.ID">
+        <div class="main">
+            <a href="MenuIndex?categoryName=@item.Name&categoryID=@item.ID&deskUniqueID=@ViewBag.DeskUniqueID">
+                <div>
                     <h2>@item.Name</h2>
-                    <div class="gredientColor">
-                        <img src="@item.IconPath" alt="" />
-                    </div>
-                </a>
-            </div>
+                </div>
+                <div class="gredientColor">
+                    <img src="@item.IconPath" alt="" />
+                </div>
+            </a>
         </div>
     }
+    <script type="text/javascript">
+        $("img").animate({ "opacity": "1", "margin-top": "-100" }, 0);
+        $("img").animate({ "opacity": "1", "margin-top": "0" }, 1100);
+    </script>
 </body>
 </html>

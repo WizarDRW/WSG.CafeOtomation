@@ -63,4 +63,10 @@ namespace WSG.CafeOtomation.Entities.Dtos
         [DisplayName("Sipariş Oluşturulma Zamanı")]
         public string CreateTime { get; set; }
     }
+    public class CustomerOrderCreateDto
+    {
+        public int Amount { get; set; }
+        public int ProductID { get; set; }
+        public string DeskUniqueId { get; set; }
+    }
 }

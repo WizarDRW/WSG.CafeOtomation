@@ -305,13 +305,19 @@ namespace WSG.CafeOtomation.WinForm.Controller
         {
             var order = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
             string totalAmount = Convert.ToDecimal(_orderDetailService.GetAll(x => x.OrderID == order.ID && x.ProductID == (int)dGWOrders.CurrentRow.Cells["ProductID"].Value).Data.Sum(x => x.Amount)).ToString("# Adet");
+            if (dGWOrders.SelectedRows.Count == dGWOrders.Rows.Count)
+                btnDeskSelectedMove.Enabled = false;
+            else
+                btnDeskSelectedMove.Enabled = true;
             if (dGWOrders.SelectedRows.Count > 1)
             {
+                btnDeskSelectedMove.Text = "Siparişleri Taşı";
                 lblUnitPrice.Text = Convert.ToDecimal(dGWOrders.SelectedRows.Cast<DataGridViewRow>().Sum(x => (decimal)x.Cells["TotalPrice"].Value)).ToString();
                 timerOrderList.Enabled = false;
             }
             else
             {
+                btnDeskSelectedMove.Text = "Siparişi Taşı";
                 timerOrderList.Enabled = true;
                 nUDAmount.Value = decimal.Parse(dGWOrders.CurrentRow.Cells["Amount"].Value.ToString());
                 lblProductTitle.Text = totalAmount + ' ' + dGWOrders.CurrentRow.Cells["Product"].Value.ToString();
@@ -404,7 +410,8 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 OrderStatus = OrderStatus.Complete,
                 OrderDetailID = data.ID,
                 CreateDate = _nowTime,
-                Minute = begintoSpan.TotalMinutes.ToString("0") + ':' + begintoSpan.TotalSeconds.ToString("00")
+                Minute = (decimal)begintoSpan.TotalMinutes,
+                Second = (decimal)begintoSpan.TotalSeconds
             };
             _orderDetailTimeLogService.Add(log);
         }

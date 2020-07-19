@@ -31,7 +31,8 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          Amount = p.StockAmount,
                          UnitPrice = p.UnitPrice,
                          CategoryName = pC.Name,
-                         ProductImages = p.ProductImages
+                         ProductImages = p.ProductImages,
+                         Minute = p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Count) <= 0 ? 0 : (p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Sum(c =>c.Minute)) / p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Count))
                      }).ToList()
                     :
                     (from p in context.Products.Where(filter)
@@ -45,7 +46,8 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          Amount = p.StockAmount,
                          UnitPrice = p.UnitPrice,
                          CategoryName = pC.Name,
-                         ProductImages = p.ProductImages
+                         ProductImages = p.ProductImages,
+                         Minute = p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Count) <= 0 ? 0 : (p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Sum(c => c.Minute)) / p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Count))
                      }).ToList();
             }
         }

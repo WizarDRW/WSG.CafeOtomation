@@ -1,0 +1,146 @@
+﻿@model IEnumerable<WSG.CafeOtomation.Entities.Dtos.OrderDetailsDto>
+@using WizardSoftwareGroupsFramework.Core.Extensions
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OrderStatusIndex</title>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style type="text/css">
+        table {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .notifyjs-foo-base {
+            opacity: 0.95;
+            width: 100%;
+            background: #850000;
+            color: #fff;
+            padding: 5px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EOrderStatus)
+                </th>
+                <th>
+                    <a style="font-weight:bold" class="btn" href="MenuCategoryIndex?deskUniqueID=@ViewBag.DeskUniqueID">Menülere Git</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                string backgroundColor = "background-color:#fff";
+                string color = "color:#000";
+                string display = "display:block";
+                if (item.EOrderStatus == WSG.CafeOtomation.Entities.Concrete.OrderStatus.Prepares)
+                {
+                    backgroundColor = "background-color:goldenrod";
+                    color = "color:#fff";
+                    display = "display:none";
+                }
+                else if (item.EOrderStatus == WSG.CafeOtomation.Entities.Concrete.OrderStatus.AtWaiters)
+                {
+                    backgroundColor = "background-color:mediumslateblue";
+                    color = "color:#fff";
+                    display = "display:none";
+                }
+                else if (item.EOrderStatus == WSG.CafeOtomation.Entities.Concrete.OrderStatus.Complete)
+                {
+                    backgroundColor = "background-color:mediumseagreen";
+                    color = "color:#fff";
+                    display = "display:none";
+                }
+                <tr style="@backgroundColor;@color;">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td align="right" style="font-weight:bold">
+                        @Html.DisplayFor(modelItem => item.TotalPrice)₺
+                    </td>
+                    <td>
+                        @item.EOrderStatus.GetDisplayName()
+                    </td>
+
+                    <td>
+                        <a style="@display;cursor:pointer" onclick="Delete(@item.ID)">Sipariş İptal</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        function Delete(id) {
+            $.notify.addStyle('foo', {
+                html:
+                    "<div>" +
+                    "<div class='clearfix'>" +
+                    "<div class='title' data-notify-html='title'/>" +
+                    "<div class='buttons'>" +
+                    "<button class='no'>Kapat</button>" +
+                    "<button class='yes'>Sipariş İptal</button>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>"
+            });
+
+            $(document).on('click', '.notifyjs-foo-base .no', function () {
+                $(this).trigger('notify-hide');
+            });
+            $(document).on('click', '.notifyjs-foo-base .yes', function () {
+                $.ajax({
+                    type: "DELETE",
+                    url: "Delete?id=" + id,
+                    success: function (result) {
+                        if (result) {
+                            location.reload();
+                            $.notify("Siparişiniz iptal edilmiştir.", "success");
+                        } else {
+                            $.notify("Siparişiniz iptal edilemedi.", "warn");
+                        }
+                    }
+                });
+                $(this).trigger('notify-hide');
+            });
+            $.notify({
+                title: 'Sipariş iptalini onaylıyor musunuz?',
+                button: 'Confirm'
+            }, {
+                style: 'foo',
+                autoHide: false,
+                clickToHide: false
+            });
+        }
+    </script>
+</body>
+</html>

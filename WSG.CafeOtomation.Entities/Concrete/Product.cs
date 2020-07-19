@@ -33,6 +33,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int ProductCategoryID { get; set; }
         public ProductCategory ProductCategory { get; set; }
         public List<ProductImage> ProductImages { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
     }
     public class ProductImage : IEntity
     {
@@ -40,6 +41,8 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int ID { get; set; }
         public string Path { get; set; }
         public bool IsCover { get; set; }
+        public string RGB { get; set; }
+        public string FontColor { get; set; }
         public int ProductID { get; set; }
         public Product Product { get; set; }
     }
@@ -47,6 +50,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
     {
         [Key]
         public int ID { get; set; }
+        public string InvoiceNo { get; set; }
         public DateTime CreateDate { get; set; }
         public int Amount { get; set; }
         public decimal UnitPrice { get; set; }

@@ -9,7 +9,15 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@Model.FirstOrDefault().CategoryName</title>
+    <title>
+        @ViewBag.Title
+    </title>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style type="text/css">
         .main {
             position: relative;
@@ -23,51 +31,172 @@
             z-index: -1;
         }
 
-        h1 {
-            color: #fff;
-            position: absolute;
-            width: 100%;
-            vertical-align: central;
-            text-align: right;
-            right: 10px;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            font-weight: bold;
-            font-size: 30px;
+        .pad h1 {
+            font-size: x-large;
         }
 
-        h2 {
-            color: #fff;
-            position: absolute;
-            width: 100%;
-            vertical-align: bottom;
-            text-align: right; 
+        .pad h2 {
+            font-size: medium;
             bottom: 5px;
-            right: 10px;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            font-weight: bold;
-            font-size: 25px;
+        }
+
+        a:hover {
+            cursor: pointer
         }
 
         .gredientColor {
             display: block;
             background: linear-gradient(rgba(0,0,100,0.5),rgba(0,0,100,0.5));
         }
+
+        .pad {
+            color: #fff;
+            position: absolute;
+            padding: 10px;
+            width: 40%;
+            vertical-align: bottom;
+            text-align: right;
+            right: 10px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: bold;
+            font-size: 10px !important;
+        }
+
+        .ui-dialog .ui-dialog-title {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+        }
+
+        .ui-draggable .ui-dialog-titlebar {
+            background: center;
+            background-color: #ff4d4d;
+            color: white;
+            border-radius: 0 0 0 0;
+        }
+        .ui-widget-content {
+            border: 0px;
+        }
+        .ui-widget-header{
+            border: 0px;
+        }
+        .ui-corner-all {
+            border-radius: 0px;
+        }
+        .form-control{
+            border-radius: 0px;
+        }
+        .btn{
+            border-radius: 0px;
+        }
     </style>
 </head>
 <body>
     @foreach (var item in Model)
     {
-        <div class="row main">
-            <div class="col-12">
-                <a href="#">
+        <a onclick="openModal('@item.Name' ,@item.ID)">
+            @{
+                <div class="pad" style="background: linear-gradient(@item.ProductImages.SingleOrDefault(x=>x.IsCover).RGB,@item.ProductImages.SingleOrDefault(x=>x.IsCover).RGB);
+                                                color:@item.ProductImages.SingleOrDefault(x=>x.IsCover).FontColor">
                     <h1>@item.Name</h1>
-                    <h2>@item.UnitPrice TL</h2>
-                    <div class="gredientColor">
-                        <img src="@item.ProductImages.SingleOrDefault(x=>x.IsCover).Path" />
+                    <div>
+                        @item.Description
                     </div>
-                </a>
+                    @if (item.Minute == 0)
+                    {
+                        <div>
+                            Geliş Süresi Bilinmiyor!
+                        </div>
+                    }
+                    else
+                    {
+                        <h2>
+                            @item.Minute.ToString("## DK")
+                        </h2>
+                    }
+                    <h2>@item.UnitPrice ₺</h2>
+                </div>
+            }
+            <div>
+                <img src="@item.ProductImages.SingleOrDefault(x=>x.IsCover).Path" />
+            </div>
+        </a>
+    }
+    <div id="result" style="display:none;">
+        <div class="row">
+            <div class="col-md-4">
+                <form>
+                    <div style="display: none"><label id="productID"></label></div>
+                    <div style="display: none"><label id="productName"></label></div>
+                    <div style="display: none"><label id="desk">@ViewBag.DeskUniqueID</label></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group" style="width:100%">
+                        <label class="control-label">Sipariş Adetinizi Giriniz</label>
+                        <input type="number" value="1" max="100" min="1" class="form-control amount" />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width:100%">
+                        <input id="btnPost" type="button" value="Siparisi Ver" class="btn btn-danger" style="width: 100%" pattern="[0-9]{10}"/>
+                    </div>
+                </form>
             </div>
         </div>
-    }
+    </div>
+
+    <script type="text/javascript">
+        $("img").animate({ "opacity": "0" }, 0);
+        $("img").animate({ "opacity": "1" }, 700);
+        $(".pad").animate({ "margin-top": "-100" }, 0);
+        $(".pad").animate({ "margin-top": "0" }, 500);
+        var opt = {
+            autoOpen: false,
+            width: 'auto',
+            height: 'auto',
+            modal: true
+        };
+        function openModal(pName, pID) {
+            opt = {
+                autoOpen: false,
+                title: pName,
+                width: 'auto',
+                height: 'auto',
+                modal: true
+            };
+            console.log(pName + ' ' + pID);
+            $("#productID").text(pID);
+            $("#productName").text(pName);
+            $("#result").dialog(opt).dialog("open");
+        }
+        $("#btnPost").click(function () {
+            var isOpen = $("#result").dialog(opt).dialog("isOpen");
+            var count = $(".amount").val()
+            if (count <= 0) {
+                $.notify("Sipariş adeti seçilmedi!", "error");
+            } else {
+                var data = {
+                    ProductID: $("#productID").text(),
+                    Amount: $(".amount").val(),
+                    DeskUniqueId: $("#desk").text()
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "CreateOrder",
+                    data: data,
+                    success: function (result) {
+                        if (result.success) {
+                            if (isOpen) {
+                                var s = count + " adet " + $("#productName").text() + " siparisiniz verildi!";
+                                $.notify(s, "success");
+                                $("#result").dialog("close");
+                                $(".amount").val("0");
+                            }
+                        } else {
+                            $.notify(result.message, "error");
+                            console.error(result.message);
+                        }
+                    }
+                });
+            }
+        })
+    </script>
+
 </body>
 </html>
