@@ -14,6 +14,10 @@ namespace WSG.CafeOtomation.DataAccess.Abstract
     {
         List<ProductDto> GetProductDtoList(Expression<Func<Product, bool>> filter = null);
     }
+    public interface IProductTypeDal:IEntityRepository<ProductType>
+    {
+
+    }
     public interface IProductImageDal : IEntityRepository<ProductImage>
     {
     }

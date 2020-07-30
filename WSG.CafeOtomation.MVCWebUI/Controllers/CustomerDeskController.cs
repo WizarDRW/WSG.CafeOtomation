@@ -14,6 +14,7 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
     public class CustomerDeskController : Controller
     {
         private IProductService _productService;
+        private IProductTypeService _productTypeService;
         private IProductCategoryService _productCategoryService;
         private IProductImageService _productImageService;
         private IOrderService _orderService;
@@ -24,7 +25,8 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
             IProductImageService productImageService,
             IOrderService orderService,
             IOrderDetailService orderDetailService,
-            IDeskService deskService)
+            IDeskService deskService,
+            IProductTypeService productTypeService)
         {
             _productService = productService;
             _productCategoryService = productCategoryService;
@@ -32,6 +34,7 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
             _orderService = orderService;
             _orderDetailService = orderDetailService;
             _deskService = deskService;
+            _productTypeService = productTypeService;
         }
         public IActionResult Index(string deskUniqueID)
         {
@@ -47,13 +50,15 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
         {
             ViewBag.Title = categoryName;
             ViewBag.DeskUniqueID = deskUniqueID;
+            ViewBag.ProductTypes = _productTypeService;
+            ViewBag.ID = 1;
             return View(_productService.GetByCategory(categoryID).Data);
         }
         public IActionResult OrderStatusIndex(string deskUniqueID)
         {
             ViewBag.DeskUniqueID = deskUniqueID;
             var desk = _deskService.GetByUnique(deskUniqueID);
-            var order = _orderService.GetByDesk(desk.Data.ID).Data.Where(x => !x.IsClose);
+            var order = _orderService.GetByDesk(desk.Data.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open);
             var data = _orderDetailService.GetAll(x => x.OrderID == order.SingleOrDefault().ID).Data;
             return View(data);
         }
@@ -63,7 +68,7 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
         {
             var desk = _deskService.GetByUnique(customerOrderCreateDto.DeskUniqueId).Data;
             var product = _productService.GetByID(customerOrderCreateDto.ProductID).Data;
-            var order = _orderService.GetByDesk(desk.ID).Data.Where(x => !x.IsClose);
+            var order = _orderService.GetByDesk(desk.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open);
             if (order.Count() < 1)
             {
                 var orderCreate = new Order
@@ -79,6 +84,7 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
                     {
                         Amount = customerOrderCreateDto.Amount,
                         EOrderStatus = OrderStatus.Waiting,
+                        OrderPayType = OrderPayType.None,
                         OrderID = orderCreate.ID,
                         ProductID = product.ID,
                         TotalPrice = customerOrderCreateDto.Amount * product.UnitPrice,

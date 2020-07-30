@@ -55,11 +55,11 @@
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnPrintSelect = new System.Windows.Forms.Button();
             this.pnlControl = new System.Windows.Forms.Panel();
+            this.btnDeskSelectedMove = new System.Windows.Forms.Button();
+            this.btnDeskMove = new System.Windows.Forms.Button();
             this.btnSuccessOrder = new System.Windows.Forms.Button();
             this.lblUnitPrice = new System.Windows.Forms.Label();
             this.timerOrderList = new System.Windows.Forms.Timer(this.components);
-            this.btnDeskMove = new System.Windows.Forms.Button();
-            this.btnDeskSelectedMove = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dGWOrders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUDPay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUDAmount)).BeginInit();
@@ -202,11 +202,11 @@
             this.btnPayCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnPayCustomer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnPayCustomer.ForeColor = System.Drawing.Color.White;
-            this.btnPayCustomer.Location = new System.Drawing.Point(3, 204);
+            this.btnPayCustomer.Location = new System.Drawing.Point(197, 205);
             this.btnPayCustomer.Name = "btnPayCustomer";
-            this.btnPayCustomer.Size = new System.Drawing.Size(382, 42);
+            this.btnPayCustomer.Size = new System.Drawing.Size(188, 42);
             this.btnPayCustomer.TabIndex = 12;
-            this.btnPayCustomer.Text = "Ödeme Yapılmadı Hesabı Müsteriye Yaz";
+            this.btnPayCustomer.Text = "Cari Hesaba Yaz";
             this.btnPayCustomer.UseVisualStyleBackColor = false;
             this.btnPayCustomer.Click += new System.EventHandler(this.btnPayCustomer_Click);
             // 
@@ -216,11 +216,11 @@
             this.btnPaySuccess.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnPaySuccess.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnPaySuccess.ForeColor = System.Drawing.Color.White;
-            this.btnPaySuccess.Location = new System.Drawing.Point(3, 155);
+            this.btnPaySuccess.Location = new System.Drawing.Point(3, 205);
             this.btnPaySuccess.Name = "btnPaySuccess";
-            this.btnPaySuccess.Size = new System.Drawing.Size(382, 42);
+            this.btnPaySuccess.Size = new System.Drawing.Size(191, 42);
             this.btnPaySuccess.TabIndex = 13;
-            this.btnPaySuccess.Text = "Ödeme Yapıldı Masayı Kapat";
+            this.btnPaySuccess.Text = "Ödeme Yapıldı";
             this.btnPaySuccess.UseVisualStyleBackColor = false;
             this.btnPaySuccess.Click += new System.EventHandler(this.btnPaySuccess_Click);
             // 
@@ -416,6 +416,34 @@
             this.pnlControl.Size = new System.Drawing.Size(388, 248);
             this.pnlControl.TabIndex = 24;
             // 
+            // btnDeskSelectedMove
+            // 
+            this.btnDeskSelectedMove.BackColor = System.Drawing.Color.Orange;
+            this.btnDeskSelectedMove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDeskSelectedMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnDeskSelectedMove.ForeColor = System.Drawing.Color.White;
+            this.btnDeskSelectedMove.Location = new System.Drawing.Point(3, 156);
+            this.btnDeskSelectedMove.Name = "btnDeskSelectedMove";
+            this.btnDeskSelectedMove.Size = new System.Drawing.Size(191, 44);
+            this.btnDeskSelectedMove.TabIndex = 22;
+            this.btnDeskSelectedMove.Text = "Siparişleri Taşı";
+            this.btnDeskSelectedMove.UseVisualStyleBackColor = false;
+            this.btnDeskSelectedMove.Click += new System.EventHandler(this.btnDeskSelectedMove_Click);
+            // 
+            // btnDeskMove
+            // 
+            this.btnDeskMove.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnDeskMove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDeskMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnDeskMove.ForeColor = System.Drawing.Color.White;
+            this.btnDeskMove.Location = new System.Drawing.Point(197, 156);
+            this.btnDeskMove.Name = "btnDeskMove";
+            this.btnDeskMove.Size = new System.Drawing.Size(188, 44);
+            this.btnDeskMove.TabIndex = 21;
+            this.btnDeskMove.Text = "Masayı Taşı";
+            this.btnDeskMove.UseVisualStyleBackColor = false;
+            this.btnDeskMove.Click += new System.EventHandler(this.btnDeskMove_Click);
+            // 
             // btnSuccessOrder
             // 
             this.btnSuccessOrder.BackColor = System.Drawing.Color.MediumSeaGreen;
@@ -448,34 +476,6 @@
             this.timerOrderList.Enabled = true;
             this.timerOrderList.Interval = 400;
             this.timerOrderList.Tick += new System.EventHandler(this.timerOrderList_Tick);
-            // 
-            // btnDeskMove
-            // 
-            this.btnDeskMove.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnDeskMove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDeskMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnDeskMove.ForeColor = System.Drawing.Color.White;
-            this.btnDeskMove.Location = new System.Drawing.Point(197, 156);
-            this.btnDeskMove.Name = "btnDeskMove";
-            this.btnDeskMove.Size = new System.Drawing.Size(188, 44);
-            this.btnDeskMove.TabIndex = 21;
-            this.btnDeskMove.Text = "Masayı Taşı";
-            this.btnDeskMove.UseVisualStyleBackColor = false;
-            this.btnDeskMove.Click += new System.EventHandler(this.btnDeskMove_Click);
-            // 
-            // btnDeskSelectedMove
-            // 
-            this.btnDeskSelectedMove.BackColor = System.Drawing.Color.Orange;
-            this.btnDeskSelectedMove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDeskSelectedMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnDeskSelectedMove.ForeColor = System.Drawing.Color.White;
-            this.btnDeskSelectedMove.Location = new System.Drawing.Point(3, 156);
-            this.btnDeskSelectedMove.Name = "btnDeskSelectedMove";
-            this.btnDeskSelectedMove.Size = new System.Drawing.Size(191, 44);
-            this.btnDeskSelectedMove.TabIndex = 22;
-            this.btnDeskSelectedMove.Text = "Siparişleri Taşı";
-            this.btnDeskSelectedMove.UseVisualStyleBackColor = false;
-            this.btnDeskSelectedMove.Click += new System.EventHandler(this.btnDeskSelectedMove_Click);
             // 
             // DeskMenu
             // 

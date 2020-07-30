@@ -20,6 +20,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<PaymentDetail> PaymentDetails { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductDetail> ProductDetails { get; set; }
         public DbSet<Order> Orders { get; set; }

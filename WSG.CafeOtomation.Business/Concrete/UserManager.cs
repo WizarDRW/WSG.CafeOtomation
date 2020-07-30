@@ -141,5 +141,10 @@ namespace WSG.CafeOtomation.Business.Concrete
         {
             return new SuccessDataResult<UserTitle>(_userTitleDal.Get(x => x.UserID == id));
         }
+
+        public IDataResult<UserTitle> GetByCartPass(string pass)
+        {
+            return new SuccessDataResult<UserTitle>(_userTitleDal.Get(x => x.CartPass == pass));
+        }
     }
 }

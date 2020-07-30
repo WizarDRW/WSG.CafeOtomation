@@ -11,6 +11,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int TitleID { get; set; }
         public int SessionMinute { get; set; }
         public AccessAuth AccessAuth { get; set; }
+        public string CartPass { get; set; }
     }
     public class Title : IEntity
     {

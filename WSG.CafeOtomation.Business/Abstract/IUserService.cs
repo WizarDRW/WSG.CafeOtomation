@@ -24,6 +24,7 @@ namespace WSG.CafeOtomation.Business.Abstract
         IDataResult<List<UserTitle>> GetAll();
         IDataResult<UserTitle> GetByID(int id);
         IDataResult<UserTitle> GetByUserID(int id);
+        IDataResult<UserTitle> GetByCartPass(string pass);
         IResult Add(UserTitle title);
         IResult Update(UserTitle title);
         IResult Delete(UserTitle title);

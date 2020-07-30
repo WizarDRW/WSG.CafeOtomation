@@ -83,7 +83,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         }
         private void ButtonColor(Button button, int id)
         {
-            var data = _orderService.GetByDesk(id).Data.Where(c => !c.IsClose);
+            var data = _orderService.GetByDesk(id).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open);
             if (data.Count() > 0)
             {
                 button.BackColor = Color.LawnGreen;
@@ -97,7 +97,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         }
         public void OrderList()
         {
-            dGVOrderDetails.DataSource = _orderDetailService.GetOrderDetailAll(x => x.EOrderStatus != (OrderStatus)3).Data;
+            dGVOrderDetails.DataSource = _orderDetailService.GetOrderDetailAll(x => x.EOrderStatus != OrderStatus.Complete && x.OrderPayType == OrderPayType.None).Data;
             dGVOrderDetails.Columns["ID"].Visible = false;
         }
         public void AccessControl()

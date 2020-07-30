@@ -56,7 +56,7 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
         private void btnOK_Click(object sender, EventArgs e)
         {
             var desk = _deskService.GetByNo(cmbBxDesk.SelectedItem.ToString()).Data;
-            var data = _orderService.GetByDesk(desk.ID).Data.Where(x => !x.IsClose).SingleOrDefault();
+            var data = _orderService.GetByDesk(desk.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
             if (_id != null)
             {
                 if (data == null)
@@ -70,7 +70,7 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
                     {
                         CreateUserID = _user.ID,
                         DeskID = desk.ID,
-                        IsClose = false,
+                        OrderPayStatus = OrderPayStatus.Open,
                         TotalPrice = totalPrice,
                         CreateDate = DateTime.Now
                     };

@@ -36,6 +36,9 @@ namespace WSG.CafeOtomation.Business.DependencyResolvers.Autofac
             builder.RegisterType<ProductManager>().As<IProductService>();
             builder.RegisterType<EfProductDal>().As<IProductDal>();
 
+            builder.RegisterType<ProductTypeManager>().As<IProductTypeService>();
+            builder.RegisterType<EfProductTypeDal>().As<IProductTypeDal>();
+
             builder.RegisterType<ProductImageManager>().As<IProductImageService>();
             builder.RegisterType<EfProductImageDal>().As<IProductImageDal>();
 

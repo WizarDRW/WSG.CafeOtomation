@@ -52,6 +52,10 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
             }
         }
     }
+    public class EfProductTypeDal:EfEntityRepositoryBase<ProductType, CafeContext>, IProductTypeDal
+    {
+
+    }
     public class EfProductImageDal : EfEntityRepositoryBase<ProductImage, CafeContext>, IProductImageDal
     {
     }

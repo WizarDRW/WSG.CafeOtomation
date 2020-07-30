@@ -6,6 +6,7 @@ using WizardSoftwareGroupsFramework.Core.Utilities.Security.Hashing;
 using WizardSoftwareGroupsFramework.Core.Utilities.Security.Jwt;
 using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.Business.Constants;
+using WSG.CafeOtomation.Entities.Concrete;
 using WSG.CafeOtomation.Entities.Dtos;
 
 namespace WSG.CafeOtomation.Business.Concrete
@@ -14,6 +15,7 @@ namespace WSG.CafeOtomation.Business.Concrete
     {
         private IUserService _userService;
         private ITokenHelper _tokenHelper;
+        private IUserTitleService _userTitleService;
         public AuthManager(IUserService userService, ITokenHelper tokenHelper)
         {
             _userService = userService;
@@ -21,6 +23,11 @@ namespace WSG.CafeOtomation.Business.Concrete
         }
         public AuthManager(IUserService userService)
         {
+            _userService = userService;
+        }
+        public AuthManager(IUserService userService, IUserTitleService userTitleService)
+        {
+            _userTitleService = userTitleService;
             _userService = userService;
         }
         public IDataResult<AccessToken> CreateAccessToken(User user)
@@ -62,6 +69,20 @@ namespace WSG.CafeOtomation.Business.Concrete
             if (_userService.GetByUserName(userName) != null)
                 return new ErrorResult("This user is exists!");
             return new SuccessResult();
+        }
+
+        public IDataResult<User> CardLogin(UserTitle userTitle)
+        {
+            var user = _userTitleService.GetByCartPass(userTitle.CartPass).Data;
+
+            if (user != null)
+            {
+                return new SuccessDataResult<User>(_userService.GetByID(user.UserID).Data, UserMessages.SuccessfulLogin);
+            }
+            else
+            {
+                return new ErrorDataResult<User>(UserMessages.PasswordError);
+            }
         }
     }
 }

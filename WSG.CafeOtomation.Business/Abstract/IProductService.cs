@@ -24,6 +24,15 @@ namespace WSG.CafeOtomation.Business.Abstract
         IResult Update(Product product);
         IResult Delete(Product product);
     }
+    public interface IProductTypeService
+    {
+        IDataResult<List<ProductType>> GetAll();
+        IDataResult<List<ProductType>> GetByProduct(int id);
+        IDataResult<ProductType> GetByID(int id);
+        IResult Add(ProductType productType);
+        IResult Update(ProductType productType);
+        IResult Delete(ProductType productType);
+    }
     public interface IProductImageService
     {
         IDataResult<List<ProductImage>> GetAll();

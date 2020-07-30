@@ -28,20 +28,16 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                      on o.CreateUserID equals u.ID
                      join d in context.Desks
                      on o.DeskID equals d.ID
-                     join c in context.Customers
-                     on o.CurrentBookID equals c.ID into cO
-                     from cus in cO.DefaultIfEmpty()
                      select new OrderDto
                      {
                          ID = o.ID,
                          CreateDate = o.CreateDate,
                          CreateUser = u != null ? $"{u.FirstName} {u.LastName}" : "Anonymous",
-                         Customer = cus != null ? $"{cus.FirstName} {cus.LastName}" : "Anonymous",
                          DeskNo = d.DeskNo,
                          TotalPrice = o.TotalPrice,
                          Paid = o.Paid,
                          Change = o.Change,
-                         IsClose = o.IsClose
+                         OrderPayStatus = o.OrderPayStatus
                      }).ToList()
                         :
                     (from o in context.Orders.Where(filter)
@@ -49,20 +45,16 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                      on o.CreateUserID equals u.ID
                      join d in context.Desks
                      on o.DeskID equals d.ID
-                     join c in context.Customers
-                     on o.CurrentBookID equals c.ID into cO
-                     from cus in cO.DefaultIfEmpty()
                      select new OrderDto
                      {
                          ID = o.ID,
                          CreateDate = DateTime.Now,
                          CreateUser = u != null ? $"{u.FirstName} {u.LastName}" : "Anonymous",
-                         Customer = cus != null ? $"{cus.FirstName} {cus.LastName}" : "Anonymous",
                          DeskNo = d.DeskNo,
                          TotalPrice = o.TotalPrice,
                          Paid = o.Paid,
                          Change = o.Change,
-                         IsClose = o.IsClose
+                         OrderPayStatus = o.OrderPayStatus
                      }).ToList();
             }
         }
@@ -131,6 +123,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          Amount = o.Amount,
                          TotalPrice = o.TotalPrice,
                          EOrderStatus = o.EOrderStatus,
+                         OrderPayType = o.OrderPayType,
                          ProductID = p.ID,
                          CreateTime = o.CreateDate.ToString("HH:mm:ss")
                      }).ToList()
@@ -145,6 +138,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          Amount = o.Amount,
                          TotalPrice = o.TotalPrice,
                          EOrderStatus = o.EOrderStatus,
+                         OrderPayType = o.OrderPayType,
                          ProductID = p.ID,
                          CreateTime = o.CreateDate.ToString("HH:mm:ss")
                      }).ToList();

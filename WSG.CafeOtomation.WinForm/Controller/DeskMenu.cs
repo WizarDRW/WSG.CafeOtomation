@@ -78,14 +78,19 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// </summary>
         private void loadData()
         {
-            if (_orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).Count() > 0)
+            if (_orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).Count() > 0)
             {
-                var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
-                dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == data.ID).Data;
+                var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
+                dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == data.ID && x.OrderPayType == OrderPayType.None).Data;
                 dGWOrders.Columns["ID"].Visible = false;
                 dGWOrders.Columns["ProductID"].Visible = false;
                 dGWOrders.Columns["CreateTime"].Visible = false;
-                lblTotalPay.Text = data.TotalPrice.ToString();
+                decimal total = 0;
+                for (int i = 0; i < dGWOrders.Rows.Count; i++)
+                {
+                    total += decimal.Parse(dGWOrders.Rows[i].Cells["TotalPrice"].Value.ToString());
+                }
+                lblTotalPay.Text = total.ToString("#.00 TL");
                 pnlPay.Enabled = true;
             }
         }
@@ -94,7 +99,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// </summary>
         private void PayChange()
         {
-            var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
+            var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
             dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == data.ID).Data;
             if ((nUDPay.Value - data.TotalPrice) < 0)
             {
@@ -184,7 +189,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// <param name="e"></param>
         private void tVProducts_DoubleClick(object sender, EventArgs e)
         {
-            var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
+            var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
             var product = _productService.GetByName(tVProducts.SelectedNode.Text).Data;
             if (product == null)
             {
@@ -204,7 +209,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                     {
                         CreateUserID = _user.ID,
                         DeskID = _desk.ID,
-                        IsClose = false,
+                        OrderPayStatus = OrderPayStatus.Open,
                         TotalPrice = product.UnitPrice,
                         CreateDate = DateTime.Now
                     };
@@ -281,7 +286,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// <param name="e"></param>
         private void nUDAmount_ValueChanged(object sender, EventArgs e)
         {
-            var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
+            var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
             var product = _productService.GetByID(Convert.ToInt32(dGWOrders.CurrentRow.Cells["ProductID"].Value)).Data;
             var dataChild = _orderDetailService.GetBy(x => x.ProductID == product.ID && x.OrderID == data.ID && x.ID == Convert.ToInt32(dGWOrders.CurrentRow.Cells["ID"].Value)).Data;
             if (dataChild != null)
@@ -303,7 +308,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// <param name="e"></param>
         private void dGWOrders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var order = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
+            var order = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
             string totalAmount = Convert.ToDecimal(_orderDetailService.GetAll(x => x.OrderID == order.ID && x.ProductID == (int)dGWOrders.CurrentRow.Cells["ProductID"].Value).Data.Sum(x => x.Amount)).ToString("# Adet");
             if (dGWOrders.SelectedRows.Count == dGWOrders.Rows.Count)
                 btnDeskSelectedMove.Enabled = false;
@@ -419,7 +424,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private void btnPaySuccess_Click(object sender, EventArgs e)
         {
             PayChange();
-            var dataSource = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
+            var dataSource = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
             if (decimal.Parse(lblChange.Text) >= 0)
             {
                 var data = new Order
@@ -429,7 +434,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                     Change = decimal.Parse(lblChange.Text),
                     CreateUserID = dataSource.CreateUserID,
                     DeskID = dataSource.DeskID,
-                    IsClose = true,
+                    OrderPayStatus = OrderPayStatus.Paid,
                     Paid = nUDPay.Value,
                     TotalPrice = dataSource.TotalPrice
                 };
@@ -454,7 +459,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 ID = (int)dGWOrders.Rows[dGWOrders.CurrentCell.RowIndex].Cells[0].Value
             };
             _orderDetailService.Delete(data);
-            var order = _orderService.GetByDesk(_desk.ID).Data.Where(c => !c.IsClose).SingleOrDefault();
+            var order = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
             var dataChilds = _orderDetailService.GetByOrderNo(order.ID).Data;
             if (dataChilds.Count <= 0)
             {
@@ -483,7 +488,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
 
         private void btnDeskMove_Click(object sender, EventArgs e)
         {
-            var data = _orderService.GetByDesk(_desk.ID).Data.Where(x => !x.IsClose).SingleOrDefault();
+            var data = _orderService.GetByDesk(_desk.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
             DeskMenuMoveHelper deskMenuMoveHelper = new DeskMenuMoveHelper(_user, data, _orderService, _orderDetailService);
             bool IsMove = false;
             deskMenuMoveHelper.FormClosing += (o, ev) =>
@@ -502,7 +507,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             {
                 ID.Add((int)item.Cells["ID"].Value);
             }
-            var data = _orderService.GetByDesk(_desk.ID).Data.Where(x => !x.IsClose).SingleOrDefault();
+            var data = _orderService.GetByDesk(_desk.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
             DeskMenuMoveHelper deskMenuMoveHelper = new DeskMenuMoveHelper(_user,ID, _orderService, _orderDetailService);
             deskMenuMoveHelper.ShowDialog();
         }

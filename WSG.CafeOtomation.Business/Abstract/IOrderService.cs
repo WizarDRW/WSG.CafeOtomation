@@ -11,7 +11,7 @@ namespace WSG.CafeOtomation.Business.Abstract
     {
         IDataResult<List<OrderDto>> GetAll(Expression<Func<Order, bool>> expression = null);
         IDataResult<List<Order>> GetByDesk(int deskId);
-        IDataResult<List<Order>> GetByClose(bool close);
+        IDataResult<List<Order>> GetByClose(OrderPayStatus orderPayStatus);
         IDataResult<Order> GetByOrderNo(int no);
         IResult Add(Order order);
         IResult Update(Order order);

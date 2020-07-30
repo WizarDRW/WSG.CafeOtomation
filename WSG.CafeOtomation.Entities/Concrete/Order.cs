@@ -24,10 +24,18 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public decimal TotalPrice { get; set; }
         public decimal Paid { get; set; }
         public decimal Change { get; set; }
-        public bool IsClose { get; set; }
-        public int? CurrentBookID { get; set; }
-        public CurrentBook CurrentBook { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
+        public OrderPayStatus OrderPayStatus { get; set; }
+    }
+    [TypeConverter(typeof(ExpectationResultConverter))]
+    public enum OrderPayStatus
+    {
+        [Description("Açık Masa")]
+        [Display(Name = "Açık Masa")]
+        Open = 0,
+        [Description("Ödendi")]
+        [Display(Name = "Ödendi")]
+        Paid = 2
     }
     public class OrderDetail : IEntity
     {
@@ -36,17 +44,20 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int Amount { get; set; }
         public decimal TotalPrice { get; set; }
         public OrderStatus EOrderStatus { get; set; }
+        public OrderPayType OrderPayType { get; set; }
         public int OrderID { get; set; }
         public Order Order { get; set; }
         public int ProductID { get; set; }
         public Product Product { get; set; }
         public DateTime CreateDate { get; set; }
         public int? CreateUserID { get; set; }
-        public DateTime? UpdateDate{ get; set; }
+        public DateTime? UpdateDate { get; set; }
         public int? UpdateUserID { get; set; }
+        public int? CurrentBookID { get; set; }
+        public CurrentBook CurrentBook { get; set; }
         public List<OrderDetailTimeLog> OrderDetailTimeLogs { get; set; }
     }
-    public class OrderDetailTimeLog:IEntity
+    public class OrderDetailTimeLog : IEntity
     {
         public int ID { get; set; }
         public DateTime CreateDate { get; set; }
@@ -73,5 +84,33 @@ namespace WSG.CafeOtomation.Entities.Concrete
         [Description("Tamamlandı!")]
         [Display(Name = "Tamamlandı!")]
         Complete = 3,
+    }
+    [TypeConverter(typeof(ExpectationResultConverter))]
+    public enum OrderPayType
+    {
+        [Description("Ödenecek")]
+        [Display(Name = "Ödenecek")]
+        None = 0,
+        [Description("Nakit")]
+        [Display(Name = "Nakit")]
+        Cash = 1,
+        [Description("Kredi Kartı")]
+        [Display(Name = "Kredi Kartı")]
+        Credit = 2,
+        [Description("Banka Kartı")]
+        [Display(Name = "Banka Kartı")]
+        Debit = 3,
+        [Description("Mişteri Hesabı")]
+        [Display(Name = "Müşteri Hesabı")]
+        Customer = 4,
+    }
+
+    public class OrderPayment:IEntity
+    {
+        public int ID { get; set; }
+        public int OrderID { get; set; }
+        public Order Order { get; set; }
+        public OrderPayType OrderPayType { get; set; }
+        public decimal Value { get; set; }
     }
 }

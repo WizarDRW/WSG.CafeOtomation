@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<WSG.CafeOtomation.Entities.Dtos.ProductDto>
+@using WSG.CafeOtomation.Business.Abstract
 
 @{
     Layout = null;
+    int id = 4;
 }
 
 <!DOCTYPE html>
@@ -72,19 +74,24 @@
             color: white;
             border-radius: 0 0 0 0;
         }
+
         .ui-widget-content {
             border: 0px;
         }
-        .ui-widget-header{
+
+        .ui-widget-header {
             border: 0px;
         }
+
         .ui-corner-all {
             border-radius: 0px;
         }
-        .form-control{
+
+        .form-control {
             border-radius: 0px;
         }
-        .btn{
+
+        .btn {
             border-radius: 0px;
         }
     </style>
@@ -92,7 +99,7 @@
 <body>
     @foreach (var item in Model)
     {
-        <a onclick="openModal('@item.Name' ,@item.ID)">
+        <a onclick="openModal('@item.Name', @item.ID);">
             @{
                 <div class="pad" style="background: linear-gradient(@item.ProductImages.SingleOrDefault(x=>x.IsCover).RGB,@item.ProductImages.SingleOrDefault(x=>x.IsCover).RGB);
                                                 color:@item.ProductImages.SingleOrDefault(x=>x.IsCover).FontColor">
@@ -133,8 +140,24 @@
                         <input type="number" value="1" max="100" min="1" class="form-control amount" />
                         <span class="text-danger"></span>
                     </div>
+                    @*@{
+                        var productTypes = (IProductTypeService)ViewBag.ProductTypes;
+                        var data = ;
+                        if (productTypes.GetByProduct(id).Data != null)
+                        {
+                            <div>
+                                <label class="control-label"></label>
+                                <select name="types" id="types">
+                                    @foreach (var item in data)
+                                    {
+                                        <option value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        }
+                    }*@
                     <div class="form-group" style="width:100%">
-                        <input id="btnPost" type="button" value="Siparisi Ver" class="btn btn-danger" style="width: 100%" pattern="[0-9]{10}"/>
+                        <input id="btnPost" type="button" value="Siparisi Ver" class="btn btn-danger" style="width: 100%" pattern="[0-9]{10}" />
                     </div>
                 </form>
             </div>

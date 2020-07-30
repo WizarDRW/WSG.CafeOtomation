@@ -35,6 +35,15 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public List<ProductImage> ProductImages { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
     }
+    public class ProductType:IEntity
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public int ParentID { get; set; }
+        public ProductType Parent { get; set; }
+        public int ProductID { get; set; }
+        public Product Product { get; set; }
+    }
     public class ProductImage : IEntity
     {
         [Key]

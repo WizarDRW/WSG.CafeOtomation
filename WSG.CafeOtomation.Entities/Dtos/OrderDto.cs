@@ -23,7 +23,7 @@ namespace WSG.CafeOtomation.Entities.Dtos
         [DisplayName("Para Üstü")]
         public decimal Change { get; set; }
         [DisplayName("Satış Durumu")]
-        public bool IsClose { get; set; }
+        public OrderPayStatus OrderPayStatus{ get; set; }
         [DisplayName("Müşteri")]
         public string Customer { get; set; }
     }
@@ -39,6 +39,8 @@ namespace WSG.CafeOtomation.Entities.Dtos
         public decimal TotalPrice { get; set; }
         [DisplayName("Sipariş Durumu")]
         public OrderStatus EOrderStatus { get; set; }
+        [DisplayName("Ödeme Tipi")]
+        public OrderPayType OrderPayType { get; set; }
         [DisplayName("Ürün No")]
         public int ProductID { get; set; }
         [DisplayName("Sipariş Oluşturulma Zamanı")]

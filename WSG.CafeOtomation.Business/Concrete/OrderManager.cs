@@ -42,9 +42,9 @@ namespace WSG.CafeOtomation.Business.Concrete
             return new SuccessDataResult<List<OrderDto>>(_orderDal.GetOrderDtos(filter));
         }
 
-        public IDataResult<List<Order>> GetByClose(bool close)
+        public IDataResult<List<Order>> GetByClose(OrderPayStatus orderPayStatus)
         {
-            return new SuccessDataResult<List<Order>>(_orderDal.GetList(x=>x.IsClose == close));
+            return new SuccessDataResult<List<Order>>(_orderDal.GetList(x=>x.OrderPayStatus == orderPayStatus));
         }
 
         public IDataResult<List<Order>> GetByDesk(int deskId)

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using WizardSoftwareGroupsFramework.Core.Utilities.Result.Abstract;
 using WizardSoftwareGroupsFramework.Core.Utilities.Result.Concrete;
 using WSG.CafeOtomation.Business.Abstract;
@@ -92,6 +94,47 @@ namespace WSG.CafeOtomation.Business.Concrete
         public IDataResult<Product> GetByName(string name)
         {
             return new SuccessDataResult<Product>(_productDal.Get(x => x.Name == name));
+        }
+    }
+    public class ProductTypeManager : IProductTypeService
+    {
+        private IProductTypeDal _productTypeDal;
+        public ProductTypeManager(IProductTypeDal productTypeDal)
+        {
+            _productTypeDal = productTypeDal;
+        }
+
+        public IResult Add(ProductType productType)
+        {
+            _productTypeDal.Add(productType);
+            return new SuccessResult(Messages.Added); 
+        }
+
+        public IResult Update(ProductType productType)
+        {
+            _productTypeDal.Update(productType);
+            return new SuccessResult(Messages.Updated);
+        }
+
+        public IResult Delete(ProductType productType)
+        {
+            _productTypeDal.Delete(productType);
+            return new SuccessResult(Messages.Deleted);
+        }
+
+        public IDataResult<List<ProductType>> GetAll()
+        {
+            return new SuccessDataResult<List<ProductType>>(_productTypeDal.GetList());
+        }
+
+        public IDataResult<ProductType> GetByID(int id)
+        {
+            return new SuccessDataResult<ProductType>(_productTypeDal.Get(x => x.ID == id));
+        }
+
+        public IDataResult<List<ProductType>> GetByProduct(int id)
+        {
+            return new SuccessDataResult<List<ProductType>>(_productTypeDal.GetList(x=>x.ProductID==id));
         }
     }
     public class ProductImageManager : IProductImageService
