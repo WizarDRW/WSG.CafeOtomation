@@ -31,9 +31,9 @@ namespace WSG.CafeOtomation.WebApi.Controllers
             return Ok(result.Data);
         }
         [HttpGet("getbyclose")]
-        public IActionResult GetByClose(bool close)
+        public IActionResult GetByClose(OrderPayStatus orderPayStatus)
         {
-            var result = _orderService.GetByClose(close);
+            var result = _orderService.GetByClose(orderPayStatus);
             return Ok(result.Data);
         }
         [HttpPost("add")]

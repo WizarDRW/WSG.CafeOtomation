@@ -1,0 +1,183 @@
+﻿@using WSG.CafeOtomation.Business.Abstract
+
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style type="text/css">
+    #result {
+        width: 96%;
+    }
+
+
+
+    form {
+        height: 100%;
+        padding: 5%;
+    }
+
+    .amount {
+        width: 100%;
+        padding: 5%;
+    }
+
+    .types {
+        width: 100%;
+        padding-left: 5%;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    }
+
+    #btnPost {
+        bottom: 5px;
+        color: #fff;
+    }
+
+    .add {
+        width: 100%;
+    }
+
+    .rightClose {
+        position: absolute;
+        right: 5px;
+    }
+
+    #dropDawn select {
+        margin-top: 10px;
+        height: 45px;
+    }
+</style>
+<div id="result" class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style="display: none"><label id="productID">@ViewBag.ID</label></div>
+            <div><h2 class="title" id="productName">@ViewBag.Name</h2></div>
+            <div style="display: none"><label id="desk">@ViewBag.DeskUniqueID</label></div>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group" style="width:100%">
+                <h3>Sipariş Adetinizi Giriniz</h3>
+                <input type="number" value="1" max="100" min="1" class="form-control amount" />
+                <span class="text-danger"></span>
+            </div>
+            <div>
+
+                @{
+                    var productTypes = (IProductTypeService)ViewBag.ProductTypes;
+                    var data = productTypes.GetByProduct((int)ViewBag.ID).Data;
+                    if (data.Count > 0)
+                    {
+                        <input type="button" class="btn btn-primary add" value="Detay Ekle" />
+                    }
+                }
+            </div>
+            <div id="dropDawn">
+
+            </div>
+            <br />
+            <div class="form-group modal-footer" style="width:100%;margin-bottom:0px;">
+                <input id="btnPost" type="button" value="Siparisi Ver" class="btn btn-success" style="width: 100%" pattern="[0-9]{10}" />
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var i = 1;
+    var po = 0;
+    var push = 0;
+    var selectedValues = [];
+    $(".amount").change(function () {
+        var a = $(this).val();
+            if (parseInt(a) < po) {
+                $("#dropDawn select").remove();
+                push = 0;
+            }
+            po = parseInt($(this).val());
+    });
+    $(".add").click(function () {
+
+        po = parseInt($(".amount").val());
+            if (push < po) {
+                var div = $("<div />");
+                var value = "";
+                var select = $("<select></select>").attr("id", "drop" + i).attr("class", "types");
+                var opt = $("<option value='0'>--Lütfen Seçiniz--</option>");
+                select.append(opt);
+
+                $.ajax({
+                    url: "GetProductTypeData?id=" + @ViewBag.ID,
+                    dataType: "JSON",
+                    type: "Get",
+                    success: function (data) {
+                        debugger;
+                        if (data.length < 1) {
+                            return;
+                        }
+                        for (var j = 0; j < data.length; j++) {
+                            var opt = new Option(data[j].name, data[j].id);
+                            $("select").each(function (i) {
+                                $(this).attr("id", "drop" + i).append(opt);
+                            });
+                        }
+                    }
+                })
+                select.find('option:eq(0)').prop("selected", true);
+                div.append(select);
+                $("#dropDawn").append(div);
+
+                i++;
+                push++;
+            } else {
+            }
+        });
+    $("#btnPost").click(function () {
+        selectedValues = [];
+        var process = true;
+        $('.types').map(function () {
+            if ($(this).val() != '0' && $(this).val() != null) {
+                selectedValues.push($(this).val());
+                $(this).css("border-color", "black");
+
+            } else {
+                $(this).css("border-color","red");
+                process = false;
+            }
+            }).get();
+            console.log(selectedValues);
+            var count = $(".amount").val()
+            if (count <= 0) {
+                $.notify("Sipariş adeti seçilmedi!", "error");
+            }
+            else if (count > 100) {
+                $.notify("Sipariş adeti 100'den fazla olamaz!", "error");
+            }
+            else if (!process) {
+                return;
+            }
+            else {
+                var data = {
+                    ProductID: $("#productID").text(),
+                    Amount: $(".amount").val(),
+                    DeskUniqueId: $("#desk").text(),
+                    ProductTypes: selectedValues
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "CreateOrder",
+                    data: data,
+                    success: function (result) {
+                        if (result.success) {
+                                var s = count + " adet " + $("#productName").text() + " siparisiniz verildi!";
+                                $.notify(s, "success");
+                                window.location.replace("OrderStatusIndex?deskUniqueID=@ViewBag.DeskUniqueID");
+                        } else {
+                            $.notify(result.message, "error");
+                            console.error(result.message);
+                        }
+                    }
+                });
+            }
+        })
+</script>

@@ -81,7 +81,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             if (_orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).Count() > 0)
             {
                 var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
-                dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == data.ID && x.OrderPayType == OrderPayType.None).Data;
+                dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == data.ID).Data;
                 dGWOrders.Columns["ID"].Visible = false;
                 dGWOrders.Columns["ProductID"].Visible = false;
                 dGWOrders.Columns["CreateTime"].Visible = false;

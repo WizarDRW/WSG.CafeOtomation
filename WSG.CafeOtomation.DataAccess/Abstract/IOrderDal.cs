@@ -19,7 +19,15 @@ namespace WSG.CafeOtomation.DataAccess.Abstract
         OrderDetailsDto GetOrderDetailDto(Expression<Func<OrderDetail, bool>> filter);
 
     }
+    public interface IOrderDetailTypeDal:IEntityRepository<OrderDetailType>
+    {
+        List<OrderDetailTypeDto> GetOrderDetailTypeDtos(Expression<Func<OrderDetailType, bool>> filter = null);
+    }
     public interface IOrderDetailTimeLogDal : IEntityRepository<OrderDetailTimeLog>
+    {
+
+    }
+    public interface IOrderPaymentDal:IEntityRepository<OrderPayment>
     {
 
     }

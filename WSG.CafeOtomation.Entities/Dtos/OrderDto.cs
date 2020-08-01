@@ -69,6 +69,15 @@ namespace WSG.CafeOtomation.Entities.Dtos
     {
         public int Amount { get; set; }
         public int ProductID { get; set; }
+        public List<int> ProductTypes { get; set; }
         public string DeskUniqueId { get; set; }
+    }
+    public class OrderDetailTypeDto
+    {
+        public int ID { get; set; }
+        [DisplayName("Adet")]
+        public int Count { get; set; }
+        [DisplayName("Ürün Tipi")]
+        public string ProductType { get; set; }
     }
 }

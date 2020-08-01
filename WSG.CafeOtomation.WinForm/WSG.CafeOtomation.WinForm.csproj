@@ -13,6 +13,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <PublishUrl>C:\Users\ASUS\Desktop\Data\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +26,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -39,6 +41,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,6 +51,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>7A861E8E5E600A91ABB160B1124A927742D3527A</ManifestCertificateThumbprint>
@@ -238,6 +242,12 @@
     <Compile Include="Controller\Business\Form_Alert.Designer.cs">
       <DependentUpon>Form_Alert.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controller\Business\PayPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\Business\PayPopup.Designer.cs">
+      <DependentUpon>PayPopup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controller\Business\PropertyTraffics.cs" />
     <Compile Include="Controller\DeskMenu.cs">
       <SubType>Form</SubType>
@@ -267,6 +277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controller\Business\Form_Alert.resx">
       <DependentUpon>Form_Alert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\Business\PayPopup.resx">
+      <DependentUpon>PayPopup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controller\DeskMenu.resx">
       <DependentUpon>DeskMenu.cs</DependentUpon>

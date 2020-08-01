@@ -3,7 +3,6 @@
 
 @{
     Layout = null;
-    int id = 4;
 }
 
 <!DOCTYPE html>
@@ -15,6 +14,7 @@
         @ViewBag.Title
     </title>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
@@ -99,7 +99,7 @@
 <body>
     @foreach (var item in Model)
     {
-        <a onclick="openModal('@item.Name', @item.ID);">
+        <a class="modalOpen" data-url="ManuIndexPopup?id=@item.ID&deskUniqueID=@ViewBag.DeskUniqueID">
             @{
                 <div class="pad" style="background: linear-gradient(@item.ProductImages.SingleOrDefault(x=>x.IsCover).RGB,@item.ProductImages.SingleOrDefault(x=>x.IsCover).RGB);
                                                 color:@item.ProductImages.SingleOrDefault(x=>x.IsCover).FontColor">
@@ -127,41 +127,8 @@
             </div>
         </a>
     }
-    <div id="result" style="display:none;">
-        <div class="row">
-            <div class="col-md-4">
-                <form>
-                    <div style="display: none"><label id="productID"></label></div>
-                    <div style="display: none"><label id="productName"></label></div>
-                    <div style="display: none"><label id="desk">@ViewBag.DeskUniqueID</label></div>
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group" style="width:100%">
-                        <label class="control-label">Sipariş Adetinizi Giriniz</label>
-                        <input type="number" value="1" max="100" min="1" class="form-control amount" />
-                        <span class="text-danger"></span>
-                    </div>
-                    @*@{
-                        var productTypes = (IProductTypeService)ViewBag.ProductTypes;
-                        var data = ;
-                        if (productTypes.GetByProduct(id).Data != null)
-                        {
-                            <div>
-                                <label class="control-label"></label>
-                                <select name="types" id="types">
-                                    @foreach (var item in data)
-                                    {
-                                        <option value="@item.ID">@item.Name</option>
-                                    }
-                                </select>
-                            </div>
-                        }
-                    }*@
-                    <div class="form-group" style="width:100%">
-                        <input id="btnPost" type="button" value="Siparisi Ver" class="btn btn-danger" style="width: 100%" pattern="[0-9]{10}" />
-                    </div>
-                </form>
-            </div>
-        </div>
+    <div class="modal fade" id="modalShow" role="dialog">
+
     </div>
 
     <script type="text/javascript">
@@ -169,56 +136,19 @@
         $("img").animate({ "opacity": "1" }, 700);
         $(".pad").animate({ "margin-top": "-100" }, 0);
         $(".pad").animate({ "margin-top": "0" }, 500);
-        var opt = {
-            autoOpen: false,
-            width: 'auto',
-            height: 'auto',
-            modal: true
-        };
-        function openModal(pName, pID) {
-            opt = {
-                autoOpen: false,
-                title: pName,
-                width: 'auto',
-                height: 'auto',
-                modal: true
-            };
-            console.log(pName + ' ' + pID);
-            $("#productID").text(pID);
-            $("#productName").text(pName);
-            $("#result").dialog(opt).dialog("open");
-        }
-        $("#btnPost").click(function () {
-            var isOpen = $("#result").dialog(opt).dialog("isOpen");
-            var count = $(".amount").val()
-            if (count <= 0) {
-                $.notify("Sipariş adeti seçilmedi!", "error");
-            } else {
-                var data = {
-                    ProductID: $("#productID").text(),
-                    Amount: $(".amount").val(),
-                    DeskUniqueId: $("#desk").text()
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "CreateOrder",
-                    data: data,
-                    success: function (result) {
-                        if (result.success) {
-                            if (isOpen) {
-                                var s = count + " adet " + $("#productName").text() + " siparisiniz verildi!";
-                                $.notify(s, "success");
-                                $("#result").dialog("close");
-                                $(".amount").val("0");
-                            }
-                        } else {
-                            $.notify(result.message, "error");
-                            console.error(result.message);
-                        }
-                    }
-                });
-            }
-        })
+        $(document).ready(function () {
+            $(".modalOpen").click(function () {
+                var url = $(this).data('url');
+                console.log(url);
+                $.get(url, function (data) {
+                    $("#modalShow").html(data);
+                    $("#modalShow").modal('show');
+                })
+            })
+        });
+        //$("#modalShow").on("hidden.bs.modal", function () {
+        //    $("#modalShow").modal('close');
+        //})
     </script>
 
 </body>

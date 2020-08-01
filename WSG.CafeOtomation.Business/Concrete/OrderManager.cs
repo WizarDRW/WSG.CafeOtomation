@@ -6,7 +6,6 @@ using WizardSoftwareGroupsFramework.Core.Utilities.Result.Concrete;
 using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.Business.Constants;
 using WSG.CafeOtomation.DataAccess.Abstract;
-using WSG.CafeOtomation.DataAccess.Concrete.EntityFramework;
 using WSG.CafeOtomation.Entities.Concrete;
 using WSG.CafeOtomation.Entities.Dtos;
 
@@ -101,6 +100,41 @@ namespace WSG.CafeOtomation.Business.Concrete
             return new SuccessDataResult<List<OrderAllDetailsDto>>(_orderDetailDal.GetListAllOrders(filter));
         }
     }
+    public class OrderDetailTypeManager : IOrderDetailTypeService
+    {
+        private IOrderDetailTypeDal _orderDetailTypeDal;
+        public OrderDetailTypeManager(IOrderDetailTypeDal orderDetailTypeDal)
+        {
+            _orderDetailTypeDal = orderDetailTypeDal;
+        }
+        public IResult Add(OrderDetailType orderDetailType)
+        {
+            _orderDetailTypeDal.Add(orderDetailType);
+            return new SuccessResult();
+        }
+
+        public IResult Update(OrderDetailType orderDetailType)
+        {
+            _orderDetailTypeDal.Update(orderDetailType);
+            return new SuccessResult();
+        }
+
+        public IResult Delete(OrderDetailType orderDetailType)
+        {
+            _orderDetailTypeDal.Delete(orderDetailType);
+            return new SuccessResult();
+        }
+
+        public IDataResult<List<OrderDetailTypeDto>> GetAll(Expression<Func<OrderDetailType, bool>> filter = null)
+        {
+            return new SuccessDataResult<List<OrderDetailTypeDto>>(_orderDetailTypeDal.GetOrderDetailTypeDtos(filter));
+        }
+
+        public IDataResult<OrderDetailType> GetBy(Expression<Func<OrderDetailType, bool>> filter)
+        {
+            return new SuccessDataResult<OrderDetailType>(_orderDetailTypeDal.Get(filter));
+        }
+    }
     public class OrderDetailTimeLogManager:IOrderDetailTimeLogService
     {
         private IOrderDetailTimeLogDal _orderDetailTimeLogDal;
@@ -140,6 +174,41 @@ namespace WSG.CafeOtomation.Business.Concrete
         public IDataResult<List<OrderDetailTimeLog>> GetByOrderNo(int orderId)
         {
             return new SuccessDataResult<List<OrderDetailTimeLog>>(_orderDetailTimeLogDal.GetList(x=>x.OrderDetailID == orderId));
+        }
+    }
+    public class OrderPaymentManager : IOrderPaymentService
+    {
+        private IOrderPaymentDal _orderPaymentDal;
+        public OrderPaymentManager(IOrderPaymentDal orderPaymentDal)
+        {
+            _orderPaymentDal = orderPaymentDal;
+        }
+        public IResult Add(OrderPayment orderPayment)
+        {
+            _orderPaymentDal.Add(orderPayment);
+            return new SuccessResult();
+        }
+
+        public IResult Update(OrderPayment orderPayment)
+        {
+            _orderPaymentDal.Update(orderPayment);
+            return new SuccessResult();
+        }
+
+        public IResult Delete(OrderPayment orderPayment)
+        {
+            _orderPaymentDal.Delete(orderPayment);
+            return new SuccessResult();
+        }
+
+        public IDataResult<List<OrderPayment>> GetAll(Expression<Func<OrderPayment, bool>> filter = null)
+        {
+            return new SuccessDataResult<List<OrderPayment>>(_orderPaymentDal.GetList(filter));
+        }
+
+        public IDataResult<OrderPayment> GetBy(Expression<Func<OrderPayment, bool>> filter)
+        {
+            return new SuccessDataResult<OrderPayment>(_orderPaymentDal.Get(filter));
         }
     }
 }

@@ -51,6 +51,12 @@ namespace WSG.CafeOtomation.Business.DependencyResolvers.Autofac
             builder.RegisterType<OrderDetailManager>().As<IOrderDetailService>();
             builder.RegisterType<EfOrderDetailDal>().As<IOrderDetailDal>();
 
+            builder.RegisterType<OrderDetailTypeManager>().As<IOrderDetailTypeService>();
+            builder.RegisterType<EfOrderDetailTypeDal>().As<IOrderDetailTypeDal>();
+
+            builder.RegisterType<OrderPaymentManager>().As<IOrderPaymentService>();
+            builder.RegisterType<EfOrderPaymentDal>().As<IOrderPaymentDal>();
+
             builder.RegisterType<CustomerManager>().As<ICustomerService>();
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>();
 

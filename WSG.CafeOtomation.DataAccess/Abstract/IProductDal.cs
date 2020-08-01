@@ -10,11 +10,11 @@ namespace WSG.CafeOtomation.DataAccess.Abstract
     public interface IProductCategoryDal : IEntityRepository<ProductCategory>
     {
     }
-    public interface IProductDal:IEntityRepository<Product>
+    public interface IProductDal : IEntityRepository<Product>
     {
         List<ProductDto> GetProductDtoList(Expression<Func<Product, bool>> filter = null);
     }
-    public interface IProductTypeDal:IEntityRepository<ProductType>
+    public interface IProductTypeDal : IEntityRepository<ProductType>
     {
 
     }

@@ -25,6 +25,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private IDeskService _deskService;
         private IOrderService _orderService;
         private IOrderDetailService _orderDetailService;
+        private IOrderDetailTypeService _orderDetailTypeService;
         private IUserTitleService _userTitleService;
         private IOrderDetailTimeLogService _orderDetailTimeLogService;
         private int _sessionMinutesOption;
@@ -40,6 +41,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             _orderDetailService = new OrderDetailManager(new EfOrderDetailDal());
             _userTitleService = new UserTitleManager(new EfUserTitleDal());
             _orderDetailTimeLogService = new OrderDetailTimeLogManager(new EfOrderDetailTimeLogDal());
+            _orderDetailTypeService = new OrderDetailTypeManager(new EfOrderDetailTypeDal());
             _sessionMinutesOption = 2;
 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
@@ -97,7 +99,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         }
         public void OrderList()
         {
-            dGVOrderDetails.DataSource = _orderDetailService.GetOrderDetailAll(x => x.EOrderStatus != OrderStatus.Complete && x.OrderPayType == OrderPayType.None).Data;
+            dGVOrderDetails.DataSource = _orderDetailService.GetOrderDetailAll(x => x.EOrderStatus != OrderStatus.Complete).Data;
             dGVOrderDetails.Columns["ID"].Visible = false;
         }
         public void AccessControl()
@@ -116,6 +118,12 @@ namespace WSG.CafeOtomation.WinForm.Controller
         {
             Form_Alert frm = new Form_Alert();
             frm.ShowAlert("", Form_Alert.enmType.Success);
+        }
+        public void OrderType()
+        {
+            int id = int.Parse(dGVOrderDetails.CurrentRow.Cells["ID"].Value.ToString());
+            dGVOrderTypes.DataSource = _orderDetailTypeService.GetAll(x => x.OrderDetailID == id).Data.GroupBy(x=>x.ProductType).Select(x => new { Adet = x.Count(), Tip = x.Key}).ToList();
+            //dGVOrderTypes.Columns["ID"].Visible = false;
         }
 
         #region Events
@@ -207,6 +215,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             }
             cmBxOrderStatus.SelectedItem = dGVOrderDetails.CurrentRow.Cells["EOrderStatus"].Value;
             timerLoadOrderDetails.Enabled = true;
+            OrderType();
         }
         private void dGVOrderDetails_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -325,7 +334,6 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 _orderDetailService.Update(data);
             }
         }
-
         private void MouseMoveForSession(object sender, MouseEventArgs e)
         {
             PropertyTraffics.SessionSecond = _sessionMinutesOption;

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.MVCWebUI.Models;
 
 namespace WSG.CafeOtomation.MVCWebUI.Controllers
@@ -12,6 +13,7 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IProductTypeService _productTypeService;
 
         public HomeController(ILogger<HomeController> logger)
         {

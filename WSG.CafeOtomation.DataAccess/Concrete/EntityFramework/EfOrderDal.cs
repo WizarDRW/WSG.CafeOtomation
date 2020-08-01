@@ -123,7 +123,6 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          Amount = o.Amount,
                          TotalPrice = o.TotalPrice,
                          EOrderStatus = o.EOrderStatus,
-                         OrderPayType = o.OrderPayType,
                          ProductID = p.ID,
                          CreateTime = o.CreateDate.ToString("HH:mm:ss")
                      }).ToList()
@@ -138,14 +137,50 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          Amount = o.Amount,
                          TotalPrice = o.TotalPrice,
                          EOrderStatus = o.EOrderStatus,
-                         OrderPayType = o.OrderPayType,
                          ProductID = p.ID,
                          CreateTime = o.CreateDate.ToString("HH:mm:ss")
                      }).ToList();
             }
         }
     }
+    public class EfOrderDetailTypeDal : EfEntityRepositoryBase<OrderDetailType, CafeContext>, IOrderDetailTypeDal
+    {
+        public List<OrderDetailTypeDto> GetOrderDetailTypeDtos(Expression<Func<OrderDetailType, bool>> filter = null)
+        {
+            using (var context = new CafeContext())
+            {
+                return filter == null ?
+                    (from x in context.OrderDetailTypes
+                     join od in context.OrderDetails
+                     on x.OrderDetailID equals od.ID
+                     join pt in context.ProductTypes
+                     on x.ProductTypeID equals pt.ID
+                     select new OrderDetailTypeDto
+                     {
+                         ID = x.ID,
+                         ProductType = pt.Name,
+                         Count = context.OrderDetailTypes.Where(x => x.ProductTypeID == pt.ID).GroupBy(x => x.ProductTypeID).Count()
+                     }).ToList() :
+                    (from x in context.OrderDetailTypes.Where(filter)
+                     join od in context.OrderDetails
+                     on x.OrderDetailID equals od.ID
+                     join pt in context.ProductTypes
+                     on x.ProductTypeID equals pt.ID
+                     select new OrderDetailTypeDto
+                     {
+                         ID = x.ID,
+                         ProductType = pt.Name,
+                         Count = context.OrderDetailTypes.Where(x => x.ProductTypeID == pt.ID).Count()
+                     }).ToList();
+            }
+        }
+    }
     public class EfOrderDetailTimeLogDal : EfEntityRepositoryBase<OrderDetailTimeLog, CafeContext>, IOrderDetailTimeLogDal
+    {
+
+    }
+
+    public class EfOrderPaymentDal:EfEntityRepositoryBase<OrderPayment, CafeContext>, IOrderPaymentDal
     {
 
     }

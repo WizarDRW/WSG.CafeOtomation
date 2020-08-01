@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Ocsp;
+using WizardSoftwareGroupsFramework.Core.Utilities.Result.Abstract;
 using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.Entities.Concrete;
 using WSG.CafeOtomation.Entities.Dtos;
@@ -19,6 +20,7 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
         private IProductImageService _productImageService;
         private IOrderService _orderService;
         private IOrderDetailService _orderDetailService;
+        private IOrderDetailTypeService _orderDetailTypeService;
         private IDeskService _deskService;
         public CustomerDeskController(IProductService productService,
             IProductCategoryService productCategoryService,
@@ -26,7 +28,8 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
             IOrderService orderService,
             IOrderDetailService orderDetailService,
             IDeskService deskService,
-            IProductTypeService productTypeService)
+            IProductTypeService productTypeService,
+            IOrderDetailTypeService orderDetailTypeService)
         {
             _productService = productService;
             _productCategoryService = productCategoryService;
@@ -35,6 +38,7 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
             _orderDetailService = orderDetailService;
             _deskService = deskService;
             _productTypeService = productTypeService;
+            _orderDetailTypeService = orderDetailTypeService;
         }
         public IActionResult Index(string deskUniqueID)
         {
@@ -44,15 +48,24 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
         public IActionResult MenuCategoryIndex(string deskUniqueID)
         {
             ViewBag.DeskUniqueID = deskUniqueID;
-            return View(_productCategoryService.GetAll().Data.OrderBy(x => x.Order));
+            var data = _productCategoryService.GetAll().Data.OrderBy(x => x.Order);
+            return View(data);
         }
         public IActionResult MenuIndex(string categoryName, int categoryID, string deskUniqueID)
         {
             ViewBag.Title = categoryName;
             ViewBag.DeskUniqueID = deskUniqueID;
             ViewBag.ProductTypes = _productTypeService;
-            ViewBag.ID = 1;
             return View(_productService.GetByCategory(categoryID).Data);
+        }
+        public IActionResult ManuIndexPopup(int id, string deskUniqueID)
+        {
+            ViewBag.DeskUniqueID = deskUniqueID;
+            ViewBag.ProductTypes = _productTypeService;
+            var data = _productService.GetByID(id).Data;
+            ViewBag.Name = data.Name;
+            ViewBag.ID = id;
+            return PartialView();
         }
         public IActionResult OrderStatusIndex(string deskUniqueID)
         {
@@ -69,6 +82,7 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
             var desk = _deskService.GetByUnique(customerOrderCreateDto.DeskUniqueId).Data;
             var product = _productService.GetByID(customerOrderCreateDto.ProductID).Data;
             var order = _orderService.GetByDesk(desk.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open);
+            IResult result;
             if (order.Count() < 1)
             {
                 var orderCreate = new Order
@@ -77,25 +91,36 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
                     DeskID = desk.ID,
                     CreateDate = DateTime.Now
                 };
-                var result = _orderService.Add(orderCreate);
+                result = _orderService.Add(orderCreate);
                 if (result.Success)
                 {
-                    result = _orderDetailService.Add(new OrderDetail
+                    var data = new OrderDetail
                     {
                         Amount = customerOrderCreateDto.Amount,
                         EOrderStatus = OrderStatus.Waiting,
-                        OrderPayType = OrderPayType.None,
                         OrderID = orderCreate.ID,
                         ProductID = product.ID,
                         TotalPrice = customerOrderCreateDto.Amount * product.UnitPrice,
                         CreateDate = DateTime.Now
-                    });
+                    };
+                    result = _orderDetailService.Add(data);
+                    if (customerOrderCreateDto.ProductTypes.Count > 0)
+                    {
+                        foreach (var item in customerOrderCreateDto.ProductTypes)
+                        {
+                            _orderDetailTypeService.Add(new OrderDetailType
+                            {
+                                OrderDetailID = data.ID,
+                                ProductTypeID = item
+                            });
+                        }
+                    }
                 }
                 return Json(result);
             }
             else
             {
-                var result = _orderDetailService.Add(new OrderDetail
+                var data = new OrderDetail
                 {
                     Amount = customerOrderCreateDto.Amount,
                     EOrderStatus = OrderStatus.Waiting,
@@ -103,7 +128,19 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
                     ProductID = product.ID,
                     TotalPrice = customerOrderCreateDto.Amount * product.UnitPrice,
                     CreateDate = DateTime.Now
-                });
+                };
+                result = _orderDetailService.Add(data);
+                if (customerOrderCreateDto.ProductTypes.Count > 0)
+                {
+                    foreach (var item in customerOrderCreateDto.ProductTypes)
+                    {
+                        _orderDetailTypeService.Add(new OrderDetailType
+                        {
+                            OrderDetailID = data.ID,
+                            ProductTypeID = item
+                        });
+                    }
+                }
                 return Json(result);
             }
         }
@@ -120,6 +157,11 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
                 return Json(_orderDetailService.Delete(new OrderDetail { ID = id }).Success);
             }
             return Json(false);
+        }
+        [HttpGet]
+        public JsonResult GetProductTypeData(int id)
+        {
+            return Json(_productTypeService.GetByProduct(id).Data);
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
 using WizardSoftwareGroupsFramework.Core.Entities;
 using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WizardSoftwareGroupsFramework.Core.Extensions;
@@ -25,6 +24,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public decimal Paid { get; set; }
         public decimal Change { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
+        public List<OrderPayment> OrderPayments { get; set; }
         public OrderPayStatus OrderPayStatus { get; set; }
     }
     [TypeConverter(typeof(ExpectationResultConverter))]
@@ -33,6 +33,9 @@ namespace WSG.CafeOtomation.Entities.Concrete
         [Description("Açık Masa")]
         [Display(Name = "Açık Masa")]
         Open = 0,
+        [Description("Müşteri")]
+        [Display(Name = "Müşteri")]
+        Customer = 1,
         [Description("Ödendi")]
         [Display(Name = "Ödendi")]
         Paid = 2
@@ -44,7 +47,6 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int Amount { get; set; }
         public decimal TotalPrice { get; set; }
         public OrderStatus EOrderStatus { get; set; }
-        public OrderPayType OrderPayType { get; set; }
         public int OrderID { get; set; }
         public Order Order { get; set; }
         public int ProductID { get; set; }
@@ -56,6 +58,15 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int? CurrentBookID { get; set; }
         public CurrentBook CurrentBook { get; set; }
         public List<OrderDetailTimeLog> OrderDetailTimeLogs { get; set; }
+        public List<OrderDetailType> OrderDetailTypes { get; set; }
+    }
+    public class OrderDetailType:IEntity
+    {
+        public int ID { get; set; }
+        public int OrderDetailID { get; set; }
+        public OrderDetail OrderDetail { get; set; }
+        public int ProductTypeID { get; set; }
+        public ProductType ProductType { get; set; }
     }
     public class OrderDetailTimeLog : IEntity
     {

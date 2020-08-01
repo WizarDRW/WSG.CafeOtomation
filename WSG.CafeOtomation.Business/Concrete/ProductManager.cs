@@ -122,9 +122,9 @@ namespace WSG.CafeOtomation.Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
-        public IDataResult<List<ProductType>> GetAll()
+        public IDataResult<List<ProductType>> GetAll(Expression<Func<ProductType, bool>> filter = null)
         {
-            return new SuccessDataResult<List<ProductType>>(_productTypeDal.GetList());
+            return new SuccessDataResult<List<ProductType>>(_productTypeDal.GetList(filter));
         }
 
         public IDataResult<ProductType> GetByID(int id)

@@ -4,7 +4,7 @@ using WSG.CafeOtomation.Entities.Concrete;
 
 namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework.Contexts
 {
-    public class CafeContext:DbContext
+    public class CafeContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,7 +25,9 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<ProductDetail> ProductDetails { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<OrderDetailType> OrderDetailTypes { get; set; }
         public DbSet<OrderDetailTimeLog> OrderDetailTimeLogs { get; set; }
+        public DbSet<OrderPayment> OrderPayments { get; set; }
         public DbSet<Desk> Desks { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }

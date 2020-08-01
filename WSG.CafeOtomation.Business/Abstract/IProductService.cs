@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using WizardSoftwareGroupsFramework.Core.Utilities.Result.Abstract;
 using WSG.CafeOtomation.Entities.Concrete;
 using WSG.CafeOtomation.Entities.Dtos;
@@ -26,7 +28,7 @@ namespace WSG.CafeOtomation.Business.Abstract
     }
     public interface IProductTypeService
     {
-        IDataResult<List<ProductType>> GetAll();
+        IDataResult<List<ProductType>> GetAll(Expression<Func<ProductType, bool>> filter = null);
         IDataResult<List<ProductType>> GetByProduct(int id);
         IDataResult<ProductType> GetByID(int id);
         IResult Add(ProductType productType);

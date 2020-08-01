@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using WizardSoftwareGroupsFramework.Core.Entities;
 
@@ -39,7 +40,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public int ParentID { get; set; }
+        public int? ParentID { get; set; }
         public ProductType Parent { get; set; }
         public int ProductID { get; set; }
         public Product Product { get; set; }

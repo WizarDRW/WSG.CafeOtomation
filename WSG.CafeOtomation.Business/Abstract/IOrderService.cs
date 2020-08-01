@@ -27,6 +27,14 @@ namespace WSG.CafeOtomation.Business.Abstract
         IResult Update(OrderDetail orderDetail);
         IResult Delete(OrderDetail orderDetail);
     }
+    public interface IOrderDetailTypeService
+    {
+        IDataResult<List<OrderDetailTypeDto>> GetAll(Expression<Func<OrderDetailType, bool>> filter = null);
+        IDataResult<OrderDetailType> GetBy(Expression<Func<OrderDetailType, bool>> filter);
+        IResult Add(OrderDetailType orderDetailType);
+        IResult Update(OrderDetailType orderDetailType);
+        IResult Delete(OrderDetailType orderDetailType);
+    }
     public interface IOrderDetailTimeLogService
     {
         IDataResult<List<OrderDetailTimeLog>> GetAll(Expression<Func<OrderDetailTimeLog, bool>> filter = null);
@@ -35,5 +43,13 @@ namespace WSG.CafeOtomation.Business.Abstract
         IResult Add(OrderDetailTimeLog orderDetailTimeLog);
         IResult Update(OrderDetailTimeLog orderDetailTimeLog);
         IResult Delete(OrderDetailTimeLog orderDetailTimeLog);
+    }
+    public interface IOrderPaymentService
+    {
+        IDataResult<List<OrderPayment>> GetAll(Expression<Func<OrderPayment, bool>> filter = null);
+        IDataResult<OrderPayment> GetBy(Expression<Func<OrderPayment, bool>> filter);
+        IResult Add(OrderPayment orderPayment);
+        IResult Update(OrderPayment orderPayment);
+        IResult Delete(OrderPayment orderPayment);
     }
 }
