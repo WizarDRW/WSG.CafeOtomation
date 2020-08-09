@@ -37,7 +37,7 @@ namespace WSG.CafeOtomation.Business.Concrete
 
         public IDataResult<List<Desk>> GetAll(Expression<Func<Desk, bool>> filter = null)
         {
-            return filter == null ? 
+            return filter == null ?
                 new SuccessDataResult<List<Desk>>(_deskDal.GetList())
                 :
                 new SuccessDataResult<List<Desk>>(_deskDal.GetList(filter));

@@ -56,7 +56,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             foreach (var d in _deskService.GetAll(x => x.DeskNo.Contains(find)).Data)
             {
                 Button button = new Button();
-                if ((left+200) > tPDesk.Width)
+                if ((left + 200) > tPDesk.Width)
                 {
                     left = 25;
                     top += 230;
@@ -67,6 +67,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 button.Text = d.DeskNo;
                 button.Location = new Point(left, top);
                 button.Size = new Size(200, 200);
+                button.FlatStyle = FlatStyle.Popup;
                 i += 1;
                 left += 230;
                 button.Click += Button_Click;
@@ -122,7 +123,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         public void OrderType()
         {
             int id = int.Parse(dGVOrderDetails.CurrentRow.Cells["ID"].Value.ToString());
-            dGVOrderTypes.DataSource = _orderDetailTypeService.GetAll(x => x.OrderDetailID == id).Data.GroupBy(x=>x.ProductType).Select(x => new { Adet = x.Count(), Tip = x.Key}).ToList();
+            dGVOrderTypes.DataSource = _orderDetailTypeService.GetAll(x => x.OrderDetailID == id).Data.GroupBy(x => x.ProductType).Select(x => new { Adet = x.Count(), Tip = x.Key }).ToList();
             //dGVOrderTypes.Columns["ID"].Visible = false;
         }
 

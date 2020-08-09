@@ -3,7 +3,7 @@ using WSG.CafeOtomation.Entities.Concrete;
 
 namespace WSG.CafeOtomation.DataAccess.Abstract
 {
-    public interface IDeskDal:IEntityRepository<Desk>
+    public interface IDeskDal : IEntityRepository<Desk>
     {
     }
 }

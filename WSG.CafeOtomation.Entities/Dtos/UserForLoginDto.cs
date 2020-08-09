@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WizardSoftwareGroupsFramework.Core.Entities;
+﻿using WizardSoftwareGroupsFramework.Core.Entities;
 
 namespace WSG.CafeOtomation.Entities.Dtos
 {

@@ -1,7 +1,4 @@
-﻿using Renci.SshNet.Messages.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using WizardSoftwareGroupsFramework.Core.Utilities.Result.Abstract;
 using WizardSoftwareGroupsFramework.Core.Utilities.Result.Concrete;
 using WSG.CafeOtomation.Business.Abstract;

@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using WizardSoftwareGroupsFramework.Core.DataAccess.EntityFramework;
 using WSG.CafeOtomation.DataAccess.Abstract;
 using WSG.CafeOtomation.DataAccess.Concrete.EntityFramework.Contexts;
 using WSG.CafeOtomation.Entities.Concrete;
 using WSG.CafeOtomation.Entities.Dtos;
-using System.Net.Http.Headers;
 
 namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
 {
@@ -35,8 +34,6 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          CreateUser = u != null ? $"{u.FirstName} {u.LastName}" : "Anonymous",
                          DeskNo = d.DeskNo,
                          TotalPrice = o.TotalPrice,
-                         Paid = o.Paid,
-                         Change = o.Change,
                          OrderPayStatus = o.OrderPayStatus
                      }).ToList()
                         :
@@ -52,8 +49,6 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          CreateUser = u != null ? $"{u.FirstName} {u.LastName}" : "Anonymous",
                          DeskNo = d.DeskNo,
                          TotalPrice = o.TotalPrice,
-                         Paid = o.Paid,
-                         Change = o.Change,
                          OrderPayStatus = o.OrderPayStatus
                      }).ToList();
             }
@@ -119,6 +114,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                      select new OrderDetailsDto
                      {
                          ID = o.ID,
+                         OrderID = o.OrderID,
                          Product = p.Name,
                          Amount = o.Amount,
                          TotalPrice = o.TotalPrice,
@@ -133,6 +129,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                      select new OrderDetailsDto
                      {
                          ID = o.ID,
+                         OrderID = o.OrderID,
                          Product = p.Name,
                          Amount = o.Amount,
                          TotalPrice = o.TotalPrice,
@@ -180,7 +177,11 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
 
     }
 
-    public class EfOrderPaymentDal:EfEntityRepositoryBase<OrderPayment, CafeContext>, IOrderPaymentDal
+    public class EfOrderPaymentDal : EfEntityRepositoryBase<OrderPayment, CafeContext>, IOrderPaymentDal
+    {
+
+    }
+    public class EfPayTypeDal : EfEntityRepositoryBase<PayType, CafeContext>, IPayTypeDal
     {
 
     }

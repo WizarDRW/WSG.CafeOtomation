@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using WizardSoftwareGroupsFramework.Core.Entities;
 
 namespace WSG.CafeOtomation.Entities.Concrete
@@ -18,7 +16,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int ParentID { get; set; }
         public ProductCategory Parent { get; set; }
     }
-    public class Product:IEntity
+    public class Product : IEntity
     {
         [Key]
         public int ID { get; set; }
@@ -36,7 +34,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public List<ProductImage> ProductImages { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
     }
-    public class ProductType:IEntity
+    public class ProductType : IEntity
     {
         public int ID { get; set; }
         public string Name { get; set; }

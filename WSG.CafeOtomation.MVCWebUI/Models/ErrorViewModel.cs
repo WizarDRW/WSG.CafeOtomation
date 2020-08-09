@@ -1,5 +1,3 @@
-using System;
-
 namespace WSG.CafeOtomation.MVCWebUI.Models
 {
     public class ErrorViewModel

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Ocsp;
 using WizardSoftwareGroupsFramework.Core.Utilities.Result.Abstract;
 using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.Entities.Concrete;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using WSG.CafeOtomation.Entities.Concrete;
 
 namespace WSG.CafeOtomation.Entities.Dtos
@@ -23,7 +22,7 @@ namespace WSG.CafeOtomation.Entities.Dtos
         [DisplayName("Para Üstü")]
         public decimal Change { get; set; }
         [DisplayName("Satış Durumu")]
-        public OrderPayStatus OrderPayStatus{ get; set; }
+        public OrderPayStatus OrderPayStatus { get; set; }
         [DisplayName("Müşteri")]
         public string Customer { get; set; }
     }
@@ -31,6 +30,8 @@ namespace WSG.CafeOtomation.Entities.Dtos
     {
         [DisplayName("No")]
         public int ID { get; set; }
+        [DisplayName("Sipariş No")]
+        public int OrderID { get; set; }
         [DisplayName("Ürün")]
         public string Product { get; set; }
         [DisplayName("Adet")]
@@ -40,7 +41,7 @@ namespace WSG.CafeOtomation.Entities.Dtos
         [DisplayName("Sipariş Durumu")]
         public OrderStatus EOrderStatus { get; set; }
         [DisplayName("Ödeme Tipi")]
-        public OrderPayType OrderPayType { get; set; }
+        public PayType PayType { get; set; }
         [DisplayName("Ürün No")]
         public int ProductID { get; set; }
         [DisplayName("Sipariş Oluşturulma Zamanı")]

@@ -45,7 +45,7 @@ namespace WSG.CafeOtomation.Business.Concrete
 
         public IDataResult<OperationClaim> GetByName(string name)
         {
-            return new SuccessDataResult<OperationClaim>(_operationClaimDal.Get(x=>x.Name == name));
+            return new SuccessDataResult<OperationClaim>(_operationClaimDal.Get(x => x.Name == name));
         }
 
     }

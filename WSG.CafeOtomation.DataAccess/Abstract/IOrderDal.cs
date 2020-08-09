@@ -7,19 +7,19 @@ using WSG.CafeOtomation.Entities.Dtos;
 
 namespace WSG.CafeOtomation.DataAccess.Abstract
 {
-    public interface IOrderDal:IEntityRepository<Order>
+    public interface IOrderDal : IEntityRepository<Order>
     {
         List<OrderDto> GetOrderDtos(Expression<Func<Order, bool>> filter = null);
         OrderDto GetOrderDto(Expression<Func<Order, bool>> filter);
     }
-    public interface IOrderDetailDal:IEntityRepository<OrderDetail>
+    public interface IOrderDetailDal : IEntityRepository<OrderDetail>
     {
         List<OrderDetailsDto> GetOrderDetailDtos(Expression<Func<OrderDetail, bool>> filter = null);
         List<OrderAllDetailsDto> GetListAllOrders(Expression<Func<OrderDetail, bool>> filter = null);
         OrderDetailsDto GetOrderDetailDto(Expression<Func<OrderDetail, bool>> filter);
 
     }
-    public interface IOrderDetailTypeDal:IEntityRepository<OrderDetailType>
+    public interface IOrderDetailTypeDal : IEntityRepository<OrderDetailType>
     {
         List<OrderDetailTypeDto> GetOrderDetailTypeDtos(Expression<Func<OrderDetailType, bool>> filter = null);
     }
@@ -27,7 +27,11 @@ namespace WSG.CafeOtomation.DataAccess.Abstract
     {
 
     }
-    public interface IOrderPaymentDal:IEntityRepository<OrderPayment>
+    public interface IOrderPaymentDal : IEntityRepository<OrderPayment>
+    {
+
+    }
+    public interface IPayTypeDal : IEntityRepository<PayType>
     {
 
     }

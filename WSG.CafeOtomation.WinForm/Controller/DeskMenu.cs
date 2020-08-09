@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WSG.CafeOtomation.Business.Abstract;
@@ -27,6 +26,8 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private IOrderDetailService _orderDetailService;
         private IUserTitleService _userTitleService;
         private IOrderDetailTimeLogService _orderDetailTimeLogService;
+        private IPayTypeService _payTypeService;
+        private IOrderPaymentService _orderPaymentService;
         private TreeNode _newNode;
         public DeskMenu(Desk desk, User user, IUserTitleService userTitleService, IOrderDetailTimeLogService orderDetailTimeLogService)
         {
@@ -37,6 +38,8 @@ namespace WSG.CafeOtomation.WinForm.Controller
             _productService = new ProductManager(new EfProductDal());
             _orderService = new OrderManager(new EfOrderDal());
             _orderDetailService = new OrderDetailManager(new EfOrderDetailDal());
+            _payTypeService = new PayTypeManager(new EfPayTypeDal());
+            _orderPaymentService = new OrderPaymentManager(new EfOrderPaymentDal());
             _userTitleService = userTitleService;
             _orderDetailTimeLogService = orderDetailTimeLogService;
             AccessControl();
@@ -80,16 +83,12 @@ namespace WSG.CafeOtomation.WinForm.Controller
         {
             if (_orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).Count() > 0)
             {
-                var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
-                dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == data.ID).Data;
+                var dataDetails = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
+                dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == dataDetails.ID).Data;
                 dGWOrders.Columns["ID"].Visible = false;
                 dGWOrders.Columns["ProductID"].Visible = false;
                 dGWOrders.Columns["CreateTime"].Visible = false;
-                decimal total = 0;
-                for (int i = 0; i < dGWOrders.Rows.Count; i++)
-                {
-                    total += decimal.Parse(dGWOrders.Rows[i].Cells["TotalPrice"].Value.ToString());
-                }
+                decimal total = dataDetails.TotalPrice - _orderPaymentService.GetAll(x => x.OrderID == dataDetails.ID).Data.Sum(x => x.Value);
                 lblTotalPay.Text = total.ToString("#.00 TL");
                 pnlPay.Enabled = true;
             }
@@ -99,17 +98,21 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// </summary>
         private void PayChange()
         {
-            var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
+            var data = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
             dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == data.ID).Data;
-            if ((nUDPay.Value - data.TotalPrice) < 0)
+            if (((data.TotalPrice - _orderPaymentService.GetAll(x => x.OrderID == data.ID).Data.Sum(x => x.Value)) - nUDPay.Value) > data.TotalPrice)
             {
                 lblChangeTitle.Text = "Ödenecek:";
+            }
+            else if (((data.TotalPrice - _orderPaymentService.GetAll(x => x.OrderID == data.ID).Data.Sum(x => x.Value)) - nUDPay.Value) == data.TotalPrice)
+            {
+                lblChangeTitle.Text = "";
             }
             else
             {
                 lblChangeTitle.Text = "Para Üstü:";
             }
-            lblChange.Text = (nUDPay.Value - data.TotalPrice).ToString();
+            lblChange.Text = ((data.TotalPrice - _orderPaymentService.GetAll(x => x.OrderID == data.ID).Data.Sum(x => x.Value)) - nUDPay.Value).ToString();
         }
         /// <summary>
         /// Kullanici yetki kontrolleri
@@ -173,6 +176,12 @@ namespace WSG.CafeOtomation.WinForm.Controller
         {
             try
             {
+                foreach (var item in _payTypeService.GetAll().Data)
+                {
+                    cmBxPayType.Items.Add(item.Name);
+                }
+                cmBxPayType.SelectedIndex = 0;
+                ComboBoxOrders();
                 lblTitle.Text = _desk.DeskNo;
                 loadData();
                 dGWOrders.CurrentCell = dGWOrders[1, 0];
@@ -182,6 +191,18 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 Debug.WriteLine(ex);
             }
         }
+
+        private void ComboBoxOrders(int index = 0)
+        {
+            cmBxOrders.Items.Clear();
+            var data = _orderService.GetByClose(OrderPayStatus.Open).Data.Where(x => x.DeskID == _desk.ID);
+            foreach (var item in data)
+            {
+                cmBxOrders.Items.Add(item.ID);
+            }
+            cmBxOrders.SelectedIndex = index;
+        }
+
         /// <summary>
         /// Agac listesindeki urunlere cift tiklanildiginda siparislere eklenmesi
         /// </summary>
@@ -189,7 +210,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// <param name="e"></param>
         private void tVProducts_DoubleClick(object sender, EventArgs e)
         {
-            var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
+            var data = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
             var product = _productService.GetByName(tVProducts.SelectedNode.Text).Data;
             if (product == null)
             {
@@ -199,7 +220,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             deskMenuHelper.ShowDialog();
             if (PropertyTraffics.ProductCount == null)
             {
-
+                return;
             }
             else
             {
@@ -214,6 +235,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                         CreateDate = DateTime.Now
                     };
                     _orderService.Add(data);
+                    ComboBoxOrders();
                     timerOrderList.Enabled = true;
                 }
                 int count = (int)PropertyTraffics.ProductCount;
@@ -286,7 +308,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// <param name="e"></param>
         private void nUDAmount_ValueChanged(object sender, EventArgs e)
         {
-            var data = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
+            var data = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
             var product = _productService.GetByID(Convert.ToInt32(dGWOrders.CurrentRow.Cells["ProductID"].Value)).Data;
             var dataChild = _orderDetailService.GetBy(x => x.ProductID == product.ID && x.OrderID == data.ID && x.ID == Convert.ToInt32(dGWOrders.CurrentRow.Cells["ID"].Value)).Data;
             if (dataChild != null)
@@ -308,7 +330,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// <param name="e"></param>
         private void dGWOrders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var order = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
+            var order = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
             string totalAmount = Convert.ToDecimal(_orderDetailService.GetAll(x => x.OrderID == order.ID && x.ProductID == (int)dGWOrders.CurrentRow.Cells["ProductID"].Value).Data.Sum(x => x.Amount)).ToString("# Adet");
             if (dGWOrders.SelectedRows.Count == dGWOrders.Rows.Count)
                 btnDeskSelectedMove.Enabled = false;
@@ -424,26 +446,26 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private void btnPaySuccess_Click(object sender, EventArgs e)
         {
             PayChange();
-            var dataSource = _orderService.GetByDesk(_desk.ID).Data.Where(c => c.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
-            if (decimal.Parse(lblChange.Text) >= 0)
+            var dataSource = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
+            var orderPayType = _payTypeService.GetBy(x => x.Name == (string)cmBxPayType.SelectedItem).Data;
+            var orderPayment = new OrderPayment
             {
-                var data = new Order
-                {
-                    ID = dataSource.ID,
-                    UpdateUserID = _user.ID,
-                    Change = decimal.Parse(lblChange.Text),
-                    CreateUserID = dataSource.CreateUserID,
-                    DeskID = dataSource.DeskID,
-                    OrderPayStatus = OrderPayStatus.Paid,
-                    Paid = nUDPay.Value,
-                    TotalPrice = dataSource.TotalPrice
-                };
-                _orderService.Update(data);
-                this.Close();
-            }
-            else
+                OrderID = dataSource.ID,
+                PayTypeID = orderPayType.ID,
+                Value = nUDPay.Value,
+                Balance = decimal.Parse(lblChange.Text)
+            };
+            _orderPaymentService.Add(orderPayment);
+            if (_orderPaymentService.GetAll(x => x.OrderID == dataSource.ID).Data.Sum(x => x.Value) >= dataSource.TotalPrice)
             {
-                MessageBox.Show((Convert.ToDecimal(lblChange.Text) * -1).ToString("#.00 ₺") + " daha ödenmesi gerekiyor!");
+                dataSource.UpdateUserID = _user.ID;
+                dataSource.UpdateDate = DateTime.Now;
+                dataSource.OrderPayStatus = OrderPayStatus.Paid;
+                _orderService.Update(dataSource);
+                if (_orderService.GetByDesk(_desk.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open).Count() > 0)
+                    ComboBoxOrders();
+                else
+                    this.Close();
             }
         }
 
@@ -508,8 +530,17 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 ID.Add((int)item.Cells["ID"].Value);
             }
             var data = _orderService.GetByDesk(_desk.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
-            DeskMenuMoveHelper deskMenuMoveHelper = new DeskMenuMoveHelper(_user,ID, _orderService, _orderDetailService);
+            DeskMenuMoveHelper deskMenuMoveHelper = new DeskMenuMoveHelper(_user, ID, _orderService, _orderDetailService);
             deskMenuMoveHelper.ShowDialog();
+        }
+
+        private void btnHalf_Click(object sender, EventArgs e)
+        {
+            int index = cmBxOrders.SelectedIndex;
+            HalfManage halfManage = new HalfManage(_orderService, _orderDetailService, _productService, _user, (int)cmBxOrders.SelectedItem, _desk.ID);
+            halfManage.ShowDialog();
+            ComboBoxOrders(index);
+
         }
         #endregion
 

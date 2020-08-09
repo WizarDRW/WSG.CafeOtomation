@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.Entities.Concrete;
 
@@ -13,7 +8,7 @@ namespace WSG.CafeOtomation.WebApi.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private ICustomerService  _customerService;
+        private ICustomerService _customerService;
         public CustomerController(ICustomerService customerService)
         {
             _customerService = customerService;

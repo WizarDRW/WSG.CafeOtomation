@@ -8,7 +8,7 @@ using WSG.CafeOtomation.DataAccess.Concrete.EntityFramework;
 
 namespace WSG.CafeOtomation.Business.DependencyResolvers.Autofac
 {
-    public class AutofacBusinessModule:Module
+    public class AutofacBusinessModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -59,6 +59,9 @@ namespace WSG.CafeOtomation.Business.DependencyResolvers.Autofac
 
             builder.RegisterType<CustomerManager>().As<ICustomerService>();
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>();
+
+            builder.RegisterType<PayTypeManager>().As<IPayTypeService>();
+            builder.RegisterType<EfPayTypeDal>().As<IPayTypeDal>();
 
             builder.RegisterType<SupplierManager>().As<ISupplierService>();
             builder.RegisterType<EfSupplierDal>().As<ISupplierDal>();

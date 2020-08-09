@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using WizardSoftwareGroupsFramework.Core.Entities;
 using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 
 namespace WSG.CafeOtomation.Entities.Concrete
 {
-    public class Payment:IEntity
+    public class Payment : IEntity
     {
         public int ID { get; set; }
         public int UserID { get; set; }

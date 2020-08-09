@@ -25,7 +25,7 @@ namespace WSG.CafeOtomation.Business.Concrete
         {
             _userService = userService;
         }
-        public AuthManager(IUserService userService, IUserTitleService userTitleService)
+        public AuthManager(IUserService userService, IUserTitleService userTitleService, bool form)
         {
             _userTitleService = userTitleService;
             _userService = userService;

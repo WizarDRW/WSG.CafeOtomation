@@ -43,17 +43,17 @@ namespace WSG.CafeOtomation.Business.Concrete
 
         public IDataResult<List<Order>> GetByClose(OrderPayStatus orderPayStatus)
         {
-            return new SuccessDataResult<List<Order>>(_orderDal.GetList(x=>x.OrderPayStatus == orderPayStatus));
+            return new SuccessDataResult<List<Order>>(_orderDal.GetList(x => x.OrderPayStatus == orderPayStatus));
         }
 
         public IDataResult<List<Order>> GetByDesk(int deskId)
         {
-            return new SuccessDataResult<List<Order>>(_orderDal.GetList(x=>x.DeskID == deskId));
+            return new SuccessDataResult<List<Order>>(_orderDal.GetList(x => x.DeskID == deskId));
         }
 
         public IDataResult<Order> GetByOrderNo(int no)
         {
-            return new SuccessDataResult<Order>(_orderDal.Get(x=>x.ID == no));
+            return new SuccessDataResult<Order>(_orderDal.Get(x => x.ID == no));
         }
     }
     public class OrderDetailManager : IOrderDetailService
@@ -135,7 +135,7 @@ namespace WSG.CafeOtomation.Business.Concrete
             return new SuccessDataResult<OrderDetailType>(_orderDetailTypeDal.Get(filter));
         }
     }
-    public class OrderDetailTimeLogManager:IOrderDetailTimeLogService
+    public class OrderDetailTimeLogManager : IOrderDetailTimeLogService
     {
         private IOrderDetailTimeLogDal _orderDetailTimeLogDal;
         public OrderDetailTimeLogManager(IOrderDetailTimeLogDal orderDetailTimeLogDal)
@@ -173,7 +173,7 @@ namespace WSG.CafeOtomation.Business.Concrete
 
         public IDataResult<List<OrderDetailTimeLog>> GetByOrderNo(int orderId)
         {
-            return new SuccessDataResult<List<OrderDetailTimeLog>>(_orderDetailTimeLogDal.GetList(x=>x.OrderDetailID == orderId));
+            return new SuccessDataResult<List<OrderDetailTimeLog>>(_orderDetailTimeLogDal.GetList(x => x.OrderDetailID == orderId));
         }
     }
     public class OrderPaymentManager : IOrderPaymentService
@@ -209,6 +209,41 @@ namespace WSG.CafeOtomation.Business.Concrete
         public IDataResult<OrderPayment> GetBy(Expression<Func<OrderPayment, bool>> filter)
         {
             return new SuccessDataResult<OrderPayment>(_orderPaymentDal.Get(filter));
+        }
+    }
+    public class PayTypeManager : IPayTypeService
+    {
+        private IPayTypeDal _payTypeDal;
+        public PayTypeManager(IPayTypeDal payTypeDal)
+        {
+            _payTypeDal = payTypeDal;
+        }
+        public IResult Add(PayType orderPayment)
+        {
+            _payTypeDal.Add(orderPayment);
+            return new SuccessResult(Messages.Added);
+        }
+
+        public IResult Update(PayType orderPayment)
+        {
+            _payTypeDal.Update(orderPayment);
+            return new SuccessResult(Messages.Updated);
+        }
+
+        public IResult Delete(PayType orderPayment)
+        {
+            _payTypeDal.Delete(orderPayment);
+            return new SuccessResult(Messages.Deleted);
+        }
+
+        public IDataResult<List<PayType>> GetAll(Expression<Func<PayType, bool>> filter = null)
+        {
+            return new SuccessDataResult<List<PayType>>(_payTypeDal.GetList(filter));
+        }
+
+        public IDataResult<PayType> GetBy(Expression<Func<PayType, bool>> filter)
+        {
+            return new SuccessDataResult<PayType>(_payTypeDal.Get(filter));
         }
     }
 }

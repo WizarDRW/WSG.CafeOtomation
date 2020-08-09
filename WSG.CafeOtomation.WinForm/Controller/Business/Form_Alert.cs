@@ -69,7 +69,7 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
             this.lblMsg.Text = msg;
             this.WindowState = FormWindowState.Normal;
             this.Show();
-            this.TopMost=true;
+            this.TopMost = true;
             this.action = enmAction.start;
             this.timer.Interval = 1;
             this.timer.Start();

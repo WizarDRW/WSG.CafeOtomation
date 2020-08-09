@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WSG.CafeOtomation.Business.Constants
+﻿namespace WSG.CafeOtomation.Business.Constants
 {
     public static class ProductMessages
     {

@@ -5,7 +5,7 @@ using WSG.CafeOtomation.Entities.Concrete;
 
 namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
 {
-    public class EfCustomerDal:EfEntityRepositoryBase<Customer, CafeContext>, ICustomerDal
+    public class EfCustomerDal : EfEntityRepositoryBase<Customer, CafeContext>, ICustomerDal
     {
     }
     public class EfSupplierDal : EfEntityRepositoryBase<Supplier, CafeContext>, ISupplierDal

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using WizardSoftwareGroupsFramework.Core.DataAccess.EntityFramework;
 using WSG.CafeOtomation.DataAccess.Abstract;
@@ -32,7 +32,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          UnitPrice = p.UnitPrice,
                          CategoryName = pC.Name,
                          ProductImages = p.ProductImages,
-                         Minute = p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Count) <= 0 ? 0 : (p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Sum(c =>c.Minute)) / p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Count))
+                         Minute = p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Count) <= 0 ? 0 : (p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Sum(c => c.Minute)) / p.OrderDetails.Sum(x => x.OrderDetailTimeLogs.Count))
                      }).ToList()
                     :
                     (from p in context.Products.Where(filter)
@@ -52,7 +52,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
             }
         }
     }
-    public class EfProductTypeDal:EfEntityRepositoryBase<ProductType, CafeContext>, IProductTypeDal
+    public class EfProductTypeDal : EfEntityRepositoryBase<ProductType, CafeContext>, IProductTypeDal
     {
 
     }

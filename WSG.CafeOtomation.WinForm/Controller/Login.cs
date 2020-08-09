@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WizardSoftwareGroupsFramework.Core.Utilities.Result.Abstract;
@@ -19,7 +18,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         public Login()
         {
             InitializeComponent();
-            _authService = new AuthManager(new UserManager(new EfUserDal()), new UserTitleManager(new EfUserTitleDal()));
+            _authService = new AuthManager(new UserManager(new EfUserDal()), new UserTitleManager(new EfUserTitleDal()), true);
             _userService = new UserManager(new EfUserDal());
             _exit = false;
         }

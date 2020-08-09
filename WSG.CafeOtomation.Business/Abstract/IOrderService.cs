@@ -52,4 +52,12 @@ namespace WSG.CafeOtomation.Business.Abstract
         IResult Update(OrderPayment orderPayment);
         IResult Delete(OrderPayment orderPayment);
     }
+    public interface IPayTypeService
+    {
+        IDataResult<List<PayType>> GetAll(Expression<Func<PayType, bool>> filter = null);
+        IDataResult<PayType> GetBy(Expression<Func<PayType, bool>> filter);
+        IResult Add(PayType orderPayment);
+        IResult Update(PayType orderPayment);
+        IResult Delete(PayType orderPayment);
+    }
 }

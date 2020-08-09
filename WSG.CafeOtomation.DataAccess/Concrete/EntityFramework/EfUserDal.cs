@@ -66,18 +66,18 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
 
         public List<UserStuffDto> GetStuffSafeList(Expression<Func<UserStuffDto, bool>> filter = null)
         {
-            using (CafeContext context = new CafeContext ())
+            using (CafeContext context = new CafeContext())
             {
                 return filter == null ?
                     (from u in context.Users
-                        join uT in context.UserTitles
-                        on u.ID equals uT.UserID
-                        select new UserStuffDto
-                        {
-                            ID = u.ID,
-                            UserName = u.UserName,
-                            AccessAuth = (AccessAuth)uT.AccessAuth
-                        }).ToList()
+                     join uT in context.UserTitles
+                     on u.ID equals uT.UserID
+                     select new UserStuffDto
+                     {
+                         ID = u.ID,
+                         UserName = u.UserName,
+                         AccessAuth = (AccessAuth)uT.AccessAuth
+                     }).ToList()
                         :
                         (from u in context.Users
                          join uT in context.UserTitles

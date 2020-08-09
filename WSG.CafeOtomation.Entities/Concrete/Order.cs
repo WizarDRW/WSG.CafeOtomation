@@ -21,8 +21,6 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public int DeskID { get; set; }
         public Desk Desk { get; set; }
         public decimal TotalPrice { get; set; }
-        public decimal Paid { get; set; }
-        public decimal Change { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
         public List<OrderPayment> OrderPayments { get; set; }
         public OrderPayStatus OrderPayStatus { get; set; }
@@ -60,7 +58,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public List<OrderDetailTimeLog> OrderDetailTimeLogs { get; set; }
         public List<OrderDetailType> OrderDetailTypes { get; set; }
     }
-    public class OrderDetailType:IEntity
+    public class OrderDetailType : IEntity
     {
         public int ID { get; set; }
         public int OrderDetailID { get; set; }
@@ -96,32 +94,22 @@ namespace WSG.CafeOtomation.Entities.Concrete
         [Display(Name = "Tamamlandı!")]
         Complete = 3,
     }
-    [TypeConverter(typeof(ExpectationResultConverter))]
-    public enum OrderPayType
+    public class PayType : IEntity
     {
-        [Description("Ödenecek")]
-        [Display(Name = "Ödenecek")]
-        None = 0,
-        [Description("Nakit")]
-        [Display(Name = "Nakit")]
-        Cash = 1,
-        [Description("Kredi Kartı")]
-        [Display(Name = "Kredi Kartı")]
-        Credit = 2,
-        [Description("Banka Kartı")]
-        [Display(Name = "Banka Kartı")]
-        Debit = 3,
-        [Description("Mişteri Hesabı")]
-        [Display(Name = "Müşteri Hesabı")]
-        Customer = 4,
+        public int ID { get; set; }
+        [Description("Ödeme Tipi")]
+        [Display(Name = "Ödeme Tipi")]
+        public string Name { get; set; }
     }
 
-    public class OrderPayment:IEntity
+    public class OrderPayment : IEntity
     {
         public int ID { get; set; }
         public int OrderID { get; set; }
         public Order Order { get; set; }
-        public OrderPayType OrderPayType { get; set; }
+        public int PayTypeID { get; set; }
+        public PayType PayType { get; set; }
         public decimal Value { get; set; }
+        public decimal Balance { get; set; }
     }
 }

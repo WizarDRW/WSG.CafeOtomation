@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WSG.CafeOtomation.Business.Abstract;
 using WSG.CafeOtomation.Entities.Concrete;
 
@@ -93,6 +88,23 @@ namespace WSG.CafeOtomation.WebApi.Controllers
         {
             var result = _orderDetailService.Delete(orderDetail);
             return Ok(result);
+        }
+    }
+
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PayTypeController : ControllerBase
+    {
+        private IPayTypeService _payTypeService;
+        public PayTypeController(IPayTypeService payTypeService)
+        {
+            _payTypeService = payTypeService;
+        }
+        [HttpPost]
+        public IActionResult Add(PayType payType)
+        {
+            var result = _payTypeService.Add(payType);
+            return Ok(result.Message);
         }
     }
 }

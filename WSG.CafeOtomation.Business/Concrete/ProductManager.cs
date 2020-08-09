@@ -83,12 +83,12 @@ namespace WSG.CafeOtomation.Business.Concrete
 
         public IDataResult<List<ProductDto>> GetByCategory(int id)
         {
-            return new SuccessDataResult<List<ProductDto>>(_productDal.GetProductDtoList(x=>x.ProductCategoryID == id));
+            return new SuccessDataResult<List<ProductDto>>(_productDal.GetProductDtoList(x => x.ProductCategoryID == id));
         }
 
         public IDataResult<Product> GetByID(int id)
         {
-            return new SuccessDataResult<Product>(_productDal.Get(x=>x.ID == id));
+            return new SuccessDataResult<Product>(_productDal.Get(x => x.ID == id));
         }
 
         public IDataResult<Product> GetByName(string name)
@@ -107,7 +107,7 @@ namespace WSG.CafeOtomation.Business.Concrete
         public IResult Add(ProductType productType)
         {
             _productTypeDal.Add(productType);
-            return new SuccessResult(Messages.Added); 
+            return new SuccessResult(Messages.Added);
         }
 
         public IResult Update(ProductType productType)
@@ -134,7 +134,7 @@ namespace WSG.CafeOtomation.Business.Concrete
 
         public IDataResult<List<ProductType>> GetByProduct(int id)
         {
-            return new SuccessDataResult<List<ProductType>>(_productTypeDal.GetList(x=>x.ProductID==id));
+            return new SuccessDataResult<List<ProductType>>(_productTypeDal.GetList(x => x.ProductID == id));
         }
     }
     public class ProductImageManager : IProductImageService

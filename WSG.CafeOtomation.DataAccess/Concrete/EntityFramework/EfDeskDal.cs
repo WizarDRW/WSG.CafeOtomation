@@ -5,7 +5,7 @@ using WSG.CafeOtomation.Entities.Concrete;
 
 namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
 {
-    public class EfDeskDal:EfEntityRepositoryBase<Desk, CafeContext>, IDeskDal
+    public class EfDeskDal : EfEntityRepositoryBase<Desk, CafeContext>, IDeskDal
     {
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WSG.CafeOtomation.Entities.Concrete;
+﻿using WSG.CafeOtomation.Entities.Concrete;
 
 namespace WSG.CafeOtomation.Entities.Dtos
 {

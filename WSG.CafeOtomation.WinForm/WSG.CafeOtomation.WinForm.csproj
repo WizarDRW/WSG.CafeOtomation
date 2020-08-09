@@ -242,6 +242,12 @@
     <Compile Include="Controller\Business\Form_Alert.Designer.cs">
       <DependentUpon>Form_Alert.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controller\Business\HalfManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\Business\HalfManage.Designer.cs">
+      <DependentUpon>HalfManage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controller\Business\PayPopup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -277,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controller\Business\Form_Alert.resx">
       <DependentUpon>Form_Alert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\Business\HalfManage.resx">
+      <DependentUpon>HalfManage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controller\Business\PayPopup.resx">
       <DependentUpon>PayPopup.cs</DependentUpon>
