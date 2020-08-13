@@ -28,10 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\js\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="WizardSoftwareGroupsFramework.Core">
       <HintPath>..\..\..\Workspaces\Çalışma Alanı\WizardSoftwareGroupsFramework\WizardSoftwareGroupsFramework.Core\bin\Release\netstandard2.0\WizardSoftwareGroupsFramework.Core.dll</HintPath>
     </Reference>

@@ -6,8 +6,10 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
 {
     public partial class Form_Alert : Form
     {
-        public Form_Alert()
+        private int _intervalTime;
+        public Form_Alert(int intervalTime)
         {
+            _intervalTime = intervalTime;
             InitializeComponent();
         }
         public enum enmAction
@@ -23,7 +25,7 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
             Info,
             Error
         }
-        private Form_Alert.enmAction action;
+        private enmAction action;
         private int x, y;
         public void ShowAlert(string msg, enmType type)
         {
@@ -80,7 +82,7 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
             switch (this.action)
             {
                 case enmAction.wait:
-                    timer.Interval = 5000;
+                    timer.Interval = _intervalTime;
                     action = enmAction.close;
                     break;
                 case Form_Alert.enmAction.start:

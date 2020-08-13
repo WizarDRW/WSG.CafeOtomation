@@ -36,6 +36,7 @@
             // 
             // cmbBxDesk
             // 
+            this.cmbBxDesk.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBxDesk.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cmbBxDesk.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.cmbBxDesk.FormattingEnabled = true;

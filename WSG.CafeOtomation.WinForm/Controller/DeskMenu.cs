@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Microsoft.PointOfService;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WSG.CafeOtomation.Business.Abstract;
@@ -15,7 +18,7 @@ using WSG.CafeOtomation.WinForm.Controller.Business;
 
 namespace WSG.CafeOtomation.WinForm.Controller
 {
-    public partial class DeskMenu : Form
+    public partial class DeskMenu : Form, ISynchronizeInvoke
     {
         private DateTime _nowTime;
         private Desk _desk;
@@ -29,6 +32,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private IPayTypeService _payTypeService;
         private IOrderPaymentService _orderPaymentService;
         private TreeNode _newNode;
+        private PosPrinter posPrinter;
         public DeskMenu(Desk desk, User user, IUserTitleService userTitleService, IOrderDetailTimeLogService orderDetailTimeLogService)
         {
             InitializeComponent();
@@ -51,7 +55,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         }
         public void Alert(string msg, Form_Alert.enmType type)
         {
-            Form_Alert frm = new Form_Alert();
+            Form_Alert frm = new Form_Alert(5000);
             frm.ShowAlert(msg, type);
         }
         /// <summary>
@@ -85,7 +89,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             {
                 var dataDetails = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
                 dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == dataDetails.ID).Data;
-                dGWOrders.Columns["ID"].Visible = false;
+                dGWOrders.Columns["OrderID"].Visible = false;
                 dGWOrders.Columns["ProductID"].Visible = false;
                 dGWOrders.Columns["CreateTime"].Visible = false;
                 decimal total = dataDetails.TotalPrice - _orderPaymentService.GetAll(x => x.OrderID == dataDetails.ID).Data.Sum(x => x.Value);
@@ -166,6 +170,65 @@ namespace WSG.CafeOtomation.WinForm.Controller
             }
         }
 
+        private async Task PosWriteAsync()
+        {
+            var order = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
+            var explorer = new PosExplorer(this);
+            var deviceInfo = explorer.GetDevice(DeviceType.PosPower);
+            if (deviceInfo == null)
+            {
+                Alert("Yazıcı bulunamadı!", Form_Alert.enmType.Error);
+                return;
+            }
+
+            posPrinter = (PosPrinter)explorer.CreateInstance(deviceInfo);
+            posPrinter.Open();
+            posPrinter.Claim(500);
+            posPrinter.DeviceEnabled = true;
+
+            posPrinter.ErrorEvent += (s, evt) => {
+                if (evt.ErrorCode == ErrorCode.NoService)
+                {
+                    MessageBox.Show("Yazıcı bağlantısı yok!");
+                    return;
+                }
+                if (evt.ErrorCode == ErrorCode.Closed)
+                {
+                    MessageBox.Show("Yazıcı kapalı!");
+                }
+            };
+
+            posPrinter.StatusUpdateEvent += (s, evt) =>
+            {
+                if (evt.Status == PosPrinter.StatusCoverOpen)
+                {
+                    MessageBox.Show("Yazıcının kağıt kapağı açıldı");
+                }
+                if (evt.Status == PosPrinter.StatusCoverOK)
+                {
+                    MessageBox.Show("Yazıcının kağıt kapağı kapandı");
+                }
+                if (evt.Status == PosPrinter.StatusJournalCartridgeEmpty)
+                {
+                    MessageBox.Show("Yazıcının kartuşu bitmek üzere");
+                }
+            };
+
+            posPrinter.PrintNormal(PrinterStation.Slip, "Smoke-in" + Environment.NewLine);
+            posPrinter.PrintNormal(PrinterStation.Slip, "********************************************************************" + Environment.NewLine);
+            posPrinter.PrintNormal(PrinterStation.Slip, "HESAP KODU: " + order.ID + Environment.NewLine); 
+            //posPrinter.PrintBarCode(PrinterStation.Slip, order.ID.ToString(), BarCodeSymbology.Ean128, 40, 200, 1, BarCodeTextPosition.Above);
+            posPrinter.PrintNormal(PrinterStation.Slip, "********************************************************************" + Environment.NewLine);
+            foreach (var item in _orderDetailService.GetAll(x => x.OrderID == order.ID).Data)
+            {
+                posPrinter.PrintNormal(PrinterStation.Slip, item.Product + "\t\t\t" + item.Amount + "\t\t" + item.TotalPrice + "₺" + Environment.NewLine);
+            }
+            posPrinter.PrintNormal(PrinterStation.Slip, "********************************************************************" + Environment.NewLine);
+            posPrinter.PrintNormal(PrinterStation.Slip, "Toplam:\t\t\t\t" + order.TotalPrice + "₺" + Environment.NewLine);
+
+            posPrinter.CutPaper(100); //kağıdı tam kes, 100 yerine 50 yazarsan yarısına kadar keser
+        }
+
         #region Events
         /// <summary>
         /// Masa yuklendigindeki olay dizesi
@@ -190,6 +253,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             {
                 Debug.WriteLine(ex);
             }
+            catch { }
         }
 
         private void ComboBoxOrders(int index = 0)
@@ -210,7 +274,11 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// <param name="e"></param>
         private void tVProducts_DoubleClick(object sender, EventArgs e)
         {
-            var data = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
+            Order data = null;
+            if (cmBxOrders.SelectedItem != null)
+            {
+                data = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
+            }
             var product = _productService.GetByName(tVProducts.SelectedNode.Text).Data;
             if (product == null)
             {
@@ -321,7 +389,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             }
             var i = dGWOrders.CurrentCell.RowIndex;
             loadData();
-            dGWOrders.CurrentCell = dGWOrders.Rows[i].Cells[1];
+            dGWOrders.CurrentCell = dGWOrders.Rows[i].Cells[0];
         }
         /// <summary>
         /// DataGridView da hucrete tiklandiginda
@@ -413,6 +481,17 @@ namespace WSG.CafeOtomation.WinForm.Controller
             catch { }
         }
 
+        private void cmBxPayType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmBxPayType.SelectedIndex == 0)
+            {
+                btnPaySuccess.Enabled = false;
+            }
+            else
+            {
+                btnPaySuccess.Enabled = true;
+            }
+        }
         #region Buttons
 
         private void btnSuccessOrder_Click(object sender, EventArgs e)
@@ -443,7 +522,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             _orderDetailTimeLogService.Add(log);
         }
 
-        private void btnPaySuccess_Click(object sender, EventArgs e)
+        private async void btnPaySuccess_Click(object sender, EventArgs e)
         {
             PayChange();
             var dataSource = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
@@ -462,6 +541,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 dataSource.UpdateDate = DateTime.Now;
                 dataSource.OrderPayStatus = OrderPayStatus.Paid;
                 _orderService.Update(dataSource);
+                await PosWriteAsync();
                 if (_orderService.GetByDesk(_desk.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open).Count() > 0)
                     ComboBoxOrders();
                 else
@@ -498,19 +578,19 @@ namespace WSG.CafeOtomation.WinForm.Controller
             this.Close();
         }
 
-        private void btnPrint_Click(object sender, EventArgs e)
+        private async void btnPrint_Click(object sender, EventArgs e)
         {
-
+            await PosWriteAsync();
         }
 
-        private void btnPrintSelect_Click(object sender, EventArgs e)
+        private async void btnPrintSelect_Click(object sender, EventArgs e)
         {
-
+            await PosWriteAsync();
         }
 
         private void btnDeskMove_Click(object sender, EventArgs e)
         {
-            var data = _orderService.GetByDesk(_desk.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
+            var data = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
             DeskMenuMoveHelper deskMenuMoveHelper = new DeskMenuMoveHelper(_user, data, _orderService, _orderDetailService);
             bool IsMove = false;
             deskMenuMoveHelper.FormClosing += (o, ev) =>
@@ -529,9 +609,10 @@ namespace WSG.CafeOtomation.WinForm.Controller
             {
                 ID.Add((int)item.Cells["ID"].Value);
             }
-            var data = _orderService.GetByDesk(_desk.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open).SingleOrDefault();
+            var data = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
             DeskMenuMoveHelper deskMenuMoveHelper = new DeskMenuMoveHelper(_user, ID, _orderService, _orderDetailService);
             deskMenuMoveHelper.ShowDialog();
+            loadData();
         }
 
         private void btnHalf_Click(object sender, EventArgs e)
@@ -540,7 +621,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             HalfManage halfManage = new HalfManage(_orderService, _orderDetailService, _productService, _user, (int)cmBxOrders.SelectedItem, _desk.ID);
             halfManage.ShowDialog();
             ComboBoxOrders(index);
-
+            loadData();
         }
         #endregion
 

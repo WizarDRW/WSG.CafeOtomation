@@ -54,7 +54,6 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
             dgvOne.Columns["CreateTime"].Visible = false;
         }
 
-
         private void DataGridTwo_Load()
         {
             dgvTwo.DataSource = null;
@@ -73,61 +72,68 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            foreach (var item in _getOrderDetails)
+            if (MessageBox.Show("Bölmek istediğinize emin misiniz?","Uyarı!", MessageBoxButtons.YesNo, MessageBoxIcon.Question)==DialogResult.Yes)
             {
-                var data = new OrderDetail
+                foreach (var item in _getOrderDetails)
                 {
-                    ID = item.ID,
-                    ProductID = item.ProductID,
-                    TotalPrice = item.TotalPrice,
-                    OrderID = item.OrderID,
-                    Amount = item.Amount,
-                    UpdateDate = DateTime.Now,
-                    EOrderStatus = OrderStatus.Complete,
-                    UpdateUserID = _user.ID
-                };
-                _orderDetailService.Update(data);
-            }
-            var dataOrder = new Order
-            {
-                DeskID = _deskId,
-                TotalPrice = _orderDetailsSoft.Sum(x => x.TotalPrice)
-            };
-            _orderService.Add(dataOrder);
-            foreach (var item in _orderDetailsSoft)
-            {
-                if (item.OrderID != 0)
-                {
-                    item.OrderID = dataOrder.ID;
-                    var dataOrderDetail = new OrderDetail
+                    var data = new OrderDetail
                     {
                         ID = item.ID,
                         ProductID = item.ProductID,
-                        OrderID = dataOrder.ID,
-                        Amount = item.Amount,
                         TotalPrice = item.TotalPrice,
+                        OrderID = item.OrderID,
+                        Amount = item.Amount,
                         UpdateDate = DateTime.Now,
+                        EOrderStatus = OrderStatus.Complete,
                         UpdateUserID = _user.ID
-
                     };
-                    _orderDetailService.Update(dataOrderDetail);
+                    _orderDetailService.Update(data);
                 }
-            }
-            foreach (var item in _orderRightDetails)
-            {
-                var dataOrderDetail = new OrderDetail
+                var dataOrder = new Order
                 {
-                    OrderID = dataOrder.ID,
-                    ProductID = item.ProductID,
-                    TotalPrice = item.TotalPrice,
-                    CreateUserID = _user.ID,
-                    CreateDate = DateTime.Now,
-                    Amount = item.Amount,
-                    EOrderStatus = OrderStatus.Complete
+                    DeskID = _deskId,
+                    TotalPrice = _orderDetailsSoft.Sum(x => x.TotalPrice)
                 };
-                _orderDetailService.Add(dataOrderDetail);
+                _orderService.Add(dataOrder);
+                foreach (var item in _orderDetailsSoft)
+                {
+                    if (item.OrderID != 0)
+                    {
+                        item.OrderID = dataOrder.ID;
+                        var dataOrderDetail = new OrderDetail
+                        {
+                            ID = item.ID,
+                            ProductID = item.ProductID,
+                            OrderID = dataOrder.ID,
+                            Amount = item.Amount,
+                            TotalPrice = item.TotalPrice,
+                            UpdateDate = DateTime.Now,
+                            UpdateUserID = _user.ID
+
+                        };
+                        _orderDetailService.Update(dataOrderDetail);
+                    }
+                }
+                foreach (var item in _orderRightDetails)
+                {
+                    var dataOrderDetail = new OrderDetail
+                    {
+                        OrderID = dataOrder.ID,
+                        ProductID = item.ProductID,
+                        TotalPrice = item.TotalPrice,
+                        CreateUserID = _user.ID,
+                        CreateDate = DateTime.Now,
+                        Amount = item.Amount,
+                        EOrderStatus = OrderStatus.Complete
+                    };
+                    _orderDetailService.Add(dataOrderDetail);
+                }
+                btnCancel_Click(sender, e);
             }
-            btnCancel_Click(sender, e);
+            else
+            {
+                return;
+            }
         }
 
         private void dgvOne_DoubleClick(object sender, EventArgs e)
@@ -141,7 +147,14 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
             Method_Add method_Add = LeftAll_Add;
             Double_Click((DataGridView)sender, _orderDetailsSoft, _getOrderDetails, _orderLeftDetails, method_Add);
         }
-
+        /// <summary>
+        /// Bolumlemedeki hesaplarin eventlari
+        /// </summary>
+        /// <param name="dataGridView"></param>
+        /// <param name="getorderDetailsDtos"></param>
+        /// <param name="orderDetailsDtos"></param>
+        /// <param name="orderDetails"></param>
+        /// <param name="method_Add"></param>
         private void Double_Click(DataGridView dataGridView, List<OrderDetailsDto> getorderDetailsDtos, List<OrderDetailsDto> orderDetailsDtos, List<OrderDetail> orderDetails, Method_Add method_Add)
         {
             var product = _productService.GetByName(dataGridView.CurrentRow.Cells["Product"].Value.ToString()).Data;
@@ -215,6 +228,7 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
             DataGridOne_Load();
             return;
         }
+
         private void LeftAll_Add(OrderDetailsDto data)
         {
             _getOrderDetails.Add(data);

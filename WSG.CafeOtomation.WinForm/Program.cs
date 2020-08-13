@@ -3,6 +3,7 @@ using System;
 using System.Windows.Forms;
 using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WSG.CafeOtomation.Business.DependencyResolvers.Autofac;
+using WSG.CafeOtomation.WinForm.Controller;
 
 namespace WSG.CafeOtomation.WinForm
 {

@@ -126,15 +126,18 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
                     CreateDate = DateTime.Now
                 };
                 result = _orderDetailService.Add(data);
-                if (customerOrderCreateDto.ProductTypes.Count > 0)
+                if (customerOrderCreateDto.ProductTypes != null)
                 {
-                    foreach (var item in customerOrderCreateDto.ProductTypes)
+                    if (customerOrderCreateDto.ProductTypes.Count > 0)
                     {
-                        _orderDetailTypeService.Add(new OrderDetailType
+                        foreach (var item in customerOrderCreateDto.ProductTypes)
                         {
-                            OrderDetailID = data.ID,
-                            ProductTypeID = item
-                        });
+                            _orderDetailTypeService.Add(new OrderDetailType
+                            {
+                                OrderDetailID = data.ID,
+                                ProductTypeID = item
+                            });
+                        }
                     }
                 }
                 return Json(result);

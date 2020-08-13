@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Media;
 using System.Windows.Forms;
 using WizardSoftwareGroupsFramework.Core.Entities.Concrete;
 using WSG.CafeOtomation.Business.Abstract;
@@ -29,6 +30,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private IUserTitleService _userTitleService;
         private IOrderDetailTimeLogService _orderDetailTimeLogService;
         private int _sessionMinutesOption;
+        private int _count;
         public Menu(User user)
         {
             InitializeComponent();
@@ -115,10 +117,12 @@ namespace WSG.CafeOtomation.WinForm.Controller
             }
             timerNow.Enabled = true;
         }
-        public void Alert()
+        public int Alert(int count, string msg, Form_Alert.enmType enmType)
         {
-            Form_Alert frm = new Form_Alert();
-            frm.ShowAlert("", Form_Alert.enmType.Success);
+            Form_Alert frm = new Form_Alert(10000);
+            frm.ShowAlert(msg, enmType);
+            SystemSounds.Beep.Play();
+            return count;
         }
         public void OrderType()
         {
@@ -130,7 +134,6 @@ namespace WSG.CafeOtomation.WinForm.Controller
         #region Events
         private void Menu_Load(object sender, EventArgs e)
         {
-            Alert();
             AccessControl();
             try
             {
@@ -268,6 +271,10 @@ namespace WSG.CafeOtomation.WinForm.Controller
             {
                 dGVOrderDetails.CurrentCell = dGVOrderDetails.Rows[i - 1].Cells[r];
                 dGVOrderDetails.FirstDisplayedScrollingRowIndex = 0;
+            }
+            if (_count < dGVOrderDetails.Rows.Count)
+            {
+                _count = Alert(dGVOrderDetails.Rows.Count, "Sipariş Geldi", Form_Alert.enmType.Info);
             }
         }
         private void timerNow_Tick(object sender, EventArgs e)

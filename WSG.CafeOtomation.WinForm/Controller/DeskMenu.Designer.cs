@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.tVProducts = new System.Windows.Forms.TreeView();
@@ -54,13 +54,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.pnlPay = new System.Windows.Forms.Panel();
+            this.btnDeskSelectedMove = new System.Windows.Forms.Button();
             this.btnHalf = new System.Windows.Forms.Button();
+            this.btnDeskMove = new System.Windows.Forms.Button();
             this.cmBxPayType = new System.Windows.Forms.ComboBox();
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnPrintSelect = new System.Windows.Forms.Button();
             this.pnlControl = new System.Windows.Forms.Panel();
-            this.btnDeskSelectedMove = new System.Windows.Forms.Button();
-            this.btnDeskMove = new System.Windows.Forms.Button();
             this.btnSuccessOrder = new System.Windows.Forms.Button();
             this.lblUnitPrice = new System.Windows.Forms.Label();
             this.timerOrderList = new System.Windows.Forms.Timer(this.components);
@@ -77,7 +77,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblTitle.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblTitle.Location = new System.Drawing.Point(12, 24);
+            this.lblTitle.Location = new System.Drawing.Point(12, 19);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(0, 24);
             this.lblTitle.TabIndex = 0;
@@ -90,9 +90,9 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(1159, 606);
+            this.btnExit.Location = new System.Drawing.Point(1159, 683);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(416, 179);
+            this.btnExit.Size = new System.Drawing.Size(416, 102);
             this.btnExit.TabIndex = 1;
             this.btnExit.Text = "Kapat";
             this.btnExit.UseVisualStyleBackColor = false;
@@ -119,38 +119,38 @@
             this.dGWOrders.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dGWOrders.BackgroundColor = System.Drawing.Color.Gray;
             this.dGWOrders.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dGWOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dGWOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dGWOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dGWOrders.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dGWOrders.DefaultCellStyle = dataGridViewCellStyle2;
             this.dGWOrders.Location = new System.Drawing.Point(286, 96);
             this.dGWOrders.Name = "dGWOrders";
             this.dGWOrders.ReadOnly = true;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dGWOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dGWOrders.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dGWOrders.RowHeadersWidth = 51;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.Control;
-            this.dGWOrders.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.Control;
+            this.dGWOrders.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dGWOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dGWOrders.Size = new System.Drawing.Size(583, 692);
             this.dGWOrders.TabIndex = 4;
@@ -225,9 +225,9 @@
             this.btnPayCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnPayCustomer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnPayCustomer.ForeColor = System.Drawing.Color.White;
-            this.btnPayCustomer.Location = new System.Drawing.Point(214, 234);
+            this.btnPayCustomer.Location = new System.Drawing.Point(217, 313);
             this.btnPayCustomer.Name = "btnPayCustomer";
-            this.btnPayCustomer.Size = new System.Drawing.Size(201, 42);
+            this.btnPayCustomer.Size = new System.Drawing.Size(197, 42);
             this.btnPayCustomer.TabIndex = 12;
             this.btnPayCustomer.Text = "Cari Hesaba Yaz";
             this.btnPayCustomer.UseVisualStyleBackColor = false;
@@ -241,9 +241,9 @@
             this.btnPaySuccess.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnPaySuccess.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnPaySuccess.ForeColor = System.Drawing.Color.White;
-            this.btnPaySuccess.Location = new System.Drawing.Point(3, 185);
+            this.btnPaySuccess.Location = new System.Drawing.Point(7, 215);
             this.btnPaySuccess.Name = "btnPaySuccess";
-            this.btnPaySuccess.Size = new System.Drawing.Size(413, 42);
+            this.btnPaySuccess.Size = new System.Drawing.Size(406, 42);
             this.btnPaySuccess.TabIndex = 13;
             this.btnPaySuccess.Text = "Ödeme Yap";
             this.btnPaySuccess.UseVisualStyleBackColor = false;
@@ -273,7 +273,7 @@
             this.nUDAmount.BackColor = System.Drawing.Color.Black;
             this.nUDAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.nUDAmount.ForeColor = System.Drawing.SystemColors.Control;
-            this.nUDAmount.Location = new System.Drawing.Point(215, 21);
+            this.nUDAmount.Location = new System.Drawing.Point(228, 35);
             this.nUDAmount.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -312,7 +312,7 @@
             this.lblAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblAmount.Font = new System.Drawing.Font("Trebuchet MS", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblAmount.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblAmount.Location = new System.Drawing.Point(125, 21);
+            this.lblAmount.Location = new System.Drawing.Point(138, 38);
             this.lblAmount.Name = "lblAmount";
             this.lblAmount.Size = new System.Drawing.Size(84, 35);
             this.lblAmount.TabIndex = 17;
@@ -335,9 +335,9 @@
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(3, 221);
+            this.btnDelete.Location = new System.Drawing.Point(3, 178);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(413, 39);
+            this.btnDelete.Size = new System.Drawing.Size(413, 82);
             this.btnDelete.TabIndex = 19;
             this.btnDelete.Text = "Sil";
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -382,7 +382,9 @@
             // pnlPay
             // 
             this.pnlPay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlPay.Controls.Add(this.btnDeskSelectedMove);
             this.pnlPay.Controls.Add(this.btnHalf);
+            this.pnlPay.Controls.Add(this.btnDeskMove);
             this.pnlPay.Controls.Add(this.cmBxPayType);
             this.pnlPay.Controls.Add(this.btnPrint);
             this.pnlPay.Controls.Add(this.btnPrintSelect);
@@ -400,8 +402,22 @@
             this.pnlPay.Enabled = false;
             this.pnlPay.Location = new System.Drawing.Point(1159, 270);
             this.pnlPay.Name = "pnlPay";
-            this.pnlPay.Size = new System.Drawing.Size(419, 330);
+            this.pnlPay.Size = new System.Drawing.Size(419, 407);
             this.pnlPay.TabIndex = 23;
+            // 
+            // btnDeskSelectedMove
+            // 
+            this.btnDeskSelectedMove.BackColor = System.Drawing.Color.Orange;
+            this.btnDeskSelectedMove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDeskSelectedMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnDeskSelectedMove.ForeColor = System.Drawing.Color.White;
+            this.btnDeskSelectedMove.Location = new System.Drawing.Point(7, 263);
+            this.btnDeskSelectedMove.Name = "btnDeskSelectedMove";
+            this.btnDeskSelectedMove.Size = new System.Drawing.Size(205, 44);
+            this.btnDeskSelectedMove.TabIndex = 22;
+            this.btnDeskSelectedMove.Text = "Siparişleri Taşı";
+            this.btnDeskSelectedMove.UseVisualStyleBackColor = false;
+            this.btnDeskSelectedMove.Click += new System.EventHandler(this.btnDeskSelectedMove_Click);
             // 
             // btnHalf
             // 
@@ -410,13 +426,27 @@
             this.btnHalf.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnHalf.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnHalf.ForeColor = System.Drawing.Color.White;
-            this.btnHalf.Location = new System.Drawing.Point(3, 234);
+            this.btnHalf.Location = new System.Drawing.Point(6, 313);
             this.btnHalf.Name = "btnHalf";
             this.btnHalf.Size = new System.Drawing.Size(206, 42);
             this.btnHalf.TabIndex = 26;
             this.btnHalf.Text = "Böl";
             this.btnHalf.UseVisualStyleBackColor = false;
             this.btnHalf.Click += new System.EventHandler(this.btnHalf_Click);
+            // 
+            // btnDeskMove
+            // 
+            this.btnDeskMove.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnDeskMove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDeskMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnDeskMove.ForeColor = System.Drawing.Color.White;
+            this.btnDeskMove.Location = new System.Drawing.Point(217, 263);
+            this.btnDeskMove.Name = "btnDeskMove";
+            this.btnDeskMove.Size = new System.Drawing.Size(196, 44);
+            this.btnDeskMove.TabIndex = 21;
+            this.btnDeskMove.Text = "Masayı Taşı";
+            this.btnDeskMove.UseVisualStyleBackColor = false;
+            this.btnDeskMove.Click += new System.EventHandler(this.btnDeskMove_Click);
             // 
             // cmBxPayType
             // 
@@ -428,10 +458,11 @@
             this.cmBxPayType.FormattingEnabled = true;
             this.cmBxPayType.Items.AddRange(new object[] {
             "--Lütfen Seçiniz--"});
-            this.cmBxPayType.Location = new System.Drawing.Point(4, 141);
+            this.cmBxPayType.Location = new System.Drawing.Point(7, 170);
             this.cmBxPayType.Name = "cmBxPayType";
-            this.cmBxPayType.Size = new System.Drawing.Size(413, 39);
+            this.cmBxPayType.Size = new System.Drawing.Size(405, 39);
             this.cmBxPayType.TabIndex = 25;
+            this.cmBxPayType.SelectedIndexChanged += new System.EventHandler(this.cmBxPayType_SelectedIndexChanged);
             // 
             // btnPrint
             // 
@@ -440,7 +471,7 @@
             this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnPrint.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnPrint.ForeColor = System.Drawing.Color.White;
-            this.btnPrint.Location = new System.Drawing.Point(4, 283);
+            this.btnPrint.Location = new System.Drawing.Point(7, 362);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(206, 42);
             this.btnPrint.TabIndex = 24;
@@ -455,9 +486,9 @@
             this.btnPrintSelect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnPrintSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnPrintSelect.ForeColor = System.Drawing.Color.White;
-            this.btnPrintSelect.Location = new System.Drawing.Point(214, 283);
+            this.btnPrintSelect.Location = new System.Drawing.Point(217, 362);
             this.btnPrintSelect.Name = "btnPrintSelect";
-            this.btnPrintSelect.Size = new System.Drawing.Size(201, 42);
+            this.btnPrintSelect.Size = new System.Drawing.Size(197, 42);
             this.btnPrintSelect.TabIndex = 23;
             this.btnPrintSelect.Text = " Adisyon(Seçili)";
             this.btnPrintSelect.UseVisualStyleBackColor = false;
@@ -466,45 +497,15 @@
             // pnlControl
             // 
             this.pnlControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlControl.Controls.Add(this.btnDeskSelectedMove);
-            this.pnlControl.Controls.Add(this.btnDeskMove);
             this.pnlControl.Controls.Add(this.btnSuccessOrder);
             this.pnlControl.Controls.Add(this.lblAmount);
-            this.pnlControl.Controls.Add(this.nUDAmount);
             this.pnlControl.Controls.Add(this.btnDelete);
+            this.pnlControl.Controls.Add(this.nUDAmount);
             this.pnlControl.Enabled = false;
             this.pnlControl.Location = new System.Drawing.Point(1159, 3);
             this.pnlControl.Name = "pnlControl";
             this.pnlControl.Size = new System.Drawing.Size(419, 262);
             this.pnlControl.TabIndex = 24;
-            // 
-            // btnDeskSelectedMove
-            // 
-            this.btnDeskSelectedMove.BackColor = System.Drawing.Color.Orange;
-            this.btnDeskSelectedMove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDeskSelectedMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnDeskSelectedMove.ForeColor = System.Drawing.Color.White;
-            this.btnDeskSelectedMove.Location = new System.Drawing.Point(3, 171);
-            this.btnDeskSelectedMove.Name = "btnDeskSelectedMove";
-            this.btnDeskSelectedMove.Size = new System.Drawing.Size(206, 44);
-            this.btnDeskSelectedMove.TabIndex = 22;
-            this.btnDeskSelectedMove.Text = "Siparişleri Taşı";
-            this.btnDeskSelectedMove.UseVisualStyleBackColor = false;
-            this.btnDeskSelectedMove.Click += new System.EventHandler(this.btnDeskSelectedMove_Click);
-            // 
-            // btnDeskMove
-            // 
-            this.btnDeskMove.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnDeskMove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDeskMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnDeskMove.ForeColor = System.Drawing.Color.White;
-            this.btnDeskMove.Location = new System.Drawing.Point(215, 171);
-            this.btnDeskMove.Name = "btnDeskMove";
-            this.btnDeskMove.Size = new System.Drawing.Size(201, 44);
-            this.btnDeskMove.TabIndex = 21;
-            this.btnDeskMove.Text = "Masayı Taşı";
-            this.btnDeskMove.UseVisualStyleBackColor = false;
-            this.btnDeskMove.Click += new System.EventHandler(this.btnDeskMove_Click);
             // 
             // btnSuccessOrder
             // 
@@ -512,7 +513,7 @@
             this.btnSuccessOrder.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSuccessOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnSuccessOrder.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnSuccessOrder.Location = new System.Drawing.Point(3, 85);
+            this.btnSuccessOrder.Location = new System.Drawing.Point(3, 93);
             this.btnSuccessOrder.Name = "btnSuccessOrder";
             this.btnSuccessOrder.Size = new System.Drawing.Size(413, 79);
             this.btnSuccessOrder.TabIndex = 20;
