@@ -34,6 +34,7 @@ namespace WSG.CafeOtomation.WebApi.Controllers
         [HttpPost("add")]
         public IActionResult Add(Desk desk)
         {
+            desk.UniqueIdentifier = System.Guid.NewGuid().ToString();
             var result = _deskService.Add(desk);
             return Ok(result);
         }

@@ -54,7 +54,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.panel1.BackColor = System.Drawing.Color.Black;
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnExit);
@@ -78,13 +78,13 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Trebuchet MS", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Font = new System.Drawing.Font("Trebuchet MS", 40F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(3, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(168, 81);
+            this.label1.Size = new System.Drawing.Size(258, 67);
             this.label1.TabIndex = 1;
-            this.label1.Text = "WSG";
+            this.label1.Text = "Smoke In";
             // 
             // btnExit
             // 

@@ -28,7 +28,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             string title = "Kullanıcıyı Seçiniz!";
             cmBxUserName.Items.Add(title);
             cmBxUserName.SelectedIndex = cmBxUserName.FindString(title);
-            foreach (var item in _userService.GetAllStuff(x => x.AccessAuth == AccessAuth.Waiter || x.AccessAuth == AccessAuth.Staff || x.AccessAuth == AccessAuth.Chef).Data)
+            foreach (var item in _userService.GetAllStuff().Data)
             {
                 cmBxUserName.Items.Add(item.UserName);
             }
