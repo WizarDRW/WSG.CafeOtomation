@@ -72,8 +72,9 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Bölmek istediğinize emin misiniz?","Uyarı!", MessageBoxButtons.YesNo, MessageBoxIcon.Question)==DialogResult.Yes)
+            if (MessageBox.Show("Bölmek istediğinize emin misiniz?", "Uyarı!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                var getdataOrder = _orderService.GetByOrderNo(_orderId).Data;
                 foreach (var item in _getOrderDetails)
                 {
                     var data = new OrderDetail
@@ -128,6 +129,8 @@ namespace WSG.CafeOtomation.WinForm.Controller.Business
                     };
                     _orderDetailService.Add(dataOrderDetail);
                 }
+                getdataOrder.TotalPrice = _orderDetailService.GetByOrderNo(_orderId).Data.Sum(x => x.TotalPrice);
+                _orderService.Update(getdataOrder);
                 btnCancel_Click(sender, e);
             }
             else

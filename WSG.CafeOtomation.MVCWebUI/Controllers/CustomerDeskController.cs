@@ -36,6 +36,11 @@ namespace WSG.CafeOtomation.MVCWebUI.Controllers
             _productTypeService = productTypeService;
             _orderDetailTypeService = orderDetailTypeService;
         }
+        public IActionResult DeskIndex()
+        {
+            var data = _deskService.GetAll(x => x.IsActive).Data;
+            return View(data);
+        }
         public IActionResult Index(string deskUniqueID)
         {
             ViewBag.DeskUniqueID = deskUniqueID;

@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <form asp-controller="Login" asp-action="Login" method="post">
+        <input type="text" class="form-control" name="userName" placeholder="Kullanici Adi" value="" />
+        <br />
+        <input type="password" class="form-control" name="password" placeholder="Sifre" value="" />
+        <br />
+        <input type="submit" class="btn btn-primary" name="send" value="Giris" />
+    </form>
+</body>
+</html>

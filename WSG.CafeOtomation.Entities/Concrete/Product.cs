@@ -14,7 +14,6 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public string IconPath { get; set; }
         public int Order { get; set; }
         public int ParentID { get; set; }
-        public ProductCategory Parent { get; set; }
     }
     public class Product : IEntity
     {

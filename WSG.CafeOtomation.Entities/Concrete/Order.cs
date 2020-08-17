@@ -20,6 +20,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
         public User UpdateUser { get; set; }
         public int DeskID { get; set; }
         public Desk Desk { get; set; }
+        [DisplayName("Toplam Tutar")]
         public decimal TotalPrice { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
         public List<OrderPayment> OrderPayments { get; set; }
@@ -105,6 +106,7 @@ namespace WSG.CafeOtomation.Entities.Concrete
     public class OrderPayment : IEntity
     {
         public int ID { get; set; }
+        public DateTime CreateDate { get; set; }
         public int OrderID { get; set; }
         public Order Order { get; set; }
         public int PayTypeID { get; set; }

@@ -36,9 +36,9 @@ namespace WSG.CafeOtomation.Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
-        public IDataResult<List<OrderDto>> GetAll(Expression<Func<Order, bool>> filter = null)
+        public IDataResult<List<Order>> GetAll(Expression<Func<Order, bool>> filter = null)
         {
-            return new SuccessDataResult<List<OrderDto>>(_orderDal.GetOrderDtos(filter));
+            return new SuccessDataResult<List<Order>>(_orderDal.GetList(filter));
         }
 
         public IDataResult<List<Order>> GetByClose(OrderPayStatus orderPayStatus)

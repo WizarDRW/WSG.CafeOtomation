@@ -1,0 +1,57 @@
+﻿@model IEnumerable<WSG.CafeOtomation.Entities.Concrete.Desk>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DeskIndex</title>
+    <style type="text/css">
+        .main {
+            position: relative;
+        }
+
+        img {
+            position: relative;
+            object-fit: cover;
+            width: 100%;
+            height: 200px;
+            z-index: -1;
+        }
+
+        p {
+            color: #fff;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            vertical-align: central;
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: bold;
+            font-size: 3rem;
+        }
+
+        .gredientColor {
+            display: block;
+            background: linear-gradient(rgba(92, 10, 10, 0.53),rgba(92, 10, 10, 0.53));
+        }
+    </style>
+</head>
+<body>
+    @foreach (var item in Model)
+    {
+        <div class="main">
+            <a href="CustomerDesk/Index?deskUniqueID=@item.UniqueIdentifier">
+                <p>@item.DeskNo</p>
+                <div class="gredientColor">
+                    <img style="z-index:-1" src="https://www.solidbackgrounds.com/images/3840x2160/3840x2160-dark-gray-solid-color-background.jpg" alt="gray.img" />
+                </div>
+            </a>
+        </div>
+    }
+</body>
+</html>

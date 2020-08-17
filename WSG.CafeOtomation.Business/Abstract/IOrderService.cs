@@ -9,7 +9,7 @@ namespace WSG.CafeOtomation.Business.Abstract
 {
     public interface IOrderService
     {
-        IDataResult<List<OrderDto>> GetAll(Expression<Func<Order, bool>> expression = null);
+        IDataResult<List<Order>> GetAll(Expression<Func<Order, bool>> expression = null);
         IDataResult<List<Order>> GetByDesk(int deskId);
         IDataResult<List<Order>> GetByClose(OrderPayStatus orderPayStatus);
         IDataResult<Order> GetByOrderNo(int no);

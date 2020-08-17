@@ -45,7 +45,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                      select new OrderDto
                      {
                          ID = o.ID,
-                         CreateDate = DateTime.Now,
+                         CreateDate = o.CreateDate,
                          CreateUser = u != null ? $"{u.FirstName} {u.LastName}" : "Anonymous",
                          DeskNo = d.DeskNo,
                          TotalPrice = o.TotalPrice,
@@ -179,7 +179,6 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
 
     public class EfOrderPaymentDal : EfEntityRepositoryBase<OrderPayment, CafeContext>, IOrderPaymentDal
     {
-
     }
     public class EfPayTypeDal : EfEntityRepositoryBase<PayType, CafeContext>, IPayTypeDal
     {

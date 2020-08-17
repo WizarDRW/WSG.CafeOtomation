@@ -29,7 +29,7 @@ namespace WSG.CafeOtomation.DataAccess.Abstract
     }
     public interface IOrderPaymentDal : IEntityRepository<OrderPayment>
     {
-
+        
     }
     public interface IPayTypeDal : IEntityRepository<PayType>
     {

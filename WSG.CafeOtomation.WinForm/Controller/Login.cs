@@ -63,6 +63,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 else
                 {
                     MessageBox.Show(result.Message);
+                    ActiveControl = txtbxPassword;
                 }
             }
         }
@@ -86,6 +87,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         {
             Button btn = (Button)sender;
             txtbxPassword.Text += btn.Text;
+            ActiveControl = txtbxPassword;
         }
 
         private void btnBackSpace_Click(object sender, EventArgs e)
@@ -96,6 +98,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 str = str.Substring(0, str.Length - 1);
                 txtbxPassword.Text = str;
             }
+            ActiveControl = txtbxPassword;
         }
 
         private void Login_KeyPress(object sender, KeyPressEventArgs e)

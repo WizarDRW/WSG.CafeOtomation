@@ -23,14 +23,14 @@ namespace WSG.CafeOtomation.WinForm
 
             var user = new User()
             {
-                ID = 5,
+                ID = 3,
                 LastName = "Ozkara",
                 FirstName = "Nedim",
                 Status = true
 
             };
-            //Application.Run(new Controller.Menu(user));
-            Application.Run(new Login());
+            Application.Run(new Controller.Menu(user));
+            //Application.Run(new Login());
         }
     }
 }

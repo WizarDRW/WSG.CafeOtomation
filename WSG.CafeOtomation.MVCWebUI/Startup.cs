@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WizardSoftwareGroupsFramework.Core.Utilities.Security.Encryption;
+using WizardSoftwareGroupsFramework.Core.Utilities.Security.Jwt;
 using WSG.CafeOtomation.DataAccess.Concrete.EntityFramework.Contexts;
 
 namespace WSG.CafeOtomation.MVCWebUI
@@ -21,6 +24,25 @@ namespace WSG.CafeOtomation.MVCWebUI
         {
             services.AddControllersWithViews();
             services.AddDbContext<CafeContext>();
+            services.AddCors(option =>
+            {
+                option.AddPolicy("AllowOrgin",
+                    builder => builder.WithOrigins("http://www.nedimozkara.com"));
+            });
+            var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidIssuer = tokenOptions.Issuer,
+                    ValidAudience = tokenOptions.Audience,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,13 +63,14 @@ namespace WSG.CafeOtomation.MVCWebUI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Login}/{action=Index}");
             });
         }
     }

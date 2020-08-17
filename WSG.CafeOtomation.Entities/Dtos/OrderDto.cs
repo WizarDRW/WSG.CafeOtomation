@@ -81,4 +81,10 @@ namespace WSG.CafeOtomation.Entities.Dtos
         [DisplayName("Ürün Tipi")]
         public string ProductType { get; set; }
     }
+    public class OrderPaymentDto
+    {
+        public int Amount { get; set; }
+        public string PayType { get; set; }
+        public decimal TotalPrice { get; set; }
+    }
 }
