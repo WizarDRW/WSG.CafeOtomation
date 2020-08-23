@@ -120,7 +120,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          TotalPrice = o.TotalPrice,
                          EOrderStatus = o.EOrderStatus,
                          ProductID = p.ID,
-                         CreateTime = o.CreateDate.ToString("HH:mm:ss")
+                         CreateTime = o.CreateDate
                      }).ToList()
                     :
                     (from o in context.OrderDetails.Where(filter)
@@ -135,7 +135,7 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
                          TotalPrice = o.TotalPrice,
                          EOrderStatus = o.EOrderStatus,
                          ProductID = p.ID,
-                         CreateTime = o.CreateDate.ToString("HH:mm:ss")
+                         CreateTime = o.CreateDate
                      }).ToList();
             }
         }
@@ -179,9 +179,36 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
 
     public class EfOrderPaymentDal : EfEntityRepositoryBase<OrderPayment, CafeContext>, IOrderPaymentDal
     {
+        public List<OrderPaymentDto> GetReportDto(Expression<Func<OrderPayment, bool>> filter = null)
+        {
+            using (var context = new CafeContext())
+            {
+                return filter == null ? context.Orders.Join(
+                    context.OrderPayments.Join(context.PayTypes, op => op.PayTypeID,
+                    pt => pt.ID,
+                    (op, pt) => new { op.OrderID, pt.Name, op.Value }),
+                    x => x.ID,
+                    op => op.OrderID,
+                    (x, op) => new OrderPaymentDto
+                    {
+                        PayType = op.Name,
+                        TotalPrice = op.Value
+                    }).ToList():
+                    context.Orders.Join(
+                    context.OrderPayments.Where(filter).Join(context.PayTypes, op => op.PayTypeID,
+                    pt => pt.ID,
+                    (op, pt) => new { op.OrderID, pt.Name, op.Value }),
+                    x => x.ID,
+                    op => op.OrderID,
+                    (x, op) => new OrderPaymentDto
+                    {
+                        PayType = op.Name,
+                        TotalPrice = op.Value
+                    }).ToList();
+            }
+        }
     }
     public class EfPayTypeDal : EfEntityRepositoryBase<PayType, CafeContext>, IPayTypeDal
     {
-
     }
 }

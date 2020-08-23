@@ -92,7 +92,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 dGWOrders.Columns["OrderID"].Visible = false;
                 dGWOrders.Columns["ProductID"].Visible = false;
                 dGWOrders.Columns["CreateTime"].Visible = false;
-                decimal total = dataDetails.TotalPrice - _orderPaymentService.GetAll(x => x.OrderID == dataDetails.ID).Data.Sum(x => x.Value);
+                decimal total = dataDetails.TotalPrice - _orderPaymentService.GetSafeAll(x => x.OrderID == dataDetails.ID).Data.Sum(x => x.Value);
                 lblTotalPay.Text = total.ToString("#.00 TL");
                 pnlPay.Enabled = true;
             }
@@ -104,11 +104,11 @@ namespace WSG.CafeOtomation.WinForm.Controller
         {
             var data = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
             dGWOrders.DataSource = _orderDetailService.GetAll(x => x.OrderID == data.ID).Data;
-            if (((data.TotalPrice - _orderPaymentService.GetAll(x => x.OrderID == data.ID).Data.Sum(x => x.Value)) - nUDPay.Value) > data.TotalPrice)
+            if (((data.TotalPrice - _orderPaymentService.GetSafeAll(x => x.OrderID == data.ID).Data.Sum(x => x.Value)) - nUDPay.Value) > data.TotalPrice)
             {
                 lblChangeTitle.Text = "Ödenecek:";
             }
-            else if (((data.TotalPrice - _orderPaymentService.GetAll(x => x.OrderID == data.ID).Data.Sum(x => x.Value)) - nUDPay.Value) == data.TotalPrice)
+            else if (((data.TotalPrice - _orderPaymentService.GetSafeAll(x => x.OrderID == data.ID).Data.Sum(x => x.Value)) - nUDPay.Value) == data.TotalPrice)
             {
                 lblChangeTitle.Text = "";
             }
@@ -116,7 +116,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             {
                 lblChangeTitle.Text = "Para Üstü:";
             }
-            lblChange.Text = ((data.TotalPrice - _orderPaymentService.GetAll(x => x.OrderID == data.ID).Data.Sum(x => x.Value)) - nUDPay.Value).ToString();
+            lblChange.Text = ((data.TotalPrice - _orderPaymentService.GetSafeAll(x => x.OrderID == data.ID).Data.Sum(x => x.Value)) - nUDPay.Value).ToString();
         }
         /// <summary>
         /// Kullanici yetki kontrolleri
@@ -535,7 +535,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 Balance = decimal.Parse(lblChange.Text)
             };
             _orderPaymentService.Add(orderPayment);
-            if (_orderPaymentService.GetAll(x => x.OrderID == dataSource.ID).Data.Sum(x => x.Value) >= dataSource.TotalPrice)
+            if (_orderPaymentService.GetSafeAll(x => x.OrderID == dataSource.ID).Data.Sum(x => x.Value) >= dataSource.TotalPrice)
             {
                 dataSource.UpdateUserID = _user.ID;
                 dataSource.UpdateDate = DateTime.Now;

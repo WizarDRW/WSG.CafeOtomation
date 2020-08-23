@@ -201,14 +201,19 @@ namespace WSG.CafeOtomation.Business.Concrete
             return new SuccessResult();
         }
 
-        public IDataResult<List<OrderPayment>> GetAll(Expression<Func<OrderPayment, bool>> filter = null)
+        public IDataResult<List<OrderPaymentDto>> GetAll(Expression<Func<OrderPayment, bool>> filter = null)
         {
-            return new SuccessDataResult<List<OrderPayment>>(_orderPaymentDal.GetList(filter));
+            return new SuccessDataResult<List<OrderPaymentDto>>(_orderPaymentDal.GetReportDto(filter));
         }
 
         public IDataResult<OrderPayment> GetBy(Expression<Func<OrderPayment, bool>> filter)
         {
             return new SuccessDataResult<OrderPayment>(_orderPaymentDal.Get(filter));
+        }
+
+        public IDataResult<List<OrderPayment>> GetSafeAll(Expression<Func<OrderPayment, bool>> filter = null)
+        {
+            return new SuccessDataResult<List<OrderPayment>>(_orderPaymentDal.GetList(filter));
         }
     }
     public class PayTypeManager : IPayTypeService

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<WSG.CafeOtomation.Entities.Dtos.OrderDetailsDto>
+
+<style type="text/css">
+    td {
+        align-self: flex-end;
+        align-items: flex-end;
+        text-align:right;
+    }
+</style>
+<div>
+    <table class="table">
+        <tr>
+            <th>Günlük Toplam Sipariş Tutarı</th>
+            <td>@Model.Sum(x => x.TotalPrice)₺</td>
+        </tr>
+        <tr>
+            <th>Toplam Sipariş</th>
+            <td>@Model.Count() Adet</td>
+        </tr>
+        @foreach (var item in ViewBag.Payments)
+        {
+            <tr>
+                <th>@item.PayType</th>
+                <td>@item.TotalPrice ₺</td>
+            </tr>
+        }
+        <tr>
+            <th>Ciro</th>
+            <td>@ViewBag.Payed ₺</td>
+        </tr>
+    </table>
+</div>

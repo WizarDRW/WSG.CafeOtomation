@@ -45,7 +45,7 @@ namespace WSG.CafeOtomation.Entities.Dtos
         [DisplayName("Ürün No")]
         public int ProductID { get; set; }
         [DisplayName("Sipariş Oluşturulma Zamanı")]
-        public string CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
     }
     public class OrderAllDetailsDto
     {

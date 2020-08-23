@@ -46,7 +46,8 @@ namespace WSG.CafeOtomation.Business.Abstract
     }
     public interface IOrderPaymentService
     {
-        IDataResult<List<OrderPayment>> GetAll(Expression<Func<OrderPayment, bool>> filter = null);
+        IDataResult<List<OrderPaymentDto>> GetAll(Expression<Func<OrderPayment, bool>> filter = null);
+        IDataResult<List<OrderPayment>> GetSafeAll(Expression<Func<OrderPayment, bool>> filter = null);
         IDataResult<OrderPayment> GetBy(Expression<Func<OrderPayment, bool>> filter);
         IResult Add(OrderPayment orderPayment);
         IResult Update(OrderPayment orderPayment);

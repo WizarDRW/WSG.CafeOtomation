@@ -29,7 +29,7 @@ namespace WSG.CafeOtomation.DataAccess.Abstract
     }
     public interface IOrderPaymentDal : IEntityRepository<OrderPayment>
     {
-        
+        List<OrderPaymentDto> GetReportDto(Expression<Func<OrderPayment, bool>> filter = null);
     }
     public interface IPayTypeDal : IEntityRepository<PayType>
     {

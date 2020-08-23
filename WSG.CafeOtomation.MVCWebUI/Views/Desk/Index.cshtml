@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WSG.CafeOtomation.Entities.Concrete.Desk>
+
+@{
+    ViewData["Title"] = "Masalar";
+}
+
+<h1>Masalar</h1>
+
+<p>
+    <a class="btn btn-info" asp-action="Create">+</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Masa Numarası
+            </th>
+            <th>
+                Durum
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeskNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UniqueIdentifier">Düzenle</a> &nbsp;
+                <a asp-action="Delete" asp-route-id="@item.UniqueIdentifier">Sil</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

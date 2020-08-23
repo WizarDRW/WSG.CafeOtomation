@@ -85,20 +85,20 @@ namespace WSG.CafeOtomation.WinForm.Controller
 
         private void btnNumbers(object sender, EventArgs e)
         {
+            ActiveControl = txtbxPassword;
             Button btn = (Button)sender;
             txtbxPassword.Text += btn.Text;
-            ActiveControl = txtbxPassword;
         }
 
         private void btnBackSpace_Click(object sender, EventArgs e)
         {
+            ActiveControl = txtbxPassword;
             if (!string.IsNullOrEmpty(txtbxPassword.Text))
             {
                 string str = txtbxPassword.Text;
                 str = str.Substring(0, str.Length - 1);
                 txtbxPassword.Text = str;
             }
-            ActiveControl = txtbxPassword;
         }
 
         private void Login_KeyPress(object sender, KeyPressEventArgs e)

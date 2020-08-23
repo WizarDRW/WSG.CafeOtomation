@@ -134,6 +134,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         #region Events
         private void Menu_Load(object sender, EventArgs e)
         {
+            lblUser.Text = _user.FirstName + ' ' + _user.LastName;
             AccessControl();
             try
             {

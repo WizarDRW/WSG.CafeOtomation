@@ -66,6 +66,12 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>WSG.CafeOtomation.WinForm.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=5.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.5.2.0\lib\net461\Autofac.dll</HintPath>
@@ -359,6 +365,7 @@
     <Content Include="assets\icons\Stock.png" />
     <Content Include="assets\icons\success.png" />
     <Content Include="assets\icons\warning.png" />
+    <Content Include="logo.ico" />
     <None Include="Resources\Plus.png" />
     <None Include="Resources\Minus1.png" />
     <None Include="Resources\Minus.png" />

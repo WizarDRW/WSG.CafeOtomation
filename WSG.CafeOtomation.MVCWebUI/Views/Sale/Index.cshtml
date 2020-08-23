@@ -1,58 +1,25 @@
 ﻿@model IEnumerable<WSG.CafeOtomation.Entities.Concrete.Order>
 @using WSG.CafeOtomation.Business.Abstract;
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Satislar";
 }
-<style type="text/css">
-    td{
-        align-self: flex-end;
-    }
-</style>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <h1>Satis Raporlari</h1>
-<form asp-controller="Sale" asp-action="Index">
-    <label for="startdate">Başlangıç Tarihi:</label>
-    <input type="datetime-local" id="startdate" name="startdate" > &nbsp;
-    <label for="enddate">Bitiş Tarihi:</label>
-    <input type="datetime-local" id="enddate" name="enddate" > &nbsp;
-    <input type="submit" value="Getir" class="btn btn-primary" />
-</form>
+<label for="startdate">Başlangıç Tarihi:</label>
+<input type="date" id="startdate" name="startdate" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")"> &nbsp;
+<label for="enddate">Bitiş Tarihi:</label>
+<input type="date" id="enddate" class="end" name="enddate" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")"> &nbsp;
+<input type="submit" id="submit" value="Getir" class="btn btn-primary" />
 <br />
-<div>
-    <table class="table">
-        <tr>
-            <th>Günlük Toplam Sipariş Tutarı</th>
-            <td>@Model.Sum(x => x.TotalPrice)₺</td>
-        </tr>
-        <tr>
-            <th>Toplam Açılan Masa</th>
-            <td>@Model.Count() Adet</td>
-        </tr>
-        <tr>
-            <th>Toplam Sipariş</th>
-            <td>@ViewBag.OrderDetailCount Adet</td>
-        </tr>
-        @*@foreach (var item in (dynamic)ViewBag.Payments)
-        {
-            <tr>
-                <th>@item.Key</th>
-                <td>@item.Total₺</td>
-            </tr>
-        }*@
-        <tr>
-            <th>Nakit</th>
-            <td>@ViewBag.Cash₺</td>
-        </tr>
-        <tr>
-            <th>Banka Çekimleri</th>
-            <td>@ViewBag.BankCredit₺</td>
-        </tr>
-        <tr>
-            <th>Yemek Kartları</th>
-            <td>@ViewBag.FoodCart₺</td>
-        </tr>
-        <tr>
-            <th>Toplam Ödenen</th>
-            <td>@Model.Where(x => x.OrderPayStatus == WSG.CafeOtomation.Entities.Concrete.OrderPayStatus.Paid).Sum(x => x.TotalPrice)₺</td>
-        </tr>
-    </table>
-</div>
+<br />
+<br />
+<div id="partialContent"> </div>
+<script type="text/javascript">
+    $(function () {
+        $("#submit").click(function () {
+            var stateId = $(this).val();
+            $("#partialContent").load("@Url.Action("OrderTotal","Sale")?startDate=" + $("#startdate").val() + "&endDate=" + $("#enddate").val());
+   });
+ });
+
+</script>
