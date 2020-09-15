@@ -99,10 +99,36 @@
 <body>
     @foreach (var item in Model)
     {
-        <a class="modalOpen" data-url="ManuIndexPopup?id=@item.ID&deskUniqueID=@ViewBag.DeskUniqueID">
+        @*<a class="modalOpen" data-url="ManuIndexPopup?id=@item.ID&deskUniqueID=@ViewBag.DeskUniqueID">
             @{
                 <div class="pad" style="background: linear-gradient(@item.ProductImages.SingleOrDefault(x=>x.IsCover).RGB,@item.ProductImages.SingleOrDefault(x=>x.IsCover).RGB);
                                                 color:@item.ProductImages.SingleOrDefault(x=>x.IsCover).FontColor">
+                    <h1>@item.Name</h1>
+                    <div>
+                        @item.Description
+                    </div>
+                    @if (item.Minute == 0)
+                    {
+                        <div>
+                            Geliş Süresi Bilinmiyor!
+                        </div>
+                    }
+                    else
+                    {
+                        <h2>
+                            @item.Minute.ToString("## DK")
+                        </h2>
+                    }
+                    <h2>@item.UnitPrice ₺</h2>
+                </div>
+            }
+            <div>
+                <img src="@item.ProductImages.SingleOrDefault(x=>x.IsCover).Path" />
+            </div>
+        </a>*@
+        <a class="modalOpen" data-url="ManuIndexPopup?id=@item.ID&deskUniqueID=@ViewBag.DeskUniqueID">
+            @{
+                <div class="pad">
                     <h1>@item.Name</h1>
                     <div>
                         @item.Description

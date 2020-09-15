@@ -15,6 +15,10 @@ namespace WSG.CafeOtomation.DataAccess.Abstract
         List<UserStuffDto> GetStuffSafeList(Expression<Func<UserStuffDto, bool>> filter = null);
         User GetSafe(Expression<Func<User, bool>> filter);
     }
+    public interface IUserEntryDal : IEntityRepository<UserEntry>
+    {
+
+    }
     public interface IUserTitleDal : IEntityRepository<UserTitle>
     {
 

@@ -1,9 +1,22 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using WizardSoftwareGroupsFramework.Core.Entities;
 using WizardSoftwareGroupsFramework.Core.Extensions;
 
 namespace WSG.CafeOtomation.Entities.Concrete
 {
+    public class UserEntry : IEntity
+    {
+        public int ID { get; set; }
+        public int UserID { get; set; }
+        public DateTime Date { get; set; }
+        public EntryType EntryType { get; set; }
+    }
+    public enum EntryType
+    {
+        Giris = 1,
+        Cikis = 2
+    }
     public class UserTitle : IEntity
     {
         public int ID { get; set; }

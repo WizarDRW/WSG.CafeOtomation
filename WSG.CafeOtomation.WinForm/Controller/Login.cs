@@ -14,12 +14,14 @@ namespace WSG.CafeOtomation.WinForm.Controller
     {
         private IAuthService _authService;
         private IUserService _userService;
+        private IUserEntryService _userEntryService;
         private bool _exit;
         public Login()
         {
             InitializeComponent();
             _authService = new AuthManager(new UserManager(new EfUserDal()), new UserTitleManager(new EfUserTitleDal()), true);
             _userService = new UserManager(new EfUserDal());
+            _userEntryService = new UserEntryManager(new EfUserEntryDal());
             _exit = false;
         }
 
@@ -70,6 +72,17 @@ namespace WSG.CafeOtomation.WinForm.Controller
 
         private void LoginSuccess(IDataResult<User> result)
         {
+            //var check = _userEntryService.GetAllByUserID(x=>x.UserID == result.Data.ID && TimeSpan.FromHours(x.Date.Hour) > TimeSpan.FromHours(x.Date.Hour+20));
+            //if (check.Data.Count < 0)
+            //{
+            //    var entry = new UserEntry
+            //    {
+            //        UserID = result.Data.ID,
+            //        Date = DateTime.Now,
+            //        EntryType = EntryType.Giris
+            //    };
+            //    _userEntryService.Add(entry);
+            //}
             var mainMenu = new Menu(result.Data);
             mainMenu.Show();
             mainMenu.FormClosing += MainMenu_FormClosing;

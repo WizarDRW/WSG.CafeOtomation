@@ -91,6 +91,10 @@ namespace WSG.CafeOtomation.DataAccess.Concrete.EntityFramework
             }
         }
     }
+    public class EfUserEntryDal : EfEntityRepositoryBase<UserEntry, CafeContext>, IUserEntryDal
+    {
+
+    }
     public class EfUserTitleDal : EfEntityRepositoryBase<UserTitle, CafeContext>, IUserTitleDal
     {
 

@@ -126,8 +126,6 @@ namespace WSG.CafeOtomation.WinForm.Controller
             var access = _userTitleService.GetByUserID(_user.ID);
             if (access.Data.AccessAuth == (AccessAuth)5)
             {
-                pnlPay.Visible = false;
-                pnlPay.Enabled = false;
                 btnDelete.Visible = false;
                 btnDelete.Enabled = false;
                 nUDAmount.Visible = false;
@@ -237,6 +235,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         /// <param name="e"></param>
         private void DeskMenu_Load(object sender, EventArgs e)
         {
+            lblTitle.Text = _desk.DeskNo;
             try
             {
                 foreach (var item in _payTypeService.GetAll().Data)
@@ -245,7 +244,6 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 }
                 cmBxPayType.SelectedIndex = 0;
                 ComboBoxOrders();
-                lblTitle.Text = _desk.DeskNo;
                 loadData();
                 dGWOrders.CurrentCell = dGWOrders[1, 0];
             }
@@ -275,6 +273,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private void tVProducts_DoubleClick(object sender, EventArgs e)
         {
             Order data = null;
+            OrderDetail dataChilds = null;
             if (cmBxOrders.SelectedItem != null)
             {
                 data = _orderService.GetByOrderNo((int)cmBxOrders.SelectedItem).Data;
@@ -305,18 +304,31 @@ namespace WSG.CafeOtomation.WinForm.Controller
                     _orderService.Add(data);
                     ComboBoxOrders();
                     timerOrderList.Enabled = true;
+                    int count = (int)PropertyTraffics.ProductCount;
+                    dataChilds = new OrderDetail
+                    {
+                        OrderID = data.ID,
+                        ProductID = product.ID,
+                        Amount = count,
+                        TotalPrice = product.UnitPrice * count,
+                        CreateUserID = _user.ID,
+                        CreateDate = DateTime.Now
+                    };
                 }
-                int count = (int)PropertyTraffics.ProductCount;
-                var dataChilds = new OrderDetail
+                else
                 {
-                    OrderID = data.ID,
-                    ProductID = product.ID,
-                    Amount = count,
-                    TotalPrice = product.UnitPrice * count,
-                    CreateUserID = _user.ID,
-                    CreateDate = DateTime.Now
-                };
-                data.TotalPrice += dataChilds.TotalPrice;
+                    int count = (int)PropertyTraffics.ProductCount;
+                    dataChilds = new OrderDetail
+                    {
+                        OrderID = data.ID,
+                        ProductID = product.ID,
+                        Amount = count,
+                        TotalPrice = product.UnitPrice * count,
+                        CreateUserID = _user.ID,
+                        CreateDate = DateTime.Now
+                    };
+                    data.TotalPrice += dataChilds.TotalPrice;
+                }
                 var result = _orderDetailService.Add(dataChilds);
                 _orderService.Update(data);
                 loadData();
@@ -541,7 +553,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
                 dataSource.UpdateDate = DateTime.Now;
                 dataSource.OrderPayStatus = OrderPayStatus.Paid;
                 _orderService.Update(dataSource);
-                await PosWriteAsync();
+                //await PosWriteAsync();
                 if (_orderService.GetByDesk(_desk.ID).Data.Where(x => x.OrderPayStatus == OrderPayStatus.Open).Count() > 0)
                     ComboBoxOrders();
                 else

@@ -61,6 +61,46 @@ namespace WSG.CafeOtomation.Business.Concrete
             return _userDal.GetClaims(user);
         }
     }
+    public class UserEntryManager : IUserEntryService
+    {
+        public IUserEntryDal _userEntryDal;
+        public UserEntryManager(IUserEntryDal userEntryDal)
+        {
+            _userEntryDal = userEntryDal;
+        }
+        public IResult Add(UserEntry userEntry)
+        {
+            _userEntryDal.Add(userEntry);
+            return new SuccessResult(UserTitleMessages.Added);
+        }
+
+        public IResult Update(UserEntry userEntry)
+        {
+            _userEntryDal.Update(userEntry);
+            return new SuccessResult(UserTitleMessages.Updated);
+        }
+
+        public IResult Delete(UserEntry userEntry)
+        {
+            _userEntryDal.Delete(userEntry);
+            return new SuccessResult(UserTitleMessages.Deleted);
+        }
+
+        public IDataResult<List<UserEntry>> GetAll()
+        {
+            return new SuccessDataResult<List<UserEntry>>(_userEntryDal.GetList());
+        }
+
+        public IDataResult<UserEntry> GetByID(int id)
+        {
+            return new SuccessDataResult<UserEntry>(_userEntryDal.Get(x => x.ID == id));
+        }
+
+        public IDataResult<List<UserEntry>> GetAllByUserID(Expression<Func<UserEntry, bool>> filter = null)
+        {
+            return new SuccessDataResult<List<UserEntry>>(_userEntryDal.GetList(filter));
+        }
+    }
     public class TitleManager : ITitleService
     {
         private ITitleDal _titleDal;

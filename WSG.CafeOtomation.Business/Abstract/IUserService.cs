@@ -19,6 +19,15 @@ namespace WSG.CafeOtomation.Business.Abstract
         IResult Update(User user);
         IResult Delete(User user);
     }
+    public interface IUserEntryService
+    {
+        IDataResult<List<UserEntry>> GetAll();
+        IDataResult<List<UserEntry>> GetAllByUserID(Expression<Func<UserEntry, bool>> filter = null);
+        IDataResult<UserEntry> GetByID(int id);
+        IResult Add(UserEntry userEntry);
+        IResult Update(UserEntry userEntry);
+        IResult Delete(UserEntry userEntry);
+    }
     public interface IUserTitleService
     {
         IDataResult<List<UserTitle>> GetAll();

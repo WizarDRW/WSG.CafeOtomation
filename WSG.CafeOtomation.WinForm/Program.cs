@@ -29,8 +29,8 @@ namespace WSG.CafeOtomation.WinForm
                 Status = true
 
             };
-            //Application.Run(new Controller.Menu(user));
-            Application.Run(new Login());
+            Application.Run(new Controller.Menu(user));
+            //Application.Run(new Login());
         }
     }
 }

@@ -28,6 +28,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
         private IOrderDetailService _orderDetailService;
         private IOrderDetailTypeService _orderDetailTypeService;
         private IUserTitleService _userTitleService;
+        private IUserEntryService _userEntryService;
         private IOrderDetailTimeLogService _orderDetailTimeLogService;
         private int _sessionMinutesOption;
         private int _count;
@@ -44,6 +45,7 @@ namespace WSG.CafeOtomation.WinForm.Controller
             _userTitleService = new UserTitleManager(new EfUserTitleDal());
             _orderDetailTimeLogService = new OrderDetailTimeLogManager(new EfOrderDetailTimeLogDal());
             _orderDetailTypeService = new OrderDetailTypeManager(new EfOrderDetailTypeDal());
+            _userEntryService = new UserEntryManager(new EfUserEntryDal());
             _sessionMinutesOption = 2;
 
             this.AutoScaleDimensions = new SizeF(6F, 13F);
@@ -380,5 +382,17 @@ namespace WSG.CafeOtomation.WinForm.Controller
         #endregion
 
         #endregion
+
+        private void TsUserExit_Click(object sender, EventArgs e)
+        {
+            var entry = new UserEntry
+            {
+                UserID = _user.ID,
+                Date = DateTime.Now,
+                EntryType = EntryType.Cikis
+            };
+            _userEntryService.Add(entry);
+            tSExit_Click(sender, e);
+        }
     }
 }

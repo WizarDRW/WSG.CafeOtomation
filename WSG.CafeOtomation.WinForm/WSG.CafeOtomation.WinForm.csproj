@@ -350,6 +350,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\icons\CAFESMOKEINLOGO.jpeg" />
+    <Content Include="assets\icons\CAFESMOKEINLOGO_White.png" />
     <Content Include="assets\icons\Cancel.png" />
     <Content Include="assets\icons\Close.png" />
     <Content Include="assets\icons\Desk.png" />
